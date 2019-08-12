@@ -36,17 +36,6 @@ export class MapEngineService {
     this.g.selectAll("#countries").style("stroke-width", 1.0 / xyz[2] + "px");
   }
 
-  private canada_scale_ratio = (d: any) => {
-    let window_width = window.innerWidth*0.75, window_height = window.innerHeight*0.75;
-    let bounds = this.path.bounds(d);
-    let w_scale = (bounds[1][0] - bounds[0][0]) / (window_width);
-    let h_scale = (bounds[1][1] - bounds[0][1])*2 / (4*window_height);
-    let z = .9 / Math.max(w_scale, h_scale);
-    let x = (bounds[1][0] + bounds[0][0]) / 2;
-    let y = (bounds[1][1]) / 1.7+ (window_height / z / 6);
-    return [x, y, z];
-  }
-
   private scale_ratio = (d: any) => {
     let window_width = window.innerWidth*0.75, window_height = window.innerHeight*0.75;
     let bounds = this.path.bounds(d);
@@ -66,10 +55,19 @@ export class MapEngineService {
       "</table>";
   }
 
+  private updateShownMode = (isWorldShown: boolean, isCountryShown: boolean, isStateShown: boolean) => {
+    this.isWorldMapShown = isWorldShown;
+    this.g.selectAll(".country-level-mark").transition().duration(200).style("opacity", isWorldShown ? 1 : 0);
+    this.isCountryMapShown = isCountryShown
+    this.g.selectAll(".state-level-mark").transition().duration(200).style("opacity", isCountryShown ? 1 : 0);
+    this.isStateMapShown = isStateShown
+    this.g.selectAll(".city-level-mark").transition().duration(200).style("opacity", isStateShown ? 1 : 0);
+  }
+
   private stateNetworkInfo = (d) => {
     d3.select("#tooltip").transition().duration(200).style("opacity", .9); 
 
-    d3.select("#tooltip").html(this.tooltipHtml(d["properties"]["gn_name"], this.sampleData[d["properties"]["abbrev"]]))  
+    d3.select("#tooltip").html(this.tooltipHtml(d["properties"]["name"], this.sampleData[d["properties"]["abbrev"]]))  
       .style("left", (d3.event.pageX) + "px")     
       .style("top", (d3.event.pageY - 150) + "px");
   }
@@ -90,7 +88,6 @@ export class MapEngineService {
       let xyz = this.scale_ratio(d);
       this.selectedState = d;
       this.updateShownMode(false, false, true)
-      let state_name = this.selectedState["properties"]["name"];
       this.zoom(xyz);
 
       this.g.selectAll(".city-level-mark")
@@ -106,15 +103,7 @@ export class MapEngineService {
     }
   }
 
-  private updateShownMode = (isWorldShown: boolean, isCountryShown: boolean, isStateShown: boolean) => {
-    this.isWorldMapShown = isWorldShown;
-    this.g.selectAll(".country-level-mark").transition().duration(200).style("opacity", isWorldShown ? 1 : 0);
-    this.isCountryMapShown = isCountryShown
-    this.g.selectAll(".state-level-mark").transition().duration(200).style("opacity", isCountryShown ? 1 : 0);
-    this.isStateMapShown = isStateShown
-    this.g.selectAll(".city-level-mark").transition().duration(200).style("opacity", isStateShown ? 1 : 0);
-  }
-
+  
   private countrySelecting = (d) => {
     let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
     this.g.selectAll("#states").remove();
@@ -132,7 +121,6 @@ export class MapEngineService {
       this.selectedCountry = d;
 
       if (d["id"]  == 'CAN') {
-        xyz = this.canada_scale_ratio(d);
         d3.json("../../assets/states.topo.json").then((us) => {
           this.g.append("g")
             .attr("id", "states").selectAll("path")
