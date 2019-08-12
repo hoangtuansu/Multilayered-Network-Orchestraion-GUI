@@ -1,0 +1,5 @@
+<div>
+<div #renderer3DContainer [@fadeOut3DDiv]="isHide3DDiv ? '3d-hide' : '3d-show'" (@fadeOut3DDiv.done)="animation3DEnd($event)"></div>
+<div #renderer2DContainer class="visual2d" [@fadeOut2DDiv]="!isHide3DDiv ? '2d-hide' : '2d-show'"></div>
+</div>
+<div><span>{{ displayMode }}</span></div>
