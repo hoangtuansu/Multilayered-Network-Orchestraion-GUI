@@ -16,6 +16,9 @@ export class MapEngineService {
   selectedState: any = null;
   projection: any = null;
   path: any = null;
+  isWorldMapShown = true;
+  isCountryMapShown = false;
+  isStateMapShown = false;
   constructor() {
     let colors = ["#e74c3c", "#b03a2e", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
   "#1e8449", "#b9770e"];
@@ -86,7 +89,7 @@ export class MapEngineService {
     if (d && this.selectedState !== d) {
       let xyz = this.scale_ratio(d);
       this.selectedState = d;
-      
+      this.updateShownMode(false, false, true)
       let state_name = this.selectedState["properties"]["name"];
       this.zoom(xyz);
 
@@ -103,6 +106,15 @@ export class MapEngineService {
     }
   }
 
+  private updateShownMode = (isWorldShown: boolean, isCountryShown: boolean, isStateShown: boolean) => {
+    this.isWorldMapShown = isWorldShown;
+    this.g.selectAll(".country-level-mark").transition().duration(200).style("opacity", isWorldShown ? 1 : 0);
+    this.isCountryMapShown = isCountryShown
+    this.g.selectAll(".state-level-mark").transition().duration(200).style("opacity", isCountryShown ? 1 : 0);
+    this.isStateMapShown = isStateShown
+    this.g.selectAll(".city-level-mark").transition().duration(200).style("opacity", isStateShown ? 1 : 0);
+  }
+
   private countrySelecting = (d) => {
     let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
     this.g.selectAll("#states").remove();
@@ -114,8 +126,8 @@ export class MapEngineService {
     }
 
     if (d && this.selectedCountry !== d) {
-      this.g.selectAll(".country-level-mark").transition()
-        .duration(200).style("opacity", 0);
+      this.updateShownMode(false, true, false)
+      
       let xyz = this.scale_ratio(d);
       this.selectedCountry = d;
 
@@ -143,6 +155,7 @@ export class MapEngineService {
             .attr("xlink:href", '../../assets/images/switch.png')
             .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
             });
+            
         }); 
       } else {
         this.zoom(xyz);
@@ -152,9 +165,7 @@ export class MapEngineService {
       let xyz = [width / 2, height / 1.5, 1];
       this.selectedCountry = null;
       this.zoom(xyz);
-      this.showNetworkNode(this.g, ".country-level-mark", true);
-      this.g.selectAll(".country-level-mark").transition()
-        .duration(200).style("opacity", 1);
+      this.updateShownMode(true, false, false)
     }
   }
 
@@ -162,8 +173,6 @@ export class MapEngineService {
   createMap(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
     let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
-
-    
 
     let cityNetworkInfo = (d) => {
 
@@ -205,8 +214,10 @@ export class MapEngineService {
         .attr("xlink:href", 'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
         .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
         });
-      
+      this.isWorldMapShown = true;
     });
+
+    this.updateShownMode(true, false, false)
     
 
     
