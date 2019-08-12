@@ -32,7 +32,7 @@ export class Engine3DService implements OnDestroy {
   constructor(private animatorService: AnimatorService ) {
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({antialias: false});
     this.camera = new THREE.PerspectiveCamera( 50, this.renderer.domElement.width/this.renderer.domElement.height, 0.01, 500 );
     this.controls = new OrbitControls(this.camera , this.renderer.domElement );
     this.raycaster.linePrecision = 0.1;

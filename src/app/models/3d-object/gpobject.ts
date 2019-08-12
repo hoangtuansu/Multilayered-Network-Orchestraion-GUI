@@ -9,7 +9,7 @@ export class GPOjbect implements NObject {
     position: [number, number, number] = [0, 0, 0];
     background_image: string = "";
     mesh: THREE.Mesh = null;
-  
+
     constructor(n: string, fn: string, l: LAYER, p: [number, number, number], bg_im?: string) {
       this.name = n;
       this.full_name = fn;
@@ -27,8 +27,12 @@ export class GPOjbect implements NObject {
       let geometry = new THREE.BoxBufferGeometry(40, 20, 0.1);
       let material = null;
       if(this.background_image !== undefined) {
+        let texture = new THREE.TextureLoader().load( this.background_image);
+        texture.anisotropy = 0;
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.NearestFilter;
         material = new THREE.MeshBasicMaterial();
-        material.map = new THREE.TextureLoader().load( this.background_image);
+        material.map = texture;
         material.transparent = true;
       } else {
         material = new THREE.MeshStandardMaterial({color: 0xffffff, emissive: 0x000000, roughness: 1.0, metalness: 0.0, opacity: 0.6, transparent: true});
