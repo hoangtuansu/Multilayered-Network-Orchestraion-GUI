@@ -1,2 +1,9 @@
-<div class="visual2d"><div #renderer2DContainer 
-[@fadeOut2DDiv]="isHide2DDiv ? '2d-hide' : '2d-show'"></div></div>
+<div class="map" [@fadeOut2DDiv]="isHide2DDiv ? '2d-hide' : '2d-show'">
+    <div id="tooltip"></div>
+    <div #renderer2DContainer>
+        <div id="controls">
+            <a href="#">2D</a>
+            <a  href="#">3D</a>
+        </div>
+    </div>
+</div>

@@ -12,10 +12,12 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
     trigger('fadeOut3DDiv', [
       state('3d-show', style({
         position: 'absolute',
+        'z-index': 1,
         opacity: 1
       })),
       state('3d-hide', style({
         position: 'absolute',
+        'z-index': 0,
         opacity: 0
       })),
       transition('3d-hide <=> 3d-show', animate('1500ms'))])],

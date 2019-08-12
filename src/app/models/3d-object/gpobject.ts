@@ -28,7 +28,8 @@ export class GPOjbect implements NObject {
       let material = null;
       if(this.background_image !== undefined) {
         material = new THREE.MeshBasicMaterial();
-        material.map = new THREE.TextureLoader().load( this.background_image );
+        material.map = new THREE.TextureLoader().load( this.background_image);
+        material.transparent = true;
       } else {
         material = new THREE.MeshStandardMaterial({color: 0xffffff, emissive: 0x000000, roughness: 1.0, metalness: 0.0, opacity: 0.6, transparent: true});
       }
@@ -43,5 +44,5 @@ export class GPOjbect implements NObject {
     new GPOjbect ( 'OPT', "OPTICAL", 0, [1, 5, 1]),
     new GPOjbect ( 'DLK', "DLK", 1, [1, 10, 1]),
     new GPOjbect ( 'IP', "IP", 2, [1, 15, 1]),
-    new GPOjbect ( 'WD', "WORLD", 0, [1, 1, 1], "assets/map.png"),
+    new GPOjbect ( 'WD', "WORLD", 0, [1, 1, 1], "assets/canada.png"),
   ];

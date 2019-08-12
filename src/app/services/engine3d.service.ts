@@ -84,7 +84,6 @@ export class Engine3DService implements OnDestroy {
     }
 
     if(this.is3DFadingIn) {
-      console.log("test");
       this.animatorService.fadingIn3D(this.camera, this.controls);
     }
 

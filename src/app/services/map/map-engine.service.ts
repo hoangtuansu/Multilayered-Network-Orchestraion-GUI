@@ -59,9 +59,9 @@ export class MapEngineService {
     this.isWorldMapShown = isWorldShown;
     this.g.selectAll(".country-level-mark").transition().duration(200).style("opacity", isWorldShown ? 1 : 0);
     this.isCountryMapShown = isCountryShown
-    this.g.selectAll(".state-level-mark").transition().duration(200).style("opacity", isCountryShown ? 1 : 0);
+    this.g.selectAll(".state-level-mark").remove();
     this.isStateMapShown = isStateShown
-    this.g.selectAll(".city-level-mark").transition().duration(200).style("opacity", isStateShown ? 1 : 0);
+    this.g.selectAll(".city-level-mark").remove();
   }
 
   private stateNetworkInfo = (d) => {
@@ -81,9 +81,6 @@ export class MapEngineService {
   }
 
   private stateClicked = (d) => {
-    this.g.selectAll(".state-level-mark").remove();
-    this.g.selectAll(".city-level-mark").remove();
-
     if (d && this.selectedState !== d) {
       let xyz = this.scale_ratio(d);
       this.selectedState = d;
@@ -95,7 +92,7 @@ export class MapEngineService {
         .attr('class', 'city-level-mark')
         .attr('width', 4).attr('height', 4)
         .attr("xlink:href", '../../assets/images/router.png')
-        .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";})
+        .attr("transform", (d: any) => {return "translate(" + this.projection([d.long, d.lat]) + ")";})
         .on("click", this.cityClicked);;
     } else {
       this.selectedState = null;
@@ -107,9 +104,6 @@ export class MapEngineService {
   private countrySelecting = (d) => {
     let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
     this.g.selectAll("#states").remove();
-    this.g.selectAll(".state-level-mark").remove();
-    this.g.selectAll(".city-level-mark").remove();
-
     if (this.selectedCountry) {
       this.g.selectAll("#" + this.selectedCountry.id).style('display', null);
     }
@@ -128,12 +122,10 @@ export class MapEngineService {
             .attr("id", function(d) { return "state" + d["properties"]["gn_id"]; })
             .attr("class", "active")
             .style("fill",d => { return this.sampleData[d["properties"]["abbrev"]].color; })
-            .style("opacity", 0.8)
-            .attr("d", this.path)
+            .style("opacity", 0.8).attr("d", this.path)
             .on("mouseover", this.stateNetworkInfo).on("mouseout", this.stateNetworkInfoHide)
             .on("click", this.stateClicked);
 
-          this.zoom(xyz);
           this.g.selectAll("#" + d["id"]).style('display', 'none');
 
           this.g.selectAll(".state-level-mark")
@@ -145,10 +137,8 @@ export class MapEngineService {
             });
             
         }); 
-      } else {
-        this.zoom(xyz);
-        
       }
+      this.zoom(xyz);
     } else {
       let xyz = [width / 2, height / 1.5, 1];
       this.selectedCountry = null;
@@ -157,8 +147,7 @@ export class MapEngineService {
     }
   }
 
-
-  createMap(mapRenderer: ElementRef) {
+  createChart(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
     let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
 

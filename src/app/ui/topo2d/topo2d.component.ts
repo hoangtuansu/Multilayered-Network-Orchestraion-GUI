@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChange, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChange, Input, ViewEncapsulation } from '@angular/core';
 import { Engine2DService } from 'src/app/services/engine2d.service';
 import { trigger, style, state, transition, animate } from '@angular/animations';
 import * as OBJ from '../../models';
@@ -13,6 +13,7 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
       width: '75%',
       height: '75vh',
       position: 'absolute',
+      'z-index': 1,
       opacity: 1
     })),
     state('2d-hide', style({
@@ -20,9 +21,11 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
       width: '75%',
       height: '75vh',
       display: 'none',
+      'z-index': 0,
       opacity: 0
     })),
-    transition('2d-hide <=> 2d-show', animate('1500ms'))])]
+    transition('2d-hide <=> 2d-show', animate('1500ms'))])],
+    encapsulation: ViewEncapsulation.None
 })
 export class Topo2dComponent implements OnInit, OnChanges {
   ngOnInit(): void {
