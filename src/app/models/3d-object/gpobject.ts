@@ -30,7 +30,7 @@ export class GPOjbect implements NObject {
         let texture = new THREE.TextureLoader().load( this.background_image);
         texture.anisotropy = 0;
         texture.magFilter = THREE.NearestFilter;
-        texture.minFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.LinearFilter;
         material = new THREE.MeshBasicMaterial();
         material.map = texture;
         material.transparent = true;

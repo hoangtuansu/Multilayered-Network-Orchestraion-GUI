@@ -47,29 +47,28 @@
     text-align:center;
 }
 
-
-
 #controls {
   position: absolute;
   right: 0;
   bottom: 0;
+  transition: .5s ease-in-out all;
 }
 
-#controls a {
-  background-color: red;
-  color: white;
-  padding: 1em 1.5em;
+a#switch-view {
+  width:64px;
+  height: 64px;
+  background: transparent url("../../../assets/images/switch-view.png") center top no-repeat;
   text-decoration: none;
   text-transform: uppercase;
-  margin-left: 0.5em;
+  display: block;
 }
 
-#controls a:hover {
-background-color: #555;
+a#switch-view:hover {
+  background: url("../../../assets/images/switch-view.png") no-repeat 0 0;
 }
 
-#controls a:active {
-background-color: black;
+a#switch-view:active {
+  background: url("../../../assets/images/switch-view.png") no-repeat 0 0;
 
 }
 
