@@ -1,10 +1,4 @@
-<div class="map" [@fadeOut2DDiv]="isHide2DDiv ? '2d-hide' : '2d-show'">
+<div class="topo2d">
     <div id="tooltip"></div>
-    <div #renderer2DContainer>
-        <div id="controls"
-        [style.opacity]="engine2DService.isWorldMapShown ? '0' : '1'" 
-        [style.visibility]="engine2DService.isWorldMapShown ? 'hidden' : 'visible'">
-            <a href="#" id="switch-view"></a>
-        </div>
-    </div>
+    <div #renderer2DContainer [@fadeOut2DDiv]="isHide2DDiv ? '2d-hide' : '2d-show'"></div>
 </div>

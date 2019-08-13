@@ -1,4 +1,4 @@
-.map { 
+.topo2d { 
     width: 75%;
     height: 75vh;
     position: absolute;
@@ -47,53 +47,28 @@
     text-align:center;
 }
 
-#controls {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  transition: .5s ease-in-out all;
+.background {
+  fill: none;
+  pointer-events: all;
 }
-
-a#switch-view {
-  width:64px;
-  height: 64px;
-  background: transparent url("../../../assets/images/switch-view.png") center top no-repeat;
-  text-decoration: none;
-  text-transform: uppercase;
-  display: block;
+#countries, #states {
+  fill: #95a5a6;
+  stroke: #fff;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
-
-a#switch-view:hover {
-  background: url("../../../assets/images/switch-view.png") no-repeat 0 0;
+#countries .active {
+  fill: #89a;
 }
-
-a#switch-view:active {
-  background: url("../../../assets/images/switch-view.png") no-repeat 0 0;
-
+#cities {
+  stroke-width: 0;
 }
-
-  .background {
-    fill: none;
-    pointer-events: all;
-  }
-  #countries, #states {
-    fill: #7f8c8d;
-    stroke: #fff;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-  #countries .active {
-    fill: #89a;
-  }
-  #cities {
-    stroke-width: 0;
-  }
-  .city {
-    fill: #345;
-    stroke: #fff;
-  }
-  pre.prettyprint {
-    border: 1px solid #ccc;
-    margin-bottom: 0;
-    padding: 9.5px;
-  }
+.city {
+  fill: #345;
+  stroke: #fff;
+}
+pre.prettyprint {
+  border: 1px solid #ccc;
+  margin-bottom: 0;
+  padding: 9.5px;
+}

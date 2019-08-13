@@ -48,5 +48,5 @@ export class GPOjbect implements NObject {
     new GPOjbect ( 'OPT', "OPTICAL", 0, [1, 5, 1]),
     new GPOjbect ( 'DLK', "DLK", 1, [1, 10, 1]),
     new GPOjbect ( 'IP', "IP", 2, [1, 15, 1]),
-    new GPOjbect ( 'WD', "WORLD", 0, [1, 1, 1], "assets/canada.png"),
+    new GPOjbect ( 'WD', "WORLD", 0, [1, 1, 1], "assets/canada-alberta.png"),
   ];

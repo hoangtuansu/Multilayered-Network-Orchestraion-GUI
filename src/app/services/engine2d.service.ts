@@ -161,8 +161,8 @@ export class Engine2DService {
           this.g.selectAll(".state-level-mark")
             .data(this.state_ne_coordinations).enter().append("image")
             .attr('class', 'state-level-mark')
-            .attr('width', 20).attr('height', 20)
-            .attr("xlink:href", '../../assets/images/switch.png')
+            .attr('width', 15).attr('height', 15)
+            .attr("xlink:href", '../../assets/images/country-switch.png')
             .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
             });
             
@@ -217,8 +217,8 @@ export class Engine2DService {
         .data(this.country_ne_coordinations)
         .enter().append("image")
         .attr('class', 'country-level-mark')
-        .attr('width', 20).attr('height', 20)
-        .attr("xlink:href", 'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+        .attr('width', 45).attr('height', 45)
+        .attr("xlink:href", '../../assets/images/world-data-center.png')
         .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
         });
       this.isWorldMapShown = true;

@@ -1,19 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <!-- <div [ngSwitch]="selectedDisplayMode">
-    <a class="my_button" *ngSwitchCase="0" (click)="selectedDisplayMode = 1" routerLink="/view/1">Click</a>
-    <a class="my_button" *ngSwitchCase="1" (click)="selectedDisplayMode = 0" routerLink="/view/0">Click</a>
-  </div>
-  
-   <router-outlet></router-outlet> -->
+   
 
-   <div [ngSwitch]="selectedDisplayMode">
-    <a class="my_button" *ngSwitchCase="0" (click)="selectedDisplayMode = 1">Click</a>
-    <a class="my_button" *ngSwitchCase="1" (click)="selectedDisplayMode = 0">Click</a>
+  <div id="controls">
+      <a href="#" id="switch-view" (click)="selectedDisplayMode = (selectedDisplayMode == 1 ? 0 : 1)"></a>
   </div>
+
   <br/>
   <!-- <topo-visual [displayMode] = "selectedDisplayMode"></topo-visual>  -->
   <app-topo2d [displayMode] = "selectedDisplayMode"></app-topo2d>
