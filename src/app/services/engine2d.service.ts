@@ -1,6 +1,7 @@
 import { Injectable, ViewChild, ElementRef } from '@angular/core';
 import { AnimatorService } from './animator.service';
 import * as d3 from 'd3';
+import * as OBJ from '../models';
 import { Subject } from 'rxjs';
 import * as t from 'topojson-client';
 
@@ -59,7 +60,7 @@ export class Engine2DService {
       .attr("viewBox", "0 0 " + width + " " + height).append("g")
       .attr("transform", translateStr + " " + scaleStr + " " + "rotate(90)");
     
-    for(let o of this.animatorService.getG2DNOs()) {
+    for(let o of this.animatorService.getGNPrOs()) {
       svgContainer.append("circle").attr("cx", o.position[0]).attr("cy", o.position[2])
         .attr("r", 1).style("fill", o.color2d)
         .on("click", function(){});
@@ -138,6 +139,9 @@ export class Engine2DService {
     }
   }
 
+  private countryLinkSelecting = (d) => {
+
+  }
   
   private countrySelecting = (d) => {
     let width = window.innerWidth*0.8, height = window.innerHeight;
@@ -221,31 +225,25 @@ export class Engine2DService {
         .attr("id", function(d) { return d["id"]; })
         .attr("d", this.path).on("click", this.countrySelecting);
 
-      this.g.selectAll(".country-level-mark")
-        .data(this.country_ne_coordinations)
-        .enter().append("image")
-        .attr('class', 'country-level-mark')
-        .attr('width', 45).attr('height', 45)
-        .attr("xlink:href", '../../assets/images/world-data-center.png')
-        .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
+      this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs)
+        .enter().append("image").attr('class', 'country-level-mark')
+        .attr('width', (d) => {return d.size[0];})
+        .attr('height', (d) => {return d.size[1];})
+        .attr("xlink:href", (d) => {return d.icon_url;})
+        .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";
         });
-      svg.append("line")
+      this.g.selectAll(".country-level-link").data(OBJ.G2DLOs)
+        .enter().append("line").attr('class', 'country-level-link')
         .style("stroke", "red")
         .style("stroke-width", 3)
-        .attr("id", 1)
-        .attr("x1", 200)
-        .attr("y1", 270)
-        .attr("x2", 250)
-        .attr("y2", 300);
-      svg.append("line")
-        .style("stroke", "red")
-        .style("stroke-width", 3)
-        .attr("id", 2)
-        .attr("x1", 250)
-        .attr("y1", 300)
-        .attr("x2", 350)
-        .attr("y2", 300);
-      this.isWorldMapShown = true;
+        .attr("id", (d) => {return d.name;})
+        .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
+        .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
+        .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
+        .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+        .on("click", this.countryLinkSelecting);
+
+        this.isWorldMapShown = true;
     });
 
     this.updateShownMode(true, false, false)

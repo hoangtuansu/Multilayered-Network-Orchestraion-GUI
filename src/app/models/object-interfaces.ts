@@ -1,6 +1,6 @@
 export enum LAYER { OPTICAL, LAYER1, IP }
 export enum DISPLAY_MODE {D2 = 0, D3 = 1}
-
+export enum NODE_LEVEL {COUNTRY, STATE, CITY}
 export interface Object {
     id: number;
     name: string;
@@ -25,4 +25,9 @@ export interface Object {
     icon_url: string;
     size: [number, number],
     long_pos: [number, number]
+  }
+
+  export interface LObject2D extends Object{
+    node1: NObject2D;
+    node2: NObject2D;
   }

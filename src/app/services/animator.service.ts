@@ -30,8 +30,8 @@ export class AnimatorService {
     return OBJ.GLOs;
   }
 
-  getG2DNOs() {
-    return OBJ.G2DNOs;
+  getGNPrOs() {
+    return OBJ.GNPrOs;
   }
 
   fadingIn3D(camera: any, controls: any): boolean {
@@ -47,7 +47,7 @@ export class AnimatorService {
   }
 
   fadingIn2D(): boolean {
-    for(let o of this.getG2DNOs()) {
+    for(let o of this.getGNPrOs()) {
 
     }
     return true;
@@ -89,7 +89,7 @@ export class AnimatorService {
     if(this.isMergeSphere2Done) 
       return;
     let count_all_merged: number = 0;
-    for(let o of this.getG2DNOs()) {
+    for(let o of this.getGNPrOs()) {
       let p: [number, number, number] = [0,0,0];
       let flag: boolean = false;
       let count = 0;
@@ -121,7 +121,7 @@ export class AnimatorService {
       }
       count_all_merged += flag ? 1 : 0;
     }
-    this.isMergeSphere2Done = (count_all_merged == this.getG2DNOs().length);
+    this.isMergeSphere2Done = (count_all_merged == this.getGNPrOs().length);
   }
 
   private planesFadeOutPhase() {
@@ -149,7 +149,7 @@ export class AnimatorService {
     if(this.isProjectSpheresPhase)
       return;
     let count = 0;
-    for(let o of this.getG2DNOs()) {
+    for(let o of this.getGNPrOs()) {
       for(let _o of this.getG3DNOs()) {
         if(_o.box_id == o.id) {
           let p = o.position;
@@ -172,7 +172,7 @@ export class AnimatorService {
     if(this.isProjectSpheresPhase) {
       for(let g of this.getG3DNOs())
         g.setVisible(false);
-      for(let g of this.getG2DNOs())
+      for(let g of this.getGNPrOs())
         g.setVisible(true);
     }
     
