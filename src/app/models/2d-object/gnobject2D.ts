@@ -5,38 +5,20 @@ export class GNObject2D implements NObject2D {
     id: number = 0;
     name: string = "";
     full_name: string = "";
-    position: [number, number, number] = [1, 1, 1];
-    mesh_color: number = 0;
-    color2d: string = "";
-    mesh_emissive: number = 0;
-    mesh: THREE.Mesh = null;
+    icon_url: string;
+    size: [number, number];
+    long_pos: [number, number];
   
-    constructor(_id: number, n: string, fn: string, p: [number, number, number], mc: number, me: number, c2d: string) {
+    constructor(_id: number, n: string, fn: string, iu: string, s: [number, number], lp: [number, number]) {
       this.id = _id;
       this.name = n;
       this.full_name = fn;
-      this.position = p;
-      this.mesh_color = mc;
-      this.mesh_emissive = me;
-      this.color2d = c2d;
+      this.icon_url = iu;
+      this.size = s;
+      this.long_pos = lp;
     }
   
-    generateMesh(): THREE.Mesh {
-      let geometry14 = new THREE.CylinderBufferGeometry( 1, 1, 0.4, 32, 32);
-      let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
-      this.mesh = new THREE.Mesh(geometry14, material14);
-      this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
-      return this.mesh;
-    }
-  
-    setVisible(v: boolean) {
-      this.mesh.visible = v;
-    }
-  
-    convertToD3Position(): [number, number] {
-      let scaleX = window.innerWidth*0.75/40, scaleY = window.innerHeight*0.75/20;
-      return [this.position[0]*scaleX, this.position[2]*scaleY];
-    }
+    
   }
 
   export const G2DNOs: GNObject2D[] = [

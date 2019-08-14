@@ -1,4 +1,4 @@
-import { NObject, LAYER } from '../object-interfaces';
+import { NObject, LAYER, NPrObject } from '../object-interfaces';
 import * as THREE from 'three';
 
 export class GNObject implements NObject{
@@ -45,6 +45,53 @@ export class GNObject implements NObject{
     }
   
   };
+
+  export class GNPrObject implements NPrObject {
+    id: number = 0;
+    name: string = "";
+    full_name: string = "";
+    position: [number, number, number] = [1, 1, 1];
+    mesh_color: number = 0;
+    color2d: string = "";
+    mesh_emissive: number = 0;
+    mesh: THREE.Mesh = null;
+  
+    constructor(_id: number, n: string, fn: string, p: [number, number, number], mc: number, me: number, c2d: string) {
+      this.id = _id;
+      this.name = n;
+      this.full_name = fn;
+      this.position = p;
+      this.mesh_color = mc;
+      this.mesh_emissive = me;
+      this.color2d = c2d;
+    }
+  
+    generateMesh(): THREE.Mesh {
+      let geometry14 = new THREE.CylinderBufferGeometry( 1, 1, 0.4, 32, 32);
+      let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
+      this.mesh = new THREE.Mesh(geometry14, material14);
+      this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
+      return this.mesh;
+    }
+  
+    setVisible(v: boolean) {
+      this.mesh.visible = v;
+    }
+  
+    convertToD3Position(): [number, number] {
+      let scaleX = window.innerWidth*0.8/40, scaleY = window.innerHeight/20;
+      return [this.position[0]*scaleX, this.position[2]*scaleY];
+    }
+  }
+
+  export const GNPrOs: GNPrObject[] = [
+    new GNPrObject (1, 'site1', 'SITE-01', [0, 1, 12.5], 0x008000, 0x008000, "#008000"),
+    new GNPrObject (2, 'site2', 'SITE-02', [4, 1, 10.5], 0x4B0082, 0x4B0082, "#4B0082"),
+    new GNPrObject (3, 'site3', 'SITE-03', [-5, 1, 0], 0x008000, 0x008000, "#008000"),
+    new GNPrObject (4, 'site4', 'SITE-04', [5, 1, -5], 0x008000, 0x008000, "#008000"),
+    new GNPrObject (5, 'site6', 'SITE-04', [-2.5, 1, -12.5], 0x0080ff, 0x0080ff, "#0080ff"),
+    new GNPrObject (6, 'site5', 'SITE-04', [7.5, 1, 2.5], 0x008000, 0x008000, "#008000")
+  ];
 
   export const G3DNOs: GNObject[] = [
     new GNObject (1, 2, 'poc1', 'EDTNLABPOC-01', 0, [0, 5, 12.5], 0x4B0082, 0x400080),

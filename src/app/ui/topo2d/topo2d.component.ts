@@ -10,16 +10,16 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
   styleUrls: ['./topo2d.component.css'],
   animations: [trigger('fadeOut2DDiv', [
     state('2d-show', style({
-      width: '75%',
-      height: '75vh',
+      width: '80%',
+      height: '100vh',
       position: 'absolute',
       'z-index': 1,
       opacity: 1
     })),
     state('2d-hide', style({
       position: 'absolute',
-      width: '75%',
-      height: '75vh',
+      width: '80%',
+      height: '100vh',
       display: 'none',
       'z-index': 0,
       opacity: 0
@@ -31,7 +31,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   @ViewChild('renderer2DContainer', { static: false }) renderer2DContainer: ElementRef;
-  isHide2DDiv: boolean = true;
+  isHide2DDiv: boolean = false;
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D2;
   
   constructor(private engine2DService: Engine2DService, private engineCoordinatorService: EngineCoordinatorService) {

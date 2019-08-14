@@ -18,6 +18,14 @@ export class Engine2DService {
 
   sampleData: any = { };
   country_ne_coordinations = [{long: -135, lat: 65},{long: -115, lat: 60},{long: -78, lat: 60}];
+  
+  country_ne_links = [{x1: 100, y1: 200, x2: 100, y2: 100},
+    {x1: 150, y1: 210, x2: 100, y2: 100},
+    {x1: 160, y1: 220, x2: 100, y2: 100},
+    {x1: 170, y1: 230, x2: 100, y2: 100},
+    {x1: 180, y1: 240, x2: 100, y2: 100},
+    {x1: 190, y1: 250, x2: 100, y2: 100},
+  ];
   state_ne_coordinations = [{long: -135, lat: 65},{long: -115, lat: 58}, {long: -90, lat: 60}, {long: -78, lat: 60}, {long: -116, lat: 52}, {long: -120, lat: 70}];
   city_ne_coordinations = [{long: -114, lat: 54}, {long: -116, lat: 52}, {long: -115, lat: 58}];
   g: any = null;
@@ -132,7 +140,7 @@ export class Engine2DService {
 
   
   private countrySelecting = (d) => {
-    let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
+    let width = window.innerWidth*0.8, height = window.innerHeight;
     this.g.selectAll("#states").remove();
     if (this.selectedCountry) {
       this.g.selectAll("#" + this.selectedCountry.id).style('display', null);
@@ -179,7 +187,7 @@ export class Engine2DService {
 
   createChart(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
-    let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
+    let width = window.innerWidth*0.75, height = window.innerHeight;
 
     let cityNetworkInfo = (d) => {
 
@@ -221,13 +229,26 @@ export class Engine2DService {
         .attr("xlink:href", '../../assets/images/world-data-center.png')
         .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
         });
+      svg.append("line")
+        .style("stroke", "red")
+        .style("stroke-width", 3)
+        .attr("id", 1)
+        .attr("x1", 200)
+        .attr("y1", 270)
+        .attr("x2", 250)
+        .attr("y2", 300);
+      svg.append("line")
+        .style("stroke", "red")
+        .style("stroke-width", 3)
+        .attr("id", 2)
+        .attr("x1", 250)
+        .attr("y1", 300)
+        .attr("x2", 350)
+        .attr("y2", 300);
       this.isWorldMapShown = true;
     });
 
     this.updateShownMode(true, false, false)
-    
-
-    
   }
 
   update() {

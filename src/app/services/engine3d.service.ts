@@ -71,7 +71,7 @@ export class Engine3DService implements OnDestroy {
 
   render() {
     this.animate();
-    this.renderer.setSize(window.innerWidth*0.75, window.innerHeight*0.75);
+    this.renderer.setSize(window.innerWidth*0.8, window.innerHeight);
   }
 
   private animate() {

@@ -6,7 +6,7 @@ export interface Object {
     name: string;
   }
   
-  export interface NObject2D extends Object {
+  export interface NPrObject extends Object {
     full_name: string;
   }
   
@@ -19,4 +19,10 @@ export interface Object {
     node1: NObject;
     node2: NObject;
     generateMesh(): THREE.Mesh;
+  }
+
+  export interface NObject2D extends Object {
+    icon_url: string;
+    size: [number, number],
+    long_pos: [number, number]
   }
