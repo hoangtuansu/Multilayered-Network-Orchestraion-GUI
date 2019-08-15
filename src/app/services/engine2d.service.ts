@@ -90,8 +90,10 @@ export class Engine2DService {
     this.g.selectAll(".country-level-link").transition().duration(750).style("opacity", isWorldShown ? 1 : 0);
     this.isCountryMapShown = isCountryShown
     this.g.selectAll(".state-level-mark").remove();
+    this.g.selectAll(".state-level-link").remove();
     this.isStateMapShown = isStateShown
     this.g.selectAll(".city-level-mark").remove();
+    this.g.selectAll(".city-level-link").remove();
   }
 
   private stateNetworkInfo = (d) => {
@@ -117,15 +119,26 @@ export class Engine2DService {
       this.updateShownMode(false, false, true)
       this.zoom(xyz);
 
+      this.g.selectAll(".city-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.CITY && d.node2.level == OBJ.NODE_LEVEL.CITY;}))
+        .enter().append("line").attr('class', 'city-level-link')
+        .style("stroke", (d) => {return d.color;}).style("stroke-width", (d) => {return d.width;})
+        .attr("id", (d) => {return d.name;})
+        .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
+        .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
+        .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
+        .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+        .on("click", this.stateLinkSelecting);
+
       this.g.selectAll(".city-level-mark")
         .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
         .enter().append("image")
         .attr('class', 'city-level-mark')
         .attr('width', (d) => {return d.size[0];})
-            .attr('height', (d) => {return d.size[1];})
-            .attr("xlink:href", (d) => {return d.icon_url;})
-            .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
-            .on("click", this.cityClicked);;
+        .attr('height', (d) => {return d.size[1];})
+        .attr("xlink:href", (d) => {return d.icon_url;})
+        .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+        .on("click", this.cityClicked);
+      
     } else {
       this.selectedState = null;
       this.countrySelecting(this.selectedCountry);

@@ -8,13 +8,15 @@ import { Topo3dComponent } from './ui/topo3d/topo3d.component';
 import { Topo2dComponent } from './ui/topo2d/topo2d.component';
 import { MapViewComponent } from './ui/map/map-view.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { TopoManagerComponent } from './ui/topo-manager/topo-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Topo3dComponent,
     Topo2dComponent,
-    MapViewComponent
+    MapViewComponent,
+    TopoManagerComponent
   ],
   imports: [
     BrowserModule,

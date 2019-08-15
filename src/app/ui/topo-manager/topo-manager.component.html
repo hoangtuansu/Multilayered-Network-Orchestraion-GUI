@@ -1,0 +1,8 @@
+<div id="controls">
+    <a [ngClass]="selectedDisplayMode == 0 ? 'switch-view-2d' : 'switch-view-3d'" (click)="selectedDisplayMode = (selectedDisplayMode == 1 ? 0 : 1)"></a>
+</div>
+
+<br/>
+<!-- <topo-visual [displayMode] = "selectedDisplayMode"></topo-visual>  -->
+<app-topo2d [displayMode] = "selectedDisplayMode"></app-topo2d>
+<app-topo3d [displayMode] = "selectedDisplayMode"></app-topo3d>

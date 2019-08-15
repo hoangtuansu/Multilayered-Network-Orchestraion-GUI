@@ -1,0 +1,24 @@
+#controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: .5s ease-in-out all;
+    z-index: 10;
+  }
+a.switch-view-2d {
+    width:48px;
+    height: 48px;
+    background: #ecf0f1 url("../../../assets/images/switch-view-3d.png") center top no-repeat;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+}
+
+a.switch-view-3d {
+  width:48px;
+  height: 48px;
+  background: #ecf0f1 url("../../../assets/images/switch-view-2d.png") center top no-repeat;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+}
