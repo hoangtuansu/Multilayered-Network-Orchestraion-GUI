@@ -62,7 +62,7 @@ export class Engine3DService implements OnDestroy {
       this.scene.add(g.generateMesh());
     }
 
-    for(let g of this.animatorService.getG2DNOs()) {
+    for(let g of this.animatorService.getGNPrOs()) {
       let m = g.generateMesh();
       g.setVisible(false);
       this.scene.add(m);

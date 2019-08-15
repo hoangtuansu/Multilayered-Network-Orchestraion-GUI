@@ -18,17 +18,7 @@ export class Engine2DService {
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
 
   sampleData: any = { };
-  country_ne_coordinations = [{long: -135, lat: 65},{long: -115, lat: 60},{long: -78, lat: 60}];
   
-  country_ne_links = [{x1: 100, y1: 200, x2: 100, y2: 100},
-    {x1: 150, y1: 210, x2: 100, y2: 100},
-    {x1: 160, y1: 220, x2: 100, y2: 100},
-    {x1: 170, y1: 230, x2: 100, y2: 100},
-    {x1: 180, y1: 240, x2: 100, y2: 100},
-    {x1: 190, y1: 250, x2: 100, y2: 100},
-  ];
-  state_ne_coordinations = [{long: -135, lat: 65},{long: -115, lat: 58}, {long: -90, lat: 60}, {long: -78, lat: 60}, {long: -116, lat: 52}, {long: -120, lat: 70}];
-  city_ne_coordinations = [{long: -114, lat: 54}, {long: -116, lat: 52}, {long: -115, lat: 58}];
   g: any = null;
   selectedCountry: any = null;
   selectedState: any = null;
@@ -39,7 +29,7 @@ export class Engine2DService {
   isStateMapShown = false;
 
   constructor(private animatorService: AnimatorService) {
-    let colors = ["#e74c3c", "#b03a2e", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
+    let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
   "#1e8449", "#b9770e"];
     ["Ont.", "B.C.", "Alta.", "Sask.", "Man.", "Que.", "N.B.", "Yuk.", "Nun.", "N.L.", "N.S.",
 	"N.W.T.", "P.E.I."]
@@ -96,7 +86,8 @@ export class Engine2DService {
 
   private updateShownMode = (isWorldShown: boolean, isCountryShown: boolean, isStateShown: boolean) => {
     this.isWorldMapShown = isWorldShown;
-    this.g.selectAll(".country-level-mark").transition().duration(200).style("opacity", isWorldShown ? 1 : 0);
+    this.g.selectAll(".country-level-mark").transition().duration(750).style("opacity", isWorldShown ? 1 : 0);
+    this.g.selectAll(".country-level-link").transition().duration(750).style("opacity", isWorldShown ? 1 : 0);
     this.isCountryMapShown = isCountryShown
     this.g.selectAll(".state-level-mark").remove();
     this.isStateMapShown = isStateShown
@@ -127,12 +118,14 @@ export class Engine2DService {
       this.zoom(xyz);
 
       this.g.selectAll(".city-level-mark")
-        .data(this.city_ne_coordinations).enter().append("image")
+        .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
+        .enter().append("image")
         .attr('class', 'city-level-mark')
-        .attr('width', 4).attr('height', 4)
-        .attr("xlink:href", '../../assets/images/router.png')
-        .attr("transform", (d: any) => {return "translate(" + this.projection([d.long, d.lat]) + ")";})
-        .on("click", this.cityClicked);;
+        .attr('width', (d) => {return d.size[0];})
+            .attr('height', (d) => {return d.size[1];})
+            .attr("xlink:href", (d) => {return d.icon_url;})
+            .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+            .on("click", this.cityClicked);;
     } else {
       this.selectedState = null;
       this.countrySelecting(this.selectedCountry);
@@ -141,6 +134,18 @@ export class Engine2DService {
 
   private countryLinkSelecting = (d) => {
 
+  }
+
+  private countryNodeSelecting = (d) => {
+
+  }
+  
+  private stateNodeSelecting = (d) => {
+    console.log(d);
+  }
+
+  private stateLinkSelecting = (d) => {
+    console.log(d);
   }
   
   private countrySelecting = (d) => {
@@ -170,13 +175,25 @@ export class Engine2DService {
 
           this.g.selectAll("#" + d["id"]).style('display', 'none');
 
+          this.g.selectAll(".state-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
+            .enter().append("line").attr('class', 'state-level-link')
+            .style("stroke", "red").style("stroke-width", 1)
+            .attr("id", (d) => {return d.name;})
+            .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
+            .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
+            .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
+            .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+            .on("click", this.stateLinkSelecting);
+
           this.g.selectAll(".state-level-mark")
-            .data(this.state_ne_coordinations).enter().append("image")
+            .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.STATE; }))
+            .enter().append("image")
             .attr('class', 'state-level-mark')
-            .attr('width', 15).attr('height', 15)
-            .attr("xlink:href", '../../assets/images/country-switch.png')
-            .attr("transform", (d) => {return "translate(" + this.projection([d.long, d.lat]) + ")";
-            });
+            .attr('width', (d) => {return d.size[0];})
+            .attr('height', (d) => {return d.size[1];})
+            .attr("xlink:href", (d) => {return d.icon_url;})
+            .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+            .on("click", this.stateNodeSelecting);
             
         }); 
       }
@@ -201,8 +218,6 @@ export class Engine2DService {
 
     }
 
-    
-
     let svg = d3.select(element).append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
       .attr("viewBox", "0 0 " + width + " " + height)
@@ -225,17 +240,9 @@ export class Engine2DService {
         .attr("id", function(d) { return d["id"]; })
         .attr("d", this.path).on("click", this.countrySelecting);
 
-      this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs)
-        .enter().append("image").attr('class', 'country-level-mark')
-        .attr('width', (d) => {return d.size[0];})
-        .attr('height', (d) => {return d.size[1];})
-        .attr("xlink:href", (d) => {return d.icon_url;})
-        .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";
-        });
-      this.g.selectAll(".country-level-link").data(OBJ.G2DLOs)
+      this.g.selectAll(".country-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
         .enter().append("line").attr('class', 'country-level-link')
-        .style("stroke", "red")
-        .style("stroke-width", 3)
+        .style("stroke", "red").style("stroke-width", 3)
         .attr("id", (d) => {return d.name;})
         .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
         .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
@@ -243,7 +250,13 @@ export class Engine2DService {
         .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
         .on("click", this.countryLinkSelecting);
 
-        this.isWorldMapShown = true;
+      this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
+        .enter().append("image").attr('class', 'country-level-mark')
+        .attr('width', (d) => {return d.size[0];})
+        .attr('height', (d) => {return d.size[1];})
+        .attr("xlink:href", (d) => {return d.icon_url;})
+        .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+        .on("click", this.countryNodeSelecting);
     });
 
     this.updateShownMode(true, false, false)
