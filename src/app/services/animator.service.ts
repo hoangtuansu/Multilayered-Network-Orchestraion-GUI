@@ -187,10 +187,6 @@ export class AnimatorService {
     cam_pos.y += Math.abs(cam_pos.y) < 50 ? 2.5 : 0;
     cam_pos.z -= Math.abs(cam_pos.z) > 1 ? 2.5 : 0;
 
-    /* cam_pos.x += Math.abs(cam_pos.x - 1) > 0.1 ? (cam_pos.x < 1 ? 1 : -1) : 0;
-    cam_pos.y += Math.abs(cam_pos.y - 50) > 0.1 ? (cam_pos.y < 50 ? 1 : -1) : 0;
-    cam_pos.z += Math.abs(cam_pos.z - 1) > 0.1 ? (cam_pos.z < 1 ? 1 : -1) : 0; */
-
     if(Math.abs(cam_pos.x - 1) < 0.1 && Math.abs(cam_pos.y - 50) < 0.1 && Math.abs(cam_pos.z - 1) < 0.1) {
       cam_pos.x = 1;
       cam_pos.y = 50;

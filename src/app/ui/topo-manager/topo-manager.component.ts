@@ -9,7 +9,7 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
 })
 export class TopoManagerComponent implements OnInit {
 
-  selectedDisplayMode: number = OBJ.DISPLAY_MODE.D2;
+  selectedDisplayMode: number = OBJ.DISPLAY_MODE.D3;
   @Output() valueChange = new EventEmitter<any>();
   constructor(private engineCoordinatorService: EngineCoordinatorService) { }
 
@@ -21,14 +21,6 @@ export class TopoManagerComponent implements OnInit {
         this.selectedDisplayMode = OBJ.DISPLAY_MODE.D2;
       }
     });
-  }
-
-  changeDisplayMode() {
-    if(this.selectedDisplayMode == OBJ.DISPLAY_MODE.D3)
-      this.selectedDisplayMode = OBJ.DISPLAY_MODE.D2;
-    else if(this.selectedDisplayMode == OBJ.DISPLAY_MODE.D2)
-      this.selectedDisplayMode = OBJ.DISPLAY_MODE.D3;
-    this.valueChange.emit(this.selectedDisplayMode);
   }
 
   switchDisplayMode() {

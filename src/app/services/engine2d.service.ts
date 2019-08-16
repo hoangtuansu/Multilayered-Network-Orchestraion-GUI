@@ -151,8 +151,6 @@ export class Engine2DService {
     }
   }
 
-  
-  
   private stateNodeSelecting = (d) => {
     console.log(d);
   }
