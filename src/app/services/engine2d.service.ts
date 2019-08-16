@@ -108,7 +108,11 @@ export class Engine2DService {
     d3.select("#tooltip").transition().duration(500).style("opacity", 0); 
   }
 
-  private cityClicked = (d) => {
+  private cityLinkSelecting = (d) => {
+    console.log(d);
+  }
+
+  private cityNodeSelecting = (d) => {
     console.log(d);
   }
 
@@ -127,7 +131,7 @@ export class Engine2DService {
         .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
         .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
         .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
-        .on("click", this.stateLinkSelecting);
+        .on("click", this.cityLinkSelecting);
 
       this.g.selectAll(".city-level-mark")
         .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
@@ -137,7 +141,7 @@ export class Engine2DService {
         .attr('height', (d) => {return d.size[1];})
         .attr("xlink:href", (d) => {return d.icon_url;})
         .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
-        .on("click", this.cityClicked);
+        .on("click", this.cityNodeSelecting);
       
     } else {
       this.selectedState = null;
@@ -145,13 +149,7 @@ export class Engine2DService {
     }
   }
 
-  private countryLinkSelecting = (d) => {
-
-  }
-
-  private countryNodeSelecting = (d) => {
-
-  }
+  
   
   private stateNodeSelecting = (d) => {
     console.log(d);
@@ -217,6 +215,14 @@ export class Engine2DService {
       this.zoom(xyz);
       this.updateShownMode(true, false, false)
     }
+  }
+
+  private countryLinkSelecting = (d) => {
+
+  }
+
+  private countryNodeSelecting = (d) => {
+
   }
 
   createChart(mapRenderer: ElementRef) {

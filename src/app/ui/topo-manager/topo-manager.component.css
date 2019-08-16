@@ -22,3 +22,12 @@ a.switch-view-3d {
   text-transform: uppercase;
   display: block;
 }
+
+a.switch-view-disable {
+  width:48px;
+  height: 48px;
+  background: #ecf0f1 url("../../../assets/images/switch-view-disable.png") center top no-repeat;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+}
