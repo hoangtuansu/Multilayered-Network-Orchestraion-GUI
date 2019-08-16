@@ -27,6 +27,7 @@ export class Engine2DService {
   isWorldMapShown = true;
   isCountryMapShown = false;
   isStateMapShown = false;
+  displayWorldLevelNotifier: Subject<boolean> = new Subject<boolean>();
 
   constructor(private animatorService: AnimatorService) {
     let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
@@ -88,6 +89,7 @@ export class Engine2DService {
     this.isWorldMapShown = isWorldShown;
     this.g.selectAll(".country-level-mark").transition().duration(750).style("opacity", isWorldShown ? 1 : 0);
     this.g.selectAll(".country-level-link").transition().duration(750).style("opacity", isWorldShown ? 1 : 0);
+    this.displayWorldLevelNotifier.next(isWorldShown);
     this.isCountryMapShown = isCountryShown
     this.g.selectAll(".state-level-mark").remove();
     this.g.selectAll(".state-level-link").remove();

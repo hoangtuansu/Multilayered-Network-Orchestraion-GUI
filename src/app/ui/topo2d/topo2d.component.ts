@@ -34,7 +34,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
   isHide2DDiv: boolean = false;
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D2;
   
-  constructor(private engine2DService: Engine2DService, private engineCoordinatorService: EngineCoordinatorService) {
+  constructor(private engine2DService: Engine2DService) {
     engine2DService.fadingOutCompleteNotifier.subscribe((value) => {
       if(value) {
         this.detach2DLayout();
@@ -46,6 +46,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
         this.attach2DLayout();
       }
     });
+    
    }
 
   ngAfterViewInit() {

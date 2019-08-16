@@ -1,5 +1,7 @@
 <div id="controls">
-    <a [ngClass]="selectedDisplayMode == 0 ? 'switch-view-2d' : 'switch-view-3d'" (click)="selectedDisplayMode = (selectedDisplayMode == 1 ? 0 : 1)"></a>
+    <a [ngClass]=
+    "selectedDisplayMode == 1 ? 'switch-view-2d' : (selectedDisplayMode == 3 ? 'switch-view-disable' : 'switch-view-3d')" 
+    (click)="switchDisplayMode()"></a>
 </div>
 
 <br/>

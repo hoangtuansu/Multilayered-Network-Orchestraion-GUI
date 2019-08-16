@@ -9,11 +9,18 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
 })
 export class TopoManagerComponent implements OnInit {
 
-  selectedDisplayMode: number = OBJ.DISPLAY_MODE.D3;
+  selectedDisplayMode: number = OBJ.DISPLAY_MODE.D2;
   @Output() valueChange = new EventEmitter<any>();
   constructor(private engineCoordinatorService: EngineCoordinatorService) { }
 
   ngOnInit() {
+    this.engineCoordinatorService.get2DService().displayWorldLevelNotifier.subscribe((value) => {
+      if(value) {
+        this.selectedDisplayMode = OBJ.DISPLAY_MODE.D2WORLD;
+      } else {
+        this.selectedDisplayMode = OBJ.DISPLAY_MODE.D2;
+      }
+    });
   }
 
   changeDisplayMode() {
@@ -22,5 +29,11 @@ export class TopoManagerComponent implements OnInit {
     else if(this.selectedDisplayMode == OBJ.DISPLAY_MODE.D2)
       this.selectedDisplayMode = OBJ.DISPLAY_MODE.D3;
     this.valueChange.emit(this.selectedDisplayMode);
+  }
+
+  switchDisplayMode() {
+    if(this.selectedDisplayMode == OBJ.DISPLAY_MODE.D2WORLD)
+      return;
+    this.selectedDisplayMode = (this.selectedDisplayMode == 1 ? 0 : 1);
   }
 }

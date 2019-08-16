@@ -5,39 +5,58 @@
     transition: .5s ease-in-out all;
     z-index: 10;
   }
+
+a.switch-view-2d:before {
+  background: #ecf0f1 url("../../../assets/images/switch-view-3d.png") center center no-repeat;
+  width:0;
+  height:0;
+  visibility:hidden;
+}
+
 a.switch-view-2d {
     width:48px;
     height: 48px;
-    background: #ecf0f1 url("../../../assets/images/switch-view-3d.png") center top no-repeat;
+    background: #ecf0f1 url("../../../assets/images/switch-view-3d.png") center center no-repeat;
     text-decoration: none;
     text-transform: uppercase;
     display: block;
 }
 
-a.switch-view-2d :hover{
-    background: #ecf0f1 url("../../../assets/images/switch-view-2d-hover.png") center top no-repeat;
+a.switch-view-2d:hover{
+    background: #ecf0f1 url("../../../assets/images/switch-view-2d-hover.png") center center no-repeat;
+}
+
+a.switch-view-2d:before {
+  background: #ecf0f1 url("../../../assets/images/switch-view-2d.png") center center no-repeat;
+  width:0;
+  height:0;
+  visibility:hidden;
 }
 
 a.switch-view-3d {
   width:48px;
   height: 48px;
-  background: #ecf0f1 url("../../../assets/images/switch-view-2d.png") center top no-repeat;
+  background: #ecf0f1 url("../../../assets/images/switch-view-2d.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   display: block;
 }
 
-a.switch-view-3d :hover{
-    background: #ecf0f1 url("../../../assets/images/switch-view-3d-hover.png") center top no-repeat;
-  }
+a.switch-view-3d:hover{
+  background: #ecf0f1 url("../../../assets/images/switch-view-3d-hover.png") center center no-repeat;
+}
 
-
-
+a.switch-view-disable:before {
+  background: #ecf0f1 url("../../../assets/images/switch-view-disable.png") center center no-repeat;
+  width:0;
+  height:0;
+  visibility:hidden;
+}
 
 a.switch-view-disable {
   width:48px;
   height: 48px;
-  background: #ecf0f1 url("../../../assets/images/switch-view-disable.png") center top no-repeat;
+  background: #ecf0f1 url("../../../assets/images/switch-view-disable.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   display: block;

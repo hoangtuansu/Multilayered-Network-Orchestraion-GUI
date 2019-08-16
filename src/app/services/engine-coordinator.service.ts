@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Engine2DService } from './engine2d.service';
 import { Engine3DService } from './engine3d.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
-
   constructor(private engine2DService: Engine2DService, private engine3DService: Engine3DService) { 
     engine2DService.fadingOutCompleteNotifier.subscribe((value) => {
       if(value) {
@@ -30,5 +30,9 @@ export class EngineCoordinatorService {
       }
     });
 
+  }
+
+  get2DService() {
+    return this.engine2DService;
   }
 }

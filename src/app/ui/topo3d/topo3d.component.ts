@@ -27,10 +27,10 @@ export class Topo3dComponent implements OnInit, OnChanges {
   
   @ViewChild('renderer3DContainer', { static: false }) renderer3DContainer: ElementRef;
 
-  @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
-  isHide3DDiv: boolean = false;
+  @Input() displayMode: number = OBJ.DISPLAY_MODE.D2;
+  isHide3DDiv: boolean = true;
 
-  constructor(private engine3DService: Engine3DService, private engineCoordinatorService: EngineCoordinatorService) { 
+  constructor(private engine3DService: Engine3DService) { 
     engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
       if(value) {
         this.detach3DLayout();
