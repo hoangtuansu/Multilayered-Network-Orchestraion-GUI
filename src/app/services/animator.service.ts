@@ -177,14 +177,14 @@ export class AnimatorService {
     let count = true;
     for(let p of this.getGPOs()) {
       p.setVisible(true);
-      if(p.layer == OBJ.LAYER_PLANE.WORLD)
+      if(p.layer == OBJ.LAYER.WORLD)
         continue;
       let upperbound = 5;
       switch(p.layer) {
-        case OBJ.LAYER_PLANE.LAYER1:
+        case OBJ.LAYER.LAYER1:
           upperbound = 10;
           break;
-        case OBJ.LAYER_PLANE.IP:
+        case OBJ.LAYER.IP:
           upperbound = 15;
           break;
         default:
@@ -207,10 +207,10 @@ export class AnimatorService {
       o.setVisible(true);
       let upperbound = 5;
       switch(o.layer) {
-        case OBJ.LAYER_PLANE.LAYER1:
+        case OBJ.LAYER.LAYER1:
           upperbound = 10;
           break;
-        case OBJ.LAYER_PLANE.IP:
+        case OBJ.LAYER.IP:
           upperbound = 15;
           break;
         default:
