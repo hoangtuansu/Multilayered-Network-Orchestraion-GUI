@@ -28,6 +28,7 @@ export class Engine3DService implements OnDestroy {
   is3DFadingInStart: boolean = false;
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
+  worldPlane: THREE.Group = new THREE.Group();
 
   constructor(private animatorService: AnimatorService ) {
     this.scene = new THREE.Scene();
@@ -51,21 +52,19 @@ export class Engine3DService implements OnDestroy {
     this.controls.enabled = true;
 
     for(let g of this.animatorService.getGPOs()) {
-      this.scene.add(g.generateMesh());
+      this.scene.add(g.getMesh())
     }
 
     for(let g of this.animatorService.getG3DNOs()) {
-      this.scene.add(g.generateMesh());
+      this.scene.add(g.getMesh())
     }
 
     for(let g of this.animatorService.getGLOs()) {
-      this.scene.add(g.generateMesh());
+      this.scene.add(g.getMesh())
     }
 
     for(let g of this.animatorService.getGNPrOs()) {
-      let m = g.generateMesh();
-      g.setVisible(false);
-      this.scene.add(m);
+      this.scene.add(g.getMesh());
     }
   }
 
@@ -77,15 +76,14 @@ export class Engine3DService implements OnDestroy {
   private animate() {
     this.frameId = window.requestAnimationFrame(() => this.animate());
     if(this.is3DFadingOut) {
-      this.is3DFadingOutComplete = this.animatorService.faingOut3D(this.camera, this.controls);
+      this.is3DFadingOutComplete = this.animatorService.faingOut3D();
       if(this.is3DFadingOutComplete) {
         this.fadingOutCompleteNotifier.next(this.is3DFadingOutComplete);
       }
     }
 
-    if(this.is3DFadingIn) {
+    if(this.is3DFadingIn)
       this.animatorService.fadingIn3D(this.camera, this.controls);
-    }
 
     this.renderer.render(this.scene, this.camera);
   }

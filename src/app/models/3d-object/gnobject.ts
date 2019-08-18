@@ -66,8 +66,15 @@ export class GNObject implements NObject{
       this.mesh_emissive = me;
       this.color2d = c2d;
     }
+
+    getMesh() {
+      if(this.mesh == null) {
+        return this.generateMesh();
+      }
+      return this.mesh;
+    }
   
-    generateMesh(): THREE.Mesh {
+    private generateMesh(): THREE.Mesh {
       let geometry14 = new THREE.CylinderBufferGeometry( 1, 1, 0.4, 32, 32);
       let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
       this.mesh = new THREE.Mesh(geometry14, material14);
@@ -85,25 +92,16 @@ export class GNObject implements NObject{
     }
   }
 
-/*   export const GNPrOs: GNPrObject[] = [
+  export const GNPrOs: GNPrObject[] = [
     new GNPrObject (1, 'site1', 'SITE-01', [0, 1, 12.5], 0x008000, 0x008000, "#008000"),
     new GNPrObject (2, 'site2', 'SITE-02', [4, 1, 10.5], 0x4B0082, 0x4B0082, "#4B0082"),
     new GNPrObject (3, 'site3', 'SITE-03', [-5, 1, 0], 0x008000, 0x008000, "#008000"),
     new GNPrObject (4, 'site4', 'SITE-04', [5, 1, -5], 0x008000, 0x008000, "#008000"),
     new GNPrObject (5, 'site6', 'SITE-04', [-2.5, 1, -12.5], 0x0080ff, 0x0080ff, "#0080ff"),
     new GNPrObject (6, 'site5', 'SITE-04', [7.5, 1, 2.5], 0x008000, 0x008000, "#008000")
-  ]; */
+  ];
 
-export const GNPrOs: GNPrObject[] = [
-  new GNPrObject (1, 'site1', 'SITE-01', [0, 1, 12.5], 0x008000, 0x008000, "#008000"),
-  new GNPrObject (2, 'site2', 'SITE-02', [4, 1, 10.5], 0x4B0082, 0x4B0082, "#4B0082"),
-  new GNPrObject (3, 'site3', 'SITE-03', [-5, 1, 0], 0x008000, 0x008000, "#008000"),
-  new GNPrObject (4, 'site4', 'SITE-04', [5, 1, -5], 0x008000, 0x008000, "#008000"),
-  new GNPrObject (5, 'site6', 'SITE-04', [-2.5, 1, -12.5], 0x0080ff, 0x0080ff, "#0080ff"),
-  new GNPrObject (6, 'site5', 'SITE-04', [7.5, 1, 2.5], 0x008000, 0x008000, "#008000")
-];
-
-  export const G3DNOs: GNObject[] = [
+  /* export const G3DNOs: GNObject[] = [
     new GNObject (1, 2, 'poc1', 'EDTNLABPOC-01', 0, [0, 5, 12.5], 0x4B0082, 0x400080),
     new GNObject (2, 3, 'poc2', 'EDTNLABPOC-02', 0, [-5, 5, 0], 0x4B0082, 0x400080),
     new GNObject (3, 4, 'poc3', 'EDTNLABPOC-03', 0, [5, 5, -5], 0x4B0082, 0x400080),
@@ -119,22 +117,22 @@ export const GNPrOs: GNPrObject[] = [
     new GNObject (11, 4, 'qfx3', 'EDTNLABQFX-03', 2, [5, 15, -5], 0x008000, 0x008000),
     new GNObject (12, 6, 'qfx4', 'EDTNLABQFX-04', 2, [7.5, 15, 2.5], 0x008000, 0x008000)
     
-  ];
-
-  /* export const G3DNOs: GNObject[] = [
-    new GNObject (1, 2, 'poc1', 'EDTNLABPOC-01', 0, [4, 1, 10.5], 0x4B0082, 0x400080),
-    new GNObject (2, 3, 'poc2', 'EDTNLABPOC-02', 0, [-5, 1, 0], 0x4B0082, 0x400080),
-    new GNObject (3, 4, 'poc3', 'EDTNLABPOC-03', 0, [5, 1, -5], 0x4B0082, 0x400080),
-    new GNObject (4, 5, 'poc4', 'EDTNLABPOC-04', 0, [-2.5, 1, -12.5], 0x4B0082, 0x400080),
-  
-    new GNObject (5, 1, 'fws1', 'FW9500-SITE1', 1, [0, 1, 12.5], 0x0080ff, 0x404040),
-    new GNObject (6, 3, 'fws2', 'FW9500-SITE2', 1, [-5, 1, 0], 0x0080ff, 0x404040),
-    new GNObject (7, 6, 'fws3', 'FW9500-SITE3', 1, [7.5, 1, 2.5], 0x0080ff, 0x404040),
-    new GNObject (8, 5, 'fws4', 'FW9500-SITE4', 1, [-2.5, 1, -12.5], 0x0080ff, 0x404040),
-  
-    new GNObject (9, 1, 'qfx2', 'EDTNLABQFX-01', 2, [0, 1, 12.5], 0x008000, 0x008000),
-    new GNObject (10, 3, 'qfx2', 'EDTNLABQFX-02', 2, [-5, 1, 0], 0x008000, 0x008000),
-    new GNObject (11, 4, 'qfx3', 'EDTNLABQFX-03', 2, [5, 1, -5], 0x008000, 0x008000),
-    new GNObject (12, 6, 'qfx4', 'EDTNLABQFX-04', 2, [7.5, 1, 2.5], 0x008000, 0x008000)
-    
   ]; */
+
+  export const G3DNOs: GNObject[] = [
+    new GNObject (1, 2, 'poc1', 'EDTNLABPOC-01', LAYER.OPTICAL, [4, 1, 10.5], 0x4B0082, 0x400080),
+    new GNObject (2, 3, 'poc2', 'EDTNLABPOC-02', LAYER.OPTICAL, [-5, 1, 0], 0x4B0082, 0x400080),
+    new GNObject (3, 4, 'poc3', 'EDTNLABPOC-03', LAYER.OPTICAL, [5, 1, -5], 0x4B0082, 0x400080),
+    new GNObject (4, 5, 'poc4', 'EDTNLABPOC-04', LAYER.OPTICAL, [-2.5, 1, -12.5], 0x4B0082, 0x400080),
+  
+    new GNObject (5, 1, 'fws1', 'FW9500-SITE1', LAYER.LAYER1, [0, 1, 12.5], 0x0080ff, 0x404040),
+    new GNObject (6, 3, 'fws2', 'FW9500-SITE2', LAYER.LAYER1, [-5, 1, 0], 0x0080ff, 0x404040),
+    new GNObject (7, 6, 'fws3', 'FW9500-SITE3', LAYER.LAYER1, [7.5, 1, 2.5], 0x0080ff, 0x404040),
+    new GNObject (8, 5, 'fws4', 'FW9500-SITE4', LAYER.LAYER1, [-2.5, 1, -12.5], 0x0080ff, 0x404040),
+  
+    new GNObject (9, 1, 'qfx2', 'EDTNLABQFX-01', LAYER.IP, [0, 1, 12.5], 0x008000, 0x008000),
+    new GNObject (10, 3, 'qfx2', 'EDTNLABQFX-02', LAYER.IP, [-5, 1, 0], 0x008000, 0x008000),
+    new GNObject (11, 4, 'qfx3', 'EDTNLABQFX-03', LAYER.IP, [5, 1, -5], 0x008000, 0x008000),
+    new GNObject (12, 6, 'qfx4', 'EDTNLABQFX-04', LAYER.IP, [7.5, 1, 2.5], 0x008000, 0x008000)
+    
+  ];

@@ -31,7 +31,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   @ViewChild('renderer2DContainer', { static: false }) renderer2DContainer: ElementRef;
-  isHide2DDiv: boolean = true;
+  isHide2DDiv: boolean = false;
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
   
   constructor(private engine2DService: Engine2DService) {

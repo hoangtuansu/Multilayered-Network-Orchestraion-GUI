@@ -14,7 +14,8 @@ export class AnimatorService {
   isMergeSphere2Done: boolean = false;
   isProjectSpheresPhase: boolean = false;
   isLinksFadeOutPhaseDone: boolean = false;
-  isRedoZoomPlanePhaseDone: boolean = false;
+  isRedoPlanesFadeOutPhase: boolean = false;
+  isredoProjectSpheresPhase: boolean = false;
 
   constructor() { }
 
@@ -35,9 +36,11 @@ export class AnimatorService {
   }
 
   fadingIn3D(camera: any, controls: any): boolean {
-    this.redoZoomPlanePhase(camera, controls);
-    if(this.isRedoZoomPlanePhaseDone) {
-      return !this.isRedoZoomPlanePhaseDone;
+    this.redoPlanesFadeOutPhase();
+    if(this.isRedoPlanesFadeOutPhase) {
+      this.redoProjectSpheresPhase();
+      if(this.isredoProjectSpheresPhase)
+        return !this.isredoProjectSpheresPhase;
     }
     return false;
   }
@@ -53,22 +56,13 @@ export class AnimatorService {
     return true;
   }
 
-  faingOut3D(camera: any, controls: any): boolean {
+  faingOut3D(): boolean {
     this.linksFadeOutPhase();
     if(this.isLinksFadeOutPhaseDone) {
       this.planesFadeOutPhase();
       if(this.isPlanesFadeOutPhaseDone) {
         this.projectSpheresPhase();
-        if(this.isProjectSpheresPhase) {
-          this.moveCameraTopPhase(camera, controls);
-          if(this.isMoveCameraTopPhaseDone) {
-            this.rotatePlanePhase(camera)
-            if(this.isRotatePlanePhase) {
-              this.zoomPlanePhase(camera, controls);
-              return !this.isZoomPlanePhase;
-            }
-          }
-        }
+        return !this.isProjectSpheresPhase;
       }
     }
     return false;
@@ -77,12 +71,10 @@ export class AnimatorService {
   private linksFadeOutPhase() {
     if(this.isLinksFadeOutPhaseDone)
       return;
-    let count = 0;
     for(let l of this.getGLOs()) {
-      count += 1;
       l.mesh.visible = false;
     }
-    this.isLinksFadeOutPhaseDone = count == this.getGLOs().length;
+    this.isLinksFadeOutPhaseDone = true;
   }
 
   private mergeSpheresPhase() {
@@ -178,72 +170,69 @@ export class AnimatorService {
     
   }
 
-  private moveCameraTopPhase(camera: any, controls: any) {
-    if(this.isMoveCameraTopPhaseDone)
+  private redoPlanesFadeOutPhase() {
+    if(this.isRedoPlanesFadeOutPhase)
       return;
-    let cam_pos = camera.position;
+    
+    let count = true;
+    for(let p of this.getGPOs()) {
+      p.setVisible(true);
+      if(p.layer == OBJ.LAYER_PLANE.WORLD)
+        continue;
+      let upperbound = 5;
+      switch(p.layer) {
+        case OBJ.LAYER_PLANE.LAYER1:
+          upperbound = 10;
+          break;
+        case OBJ.LAYER_PLANE.IP:
+          upperbound = 15;
+          break;
+        default:
+          upperbound = 5;
+      }
 
-    cam_pos.x -= Math.abs(cam_pos.x) > 1 ? 3.5 : 0;
-    cam_pos.y += Math.abs(cam_pos.y) < 50 ? 2.5 : 0;
-    cam_pos.z -= Math.abs(cam_pos.z) > 1 ? 2.5 : 0;
-
-    if(Math.abs(cam_pos.x - 1) < 0.1 && Math.abs(cam_pos.y - 50) < 0.1 && Math.abs(cam_pos.z - 1) < 0.1) {
-      cam_pos.x = 1;
-      cam_pos.y = 50;
-      cam_pos.z = 1;
-      this.isMoveCameraTopPhaseDone = true;
-    } else {
-      this.isMoveCameraTopPhaseDone = false;
+      if(p.position[1] + 1 <= upperbound) {
+        p.updatePosition([p.position[0], p.position[1] + 1, p.position[2]]);
+        count = false;
+      }
     }
-
-    camera.position.set(cam_pos.x, cam_pos.y, cam_pos.z);
-    controls.update();
+    this.isRedoPlanesFadeOutPhase = count;
   }
 
-  private rotatePlanePhase(camera: any) {
-    if(this.isRotatePlanePhase)
+  private redoProjectSpheresPhase() {
+    if(this.isredoProjectSpheresPhase) 
       return;
-    let cam_rot = camera.rotation;
-    if(Math.abs(cam_rot.z - Math.PI/2) < 0.1) {
-      camera.rotation.set(-Math.PI/2, 0, Math.PI/2);
-      this.isRotatePlanePhase = true;
-      return;
-    }
-    cam_rot.z += Math.PI/18;
-    camera.rotation.set(-Math.PI/2, 0, cam_rot.z);
-    this.isRotatePlanePhase = false;
-  }
+    let count = true;
+    for(let o of this.getG3DNOs()) {
+      o.setVisible(true);
+      let upperbound = 5;
+      switch(o.layer) {
+        case OBJ.LAYER_PLANE.LAYER1:
+          upperbound = 10;
+          break;
+        case OBJ.LAYER_PLANE.IP:
+          upperbound = 15;
+          break;
+        default:
+          upperbound = 5;
+      }
 
-  private zoomPlanePhase(camera: any, controls: any) {
-    if(this.isZoomPlanePhase)
-      return;
-    controls.enabled = false;
-    let cam_pos = camera.position;
-    cam_pos.y -= 7;
-    if(Math.abs(cam_pos.y - 22) < 0.1) {
-      cam_pos.y = 22;
-      this.isZoomPlanePhase = true;
-      controls.enabled = true;
-    } else {
-      this.isZoomPlanePhase = false;
+      if(o.position[1] + 1 <= upperbound) {
+        o.updatePosition([o.position[0], o.position[1] + 1, o.position[2]]);
+        count = false;
+      }
     }
-    camera.position.set(1, cam_pos.y, 1);
-  }
 
-  private redoZoomPlanePhase(camera: any, controls: any) {
-    if(this.isRedoZoomPlanePhaseDone)
-      return;
-    controls.enabled = false;
-    let cam_pos = camera.position;
-    cam_pos.y += 7;
-    if(Math.abs(cam_pos.y - 50) < 0.1) {
-      cam_pos.y = 50;
-      this.isRedoZoomPlanePhaseDone = true;
-      controls.enabled = true;
-    } else {
-      this.isRedoZoomPlanePhaseDone = false;
+    if(count) {
+      for(let g of this.getGNPrOs())
+        g.setVisible(false);
+      for(let l of this.getGLOs()) {
+          l.mesh.visible = false;
+        }
     }
-    camera.position.set(1, cam_pos.y, 1);
+    
+    this.isredoProjectSpheresPhase = count;
+    
   }
 
 }

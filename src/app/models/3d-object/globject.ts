@@ -29,6 +29,7 @@ export class GLObject implements LObject {
       let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
       this.mesh = new THREE.Mesh(geometry14, material14);
       this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
+      this.mesh.visible = false;
       return this.mesh;
     }
   

@@ -10,7 +10,6 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
 export class TopoManagerComponent implements OnInit {
 
   selectedDisplayMode: number = OBJ.DISPLAY_MODE.D3;
-  @Output() valueChange = new EventEmitter<any>();
   constructor(private engineCoordinatorService: EngineCoordinatorService) { }
 
   ngOnInit() {
