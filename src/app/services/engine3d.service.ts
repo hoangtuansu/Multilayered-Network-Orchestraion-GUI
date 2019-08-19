@@ -52,19 +52,19 @@ export class Engine3DService implements OnDestroy {
     this.controls.enabled = true;
 
     for(let g of this.animatorService.getGPOs()) {
-      this.scene.add(g.getMesh())
+      this.scene.add(g.generateMesh())
     }
 
     for(let g of this.animatorService.getG3DNOs()) {
-      this.scene.add(g.getMesh())
+      this.scene.add(g.generateMesh())
     }
 
     for(let g of this.animatorService.getGLOs()) {
-      this.scene.add(g.getMesh())
+      this.scene.add(g.generateMesh())
     }
 
     for(let g of this.animatorService.getGNPrOs()) {
-      this.scene.add(g.getMesh());
+      this.scene.add(g.generateMesh());
     }
   }
 
@@ -78,12 +78,13 @@ export class Engine3DService implements OnDestroy {
     if(this.is3DFadingOut) {
       this.is3DFadingOutComplete = this.animatorService.faingOut3D();
       if(this.is3DFadingOutComplete) {
+        this.is3DFadingOut = false;
         this.fadingOutCompleteNotifier.next(this.is3DFadingOutComplete);
       }
     }
 
     if(this.is3DFadingIn)
-      this.animatorService.fadingIn3D(this.camera, this.controls);
+      this.animatorService.fadingIn3D(this.scene);
 
     this.renderer.render(this.scene, this.camera);
   }

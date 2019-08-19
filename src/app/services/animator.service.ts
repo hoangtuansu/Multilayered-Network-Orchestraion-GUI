@@ -7,17 +7,25 @@ import * as OBJ from '../models';
 export class AnimatorService {
 
   isPlanesFadeOutPhaseDone: boolean = false;
-  isMoveCameraTopPhaseDone: boolean = false;
-  isRotatePlanePhase: boolean = false;
-  isZoomPlanePhase: boolean = false;
   isMergeSpheresPhase: boolean = false;
   isMergeSphere2Done: boolean = false;
   isProjectSpheresPhase: boolean = false;
   isLinksFadeOutPhaseDone: boolean = false;
   isRedoPlanesFadeOutPhase: boolean = false;
   isredoProjectSpheresPhase: boolean = false;
-
+  isRedoLinksFadeOutPhase: boolean = false;
   constructor() { }
+
+  resetAllSettings() {
+    this.isPlanesFadeOutPhaseDone = false;
+    this.isMergeSpheresPhase = false;
+    this.isMergeSphere2Done = false;
+    this.isProjectSpheresPhase = false;
+    this.isLinksFadeOutPhaseDone = false;
+    this.isRedoPlanesFadeOutPhase = false;
+    this.isredoProjectSpheresPhase = false;
+    this.isRedoLinksFadeOutPhase = false;
+  }
 
   getGPOs() {
     return OBJ.GPOs;
@@ -35,12 +43,17 @@ export class AnimatorService {
     return OBJ.GNPrOs;
   }
 
-  fadingIn3D(camera: any, controls: any): boolean {
+  fadingIn3D(scene: any): boolean {
     this.redoPlanesFadeOutPhase();
     if(this.isRedoPlanesFadeOutPhase) {
       this.redoProjectSpheresPhase();
       if(this.isredoProjectSpheresPhase)
-        return !this.isredoProjectSpheresPhase;
+        this.redoLinksFadeOutPhase(scene);
+        if(this.isRedoLinksFadeOutPhase) {
+          this.resetAllSettings();
+          return true;
+        }
+          
     }
     return false;
   }
@@ -62,7 +75,10 @@ export class AnimatorService {
       this.planesFadeOutPhase();
       if(this.isPlanesFadeOutPhaseDone) {
         this.projectSpheresPhase();
-        return !this.isProjectSpheresPhase;
+        if(this.isProjectSpheresPhase) {
+          this.resetAllSettings();
+          return true;
+        }
       }
     }
     return false;
@@ -226,13 +242,21 @@ export class AnimatorService {
     if(count) {
       for(let g of this.getGNPrOs())
         g.setVisible(false);
-      for(let l of this.getGLOs()) {
-          l.mesh.visible = false;
-        }
     }
-    
     this.isredoProjectSpheresPhase = count;
-    
+  }
+
+  private redoLinksFadeOutPhase(scene: any) {
+    if(this.isRedoLinksFadeOutPhase)
+      return;
+    for(let l of this.getGLOs()) {
+      let m = scene.getObjectById(l.mesh.id, true);
+      scene.remove(m);
+      l.updatePosition(l.node1, l.node2);
+      scene.add(l.mesh);
+      l.mesh.visible = true;
+    }
+    this.isRedoLinksFadeOutPhase = true;
   }
 
 }
