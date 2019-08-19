@@ -139,6 +139,7 @@ export class Engine2DService {
       this.g.selectAll(".city-level-mark")
         .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
         .enter().append("image")
+        .attr('id', d => {return d.id;})
         .attr('class', 'city-level-mark')
         .attr('width', (d) => {return d.size[0];})
         .attr('height', (d) => {return d.size[1];})
@@ -157,6 +158,7 @@ export class Engine2DService {
     d3.selectAll('.country-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
     d3.selectAll('.country-level-link').attr('selected', null);
     d3.selectAll('.state-level-mark').attr('selected', null);
+    d3.selectAll('.state-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
   }
 
   private entitySelecting = (d) => {
@@ -223,6 +225,7 @@ export class Engine2DService {
           this.g.selectAll(".state-level-mark")
             .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.STATE; }))
             .enter().append("image")
+            .attr('id', d => {return d.id;})
             .attr('class', 'state-level-mark')
             .attr('width', (d) => {return d.size[0];})
             .attr('height', (d) => {return d.size[1];})
