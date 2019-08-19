@@ -70,7 +70,7 @@ export class Engine3DService implements OnDestroy {
 
   render() {
     this.animate();
-    this.renderer.setSize(window.innerWidth*0.8, window.innerHeight);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   private animate() {
@@ -93,14 +93,14 @@ export class Engine3DService implements OnDestroy {
 export const AnimationTriggers: any = [
   trigger('fadeOut2DDiv', [
     state('2d-show', style({
-      width: '75%',
+      width: '100%',
       height: '75vh',
       position: 'absolute',
       opacity: 1
     })),
     state('2d-hide', style({
       position: 'absolute',
-      width: '75%',
+      width: '100%',
       height: '75vh',
       display: 'none',
       opacity: 0

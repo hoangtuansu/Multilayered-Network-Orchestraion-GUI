@@ -239,10 +239,10 @@ export class AnimatorService {
       }
     }
 
-    if(count) {
+    /* if(count) {
       for(let g of this.getGNPrOs())
         g.setVisible(false);
-    }
+    } */
     this.isredoProjectSpheresPhase = count;
   }
 

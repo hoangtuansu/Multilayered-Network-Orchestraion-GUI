@@ -10,7 +10,7 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
   styleUrls: ['./topo2d.component.css'],
   animations: [trigger('fadeOut2DDiv', [
     state('2d-show', style({
-      width: '80%',
+      width: '100%',
       height: '100vh',
       position: 'absolute',
       'z-index': 1,
@@ -18,7 +18,7 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
     })),
     state('2d-hide', style({
       position: 'absolute',
-      width: '80%',
+      width: '100%',
       height: '100vh',
       display: 'none',
       'z-index': 0,

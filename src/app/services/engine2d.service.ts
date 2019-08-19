@@ -253,7 +253,7 @@ export class Engine2DService {
 
   createChart(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
-    let width = window.innerWidth*0.75, height = window.innerHeight;
+    let width = window.innerWidth, height = window.innerHeight;
 
     let cityNetworkInfo = (d) => {
 
