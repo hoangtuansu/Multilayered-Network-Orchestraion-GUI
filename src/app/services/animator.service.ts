@@ -50,7 +50,6 @@ export class AnimatorService {
       if(this.isredoProjectSpheresPhase)
         this.redoLinksFadeOutPhase(scene);
         if(this.isRedoLinksFadeOutPhase) {
-          this.resetAllSettings();
           return true;
         }
           
@@ -76,7 +75,7 @@ export class AnimatorService {
       if(this.isPlanesFadeOutPhaseDone) {
         this.projectSpheresPhase();
         if(this.isProjectSpheresPhase) {
-          this.resetAllSettings();
+          //this.resetAllSettings();
           return true;
         }
       }
@@ -193,6 +192,7 @@ export class AnimatorService {
     let count = true;
     for(let p of this.getGPOs()) {
       p.setVisible(true);
+      console.log("test");
       if(p.layer == OBJ.LAYER.WORLD)
         continue;
       let upperbound = 5;

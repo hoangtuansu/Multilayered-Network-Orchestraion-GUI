@@ -1,1 +1,9 @@
 <div class="topo3d" #renderer3DContainer [@fadeOut3DDiv]="isHide3DDiv ? '3d-hide' : '3d-show'" (@fadeOut3DDiv.done)="animation3DEnd($event)"></div>
+<div id="layer-show" *ngIf="displayMode == 1">
+    <a [ngClass]="isLayer1Shown ? 'layer1-shown' : 'layer1'" 
+        (click)="isLayer1Shown = !isLayer1Shown; engine3DService.showPlane(1, isLayer1Shown);"></a>
+    <a [ngClass]="isLayer2Shown ? 'layer2-shown' : 'layer2'" 
+        (click)="isLayer2Shown = !isLayer2Shown; engine3DService.showPlane(2, isLayer2Shown);"></a>
+    <a [ngClass]="isLayer3Shown ? 'layer3-shown' : 'layer3'" 
+        (click)="isLayer3Shown = !isLayer3Shown; engine3DService.showPlane(3, isLayer3Shown);"></a>
+</div>

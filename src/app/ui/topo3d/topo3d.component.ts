@@ -29,6 +29,9 @@ export class Topo3dComponent implements OnInit, OnChanges {
 
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
   isHide3DDiv: boolean = true;
+  isLayer1Shown: boolean = true;
+  isLayer2Shown: boolean = true;
+  isLayer3Shown: boolean = true;
 
   constructor(private engine3DService: Engine3DService) { 
     engine3DService.fadingOutCompleteNotifier.subscribe((value) => {

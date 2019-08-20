@@ -5,3 +5,50 @@
     height: 100vh;
     position: absolute;
 }
+
+#layer-show {
+    position: absolute;
+    left: 73px;
+    bottom: 20px;
+    height: 48px;
+    transition: .9s ease-in-out all;
+    z-index: 10;
+    float: right;
+  }
+  
+  #layer-show a {
+    width:48px;
+    height: 44px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-left: 5px;
+    float:right;
+  }
+
+  #layer-show .layer1 {
+    background: #ecf0f1 url("../../../assets/images/layer1-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #ecf0f1;
+  }
+
+  #layer-show .layer1-shown {
+    background: #ecf0f1 url("../../../assets/images/layer1-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #2a81b8;
+  }
+
+  #layer-show .layer2 {
+    background: #ecf0f1 url("../../../assets/images/layer2-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #ecf0f1;
+  }
+  #layer-show .layer2-shown {
+    background: #ecf0f1 url("../../../assets/images/layer2-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #2a81b8;
+  }
+
+  #layer-show .layer3 {
+    background: #ecf0f1 url("../../../assets/images/layer3-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #ecf0f1;
+  }
+  #layer-show .layer3-shown {
+    background: #ecf0f1 url("../../../assets/images/layer3-selected.png") center bottom no-repeat;
+    border-bottom: 4px solid #2a81b8;
+  }

@@ -28,7 +28,6 @@ export class Engine3DService implements OnDestroy {
   is3DFadingInStart: boolean = false;
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
-  worldPlane: THREE.Group = new THREE.Group();
 
   constructor(private animatorService: AnimatorService ) {
     this.scene = new THREE.Scene();
@@ -68,6 +67,24 @@ export class Engine3DService implements OnDestroy {
     }
   }
 
+  showPlane(plane_id, isShown) {
+    console.log(plane_id);
+    console.log(isShown);
+    for(let g of this.animatorService.getGPOs()) {
+      if(g.layer == plane_id) {
+        
+        g.setVisible(isShown);
+        console.log(g);
+      }
+    }
+
+    for(let o of this.animatorService.getG3DNOs()) {
+      if(o.layer == plane_id) {
+        o.mesh.visible = isShown;
+      }
+    }
+  }
+
   render() {
     this.animate();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -79,6 +96,7 @@ export class Engine3DService implements OnDestroy {
       this.is3DFadingOutComplete = this.animatorService.faingOut3D();
       if(this.is3DFadingOutComplete) {
         this.is3DFadingOut = false;
+        this.animatorService.resetAllSettings();
         this.fadingOutCompleteNotifier.next(this.is3DFadingOutComplete);
       }
     }
@@ -88,6 +106,8 @@ export class Engine3DService implements OnDestroy {
 
     this.renderer.render(this.scene, this.camera);
   }
+
+
 }
 
 export const AnimationTriggers: any = [
