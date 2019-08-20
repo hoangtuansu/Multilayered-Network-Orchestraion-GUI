@@ -32,6 +32,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
   }
   @ViewChild('renderer2DContainer', { static: false }) renderer2DContainer: ElementRef;
   isHide2DDiv: boolean = false;
+  @Input() isDetailShown: boolean = false;
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
   
   constructor(private engine2DService: Engine2DService) {
@@ -54,6 +55,10 @@ export class Topo2dComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[property: number]: SimpleChange}) {
+    if(changes["isDetailShown"] != undefined){
+      this.engine2DService.enableDetailView(changes["isDetailShown"].currentValue);
+      return;
+    }
     let change = changes["displayMode"];
     if(change.firstChange)
       return;

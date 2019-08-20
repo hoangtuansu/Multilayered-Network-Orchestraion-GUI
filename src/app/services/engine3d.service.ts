@@ -28,6 +28,7 @@ export class Engine3DService implements OnDestroy {
   is3DFadingInStart: boolean = false;
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
+  private isDetailEnabled: boolean = false;
 
   constructor(private animatorService: AnimatorService ) {
     this.scene = new THREE.Scene();
@@ -112,6 +113,9 @@ export class Engine3DService implements OnDestroy {
     this.renderer.render(this.scene, this.camera);
   }
 
+  enableDetailView(e: boolean) {
+    this.isDetailEnabled = e;
+  }
 
 }
 

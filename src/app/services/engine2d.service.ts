@@ -28,6 +28,7 @@ export class Engine2DService {
   isCountryMapShown = false;
   isStateMapShown = false;
   displayWorldLevelNotifier: Subject<boolean> = new Subject<boolean>();
+  private isDetailEnabled: boolean = false;
 
   constructor(private animatorService: AnimatorService) {
     let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
@@ -39,24 +40,8 @@ export class Engine2DService {
 		});
    }
 
-  createChart1(rendererContainer: ElementRef) {
-    let element = rendererContainer.nativeElement;
-    let width = window.innerWidth*0.75, height = window.innerHeight*0.75;
-    let scaleWidth = width/40, scaleHeight = height/20;
-    let translateStr: string = "translate(" + (width/2 + 30) + "," + (height/2 - 30) + ")";
-    let scaleStr: string = "scale(" + scaleWidth + "," + scaleHeight + ")";
-    let svgContainer = d3.select(element).append("svg")
-      .attr("width", width).attr("height", height)
-      .attr("x", 0).attr("y", 0)
-      .attr("viewBox", "0 0 " + width + " " + height).append("g")
-      .attr("transform", translateStr + " " + scaleStr + " " + "rotate(90)");
-    
-    for(let o of this.animatorService.getGNPrOs()) {
-      svgContainer.append("circle").attr("cx", o.position[0]).attr("cy", o.position[2])
-        .attr("r", 1).style("fill", o.color2d)
-        .on("click", function(){});
-    }
-
+  enableDetailView(e: boolean) {
+    this.isDetailEnabled = e;
   }
 
   private zoom = (xyz: any) => {
@@ -162,12 +147,16 @@ export class Engine2DService {
   }
 
   private entitySelecting = (d) => {
+    if(!this.isDetailEnabled)
+      return;
     this.resetSelectedEntity();
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
   }
 
   private entityMouseOver = (d) => {
+    if(!this.isDetailEnabled)
+      return;
     let did = '#' + d.id;
     if(d3.select(did).attr('selected') == null) {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
@@ -175,6 +164,8 @@ export class Engine2DService {
   }
 
   private entityMouseOut = (d) => {
+    if(!this.isDetailEnabled)
+      return;
     let did = '#' + d.id;
     if(d3.select(did).attr('selected') == null) {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_url"];});

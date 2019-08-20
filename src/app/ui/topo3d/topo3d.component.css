@@ -8,17 +8,18 @@
 
 #layer-show {
     position: absolute;
-    left: 73px;
+    left: 105px;
     bottom: 20px;
-    height: 48px;
+    height: 45px;
     transition: .9s ease-in-out all;
     z-index: 10;
     float: right;
   }
   
   #layer-show a {
-    width:48px;
-    height: 44px;
+    width:35px;
+    height: 32px;
+    padding: 3px;
     text-decoration: none;
     text-transform: uppercase;
     margin-left: 5px;

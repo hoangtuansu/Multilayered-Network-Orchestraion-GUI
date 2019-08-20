@@ -10,7 +10,7 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
 export class TopoManagerComponent implements OnInit {
 
   selectedDisplayMode: number = OBJ.DISPLAY_MODE.D2WORLD;
-  isDetailViewEnabled: boolean = false;
+  isDetailViewActivate: boolean = false;
   constructor(private engineCoordinatorService: EngineCoordinatorService) { }
 
   ngOnInit() {

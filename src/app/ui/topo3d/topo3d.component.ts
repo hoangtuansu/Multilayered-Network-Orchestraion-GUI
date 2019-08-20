@@ -29,6 +29,7 @@ export class Topo3dComponent implements OnInit, OnChanges {
 
   @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
   isHide3DDiv: boolean = true;
+  @Input() isDetailShown: boolean = false;
   isLayer1Shown: boolean = true;
   isLayer2Shown: boolean = true;
   isLayer3Shown: boolean = true;
@@ -61,6 +62,10 @@ export class Topo3dComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[property: number]: SimpleChange}) {
+    if(changes["isDetailShown"] != undefined){
+      this.engine3DService.enableDetailView(changes["isDetailShown"].currentValue);
+      return;
+    }
     let change = changes["displayMode"];
     if(change.firstChange)
       return;

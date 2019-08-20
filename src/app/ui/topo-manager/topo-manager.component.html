@@ -4,11 +4,10 @@
     (click)="switchDisplayMode()"></a>
     <a [ngClass]=
     "isDetailViewActivate ? 'detail-view-enabled' : 'detail-view-disabled'" 
-    (click)="isDetailViewEnabled = !isDetailViewEnabled"></a>
-    
+    (click)="isDetailViewActivate = !isDetailViewActivate"></a>
 </div>
 
 <br/>
 <!-- <topo-visual [displayMode] = "selectedDisplayMode"></topo-visual>  -->
-<app-topo2d [displayMode] = "selectedDisplayMode"></app-topo2d>
-<app-topo3d [displayMode] = "selectedDisplayMode"></app-topo3d>
+<app-topo2d [displayMode] = "selectedDisplayMode" [isDetailShown] = "isDetailViewActivate"></app-topo2d>
+<app-topo3d [displayMode] = "selectedDisplayMode" [isDetailShown] = "isDetailViewActivate"></app-topo3d>
