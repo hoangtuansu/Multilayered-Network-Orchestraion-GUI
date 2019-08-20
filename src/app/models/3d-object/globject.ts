@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GNObject, G3DNOs, GNPrOs } from './gnobject';
 
 export class GLObject implements LObject {
-    id: number = 0;
+    id: any = 0;
     name: string = "";
     node1: any = null;
     node2: any = null;
@@ -13,7 +13,7 @@ export class GLObject implements LObject {
     mesh_emissive: number = 0;
     mesh: THREE.Mesh = null;
   
-    constructor(_id: number, n: string, n1: any, n2: any, h: number, mc: number, me: number) {
+    constructor(_id: any, n: string, n1: any, n2: any, h: number, mc: number, me: number) {
       this.id = _id; 
       this.name = n;
       this.node1 = n1;
@@ -56,7 +56,7 @@ export class GLObject implements LObject {
   
   };
 
-  export const GLOs: GLObject[] = [
+  /* export const GLOs: GLObject[] = [
     new GLObject (1, '100GB', G3DNOs[0], GNPrOs[1], 5, 0xffff00, 0x66C6C),
     new GLObject (2, '10GB', G3DNOs[9], GNPrOs[2], 5, 0xffff00, 0x66C6C),
   
@@ -67,18 +67,21 @@ export class GLObject implements LObject {
   
     new GLObject (6, '100GB', G3DNOs[11], GNPrOs[5], 5, 0xffff00, 0x66C6C)
   
-  ];
-
-  /* export const GLOs: GLObject[] = [
-    new GLObject (1, '100GB', G3DNOs[0], G3DNOs[4], 5, 0xffff00, 0x66C6C),
-    new GLObject (2, '10GB', G3DNOs[4], G3DNOs[8], 5, 0xffff00, 0x66C6C),
-  
-    new GLObject (3, '20GB', G3DNOs[1], G3DNOs[5], 5, 0xffff00, 0x66C6C),
-    new GLObject (4, '40GB', G3DNOs[5], G3DNOs[9], 5, 0xffff00, 0x66C6C),
-  
-    new GLObject (5, '200GB', G3DNOs[2], G3DNOs[10], 10, 0xffff00, 0x66C6C),
-  
-    new GLObject (6, '100GB', G3DNOs[3], G3DNOs[7], 5, 0xffff00, 0x66C6C),
-  
-    new GLObject (7, '50GB', G3DNOs[6], G3DNOs[11], 5, 0xffff00, 0x66C6C)
   ]; */
+
+  export const GLOs: GLObject[] = [
+    new GLObject ('globject0', '100GB', G3DNOs[5], GNPrOs[2], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject1', '10GB', G3DNOs[6], GNPrOs[5], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject2', '20GB', G3DNOs[7], GNPrOs[4], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject3', '40GB', G3DNOs[8], GNPrOs[0], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject4', '200GB', G3DNOs[9], GNPrOs[2], 10, 0xffff00, 0x66C6C),
+    new GLObject ('globject5', '100GB', G3DNOs[10], GNPrOs[3], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject6', '50GB', G3DNOs[11], GNPrOs[5], 5, 0xffff00, 0x66C6C),
+
+    new GLObject ('globject7', '100GB', G3DNOs[0], GNPrOs[1], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject8', '10GB', G3DNOs[1], GNPrOs[2], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject9', '20GB', G3DNOs[2], GNPrOs[3], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject10', '40GB', G3DNOs[3], GNPrOs[4], 5, 0xffff00, 0x66C6C),
+    new GLObject ('globject11', '200GB', G3DNOs[4], GNPrOs[0], 10, 0xffff00, 0x66C6C)
+    
+  ];

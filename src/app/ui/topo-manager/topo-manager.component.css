@@ -49,3 +49,23 @@ a.switch-view-disable {
   display: inline-block;
 }
 
+.detail-view-enabled {
+  width:48px;
+  height: 48px;
+  background: #ecf0f1 url("../../../assets/images/detail-view-enabled.png") center center no-repeat;
+  text-decoration: none;
+  text-transform: uppercase;
+  float: right;
+  padding-left: 5px;
+}
+
+.detail-view-disabled {
+  width:48px;
+  height: 48px;
+  background: #ecf0f1 url("../../../assets/images/detail-view-disabled.png") center center no-repeat;
+  text-decoration: none;
+  text-transform: uppercase;
+  float: right;
+  padding-left: 5px;
+}
+

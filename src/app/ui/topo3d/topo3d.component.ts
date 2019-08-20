@@ -42,6 +42,9 @@ export class Topo3dComponent implements OnInit, OnChanges {
 
     engine3DService.fadingInStartNotifier.subscribe((value) => {
       if(value) {
+        this.isLayer1Shown = true;
+        this.isLayer2Shown = true;
+        this.isLayer3Shown = true;
         this.attach3DLayout();
       }
     });

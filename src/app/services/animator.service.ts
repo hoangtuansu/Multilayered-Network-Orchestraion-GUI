@@ -27,19 +27,19 @@ export class AnimatorService {
     this.isRedoLinksFadeOutPhase = false;
   }
 
-  getGPOs() {
+  getGPOs(): OBJ.GPOjbect[] {
     return OBJ.GPOs;
   }
 
-  getG3DNOs() {
+  getG3DNOs(): OBJ.GNObject[] {
     return OBJ.G3DNOs;
   }
 
-  getGLOs() {
+  getGLOs(): OBJ.GLObject[] {
     return OBJ.GLOs;
   }
 
-  getGNPrOs() {
+  getGNPrOs(): OBJ.GNPrObject[] {
     return OBJ.GNPrOs;
   }
 
@@ -75,7 +75,6 @@ export class AnimatorService {
       if(this.isPlanesFadeOutPhaseDone) {
         this.projectSpheresPhase();
         if(this.isProjectSpheresPhase) {
-          //this.resetAllSettings();
           return true;
         }
       }
