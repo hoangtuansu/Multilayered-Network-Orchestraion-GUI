@@ -9,6 +9,8 @@ import { Topo2dComponent } from './ui/topo2d/topo2d.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { TopoManagerComponent } from './ui/topo-manager/topo-manager.component';
 import { PanelDetailsComponent } from './ui/panel-details/panel-details.component';
+import {DemoMaterialModule} from './material-module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,12 @@ import { PanelDetailsComponent } from './ui/panel-details/panel-details.componen
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    FormsModule,
+    DemoMaterialModule,
+    ReactiveFormsModule,
     AngularFontAwesomeModule
   ],
+  entryComponents: [PanelDetailsComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

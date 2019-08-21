@@ -42,6 +42,7 @@ export class Engine2DService {
 
   enableDetailView(e: boolean) {
     this.isDetailEnabled = e;
+    this.resetSelectedEntity();
   }
 
   private zoom = (xyz: any) => {
