@@ -1,30 +1,32 @@
 <h1 mat-dialog-title>{{data.full_name}}</h1>
 <div mat-dialog-content>
   <div [@.disabled]="disableAnimation">
-      <mat-expansion-panel [expanded]="true">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>account_circle</mat-icon>
-            Personal data
+            <div style="height: 32px;"> 
+              <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/node.png"></div>
+              <span>Routers</span>
+            </div>
           </mat-panel-title>
           
         </mat-expansion-panel-header>
     
-          <mat-form-field>
-            <input matInput placeholder="First name">
-          </mat-form-field>
-      
-          <mat-form-field>
-            <input matInput type="number" min="1" placeholder="Age">
-          </mat-form-field>
+        <mat-action-list>
+            <button mat-list-item (click)="save()"> <img style="vertical-align:middle" src="assets/images/node.png"> Save </button>
+            <button mat-list-item (click)="undo()"> Undo </button>
+          </mat-action-list>
       
       </mat-expansion-panel>
     
       <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>map</mat-icon>
-            Destination
+              <div style="height: 32px;"> 
+                <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/link.png"></div>
+                <span>Links</span>
+              </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
     
@@ -36,10 +38,10 @@
     
       <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>date_range</mat-icon>
-            Day of the trip
-          </mat-panel-title>
+            <div style="height: 32px;"> 
+              <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/path.png"></div>
+              <span>LSPs</span>
+            </div>
         </mat-expansion-panel-header>
     
           <mat-form-field>
@@ -48,7 +50,7 @@
           <mat-datepicker #picker></mat-datepicker>
       
       </mat-expansion-panel>
-    
+    </mat-accordion>
   </div>
   
   <!-- Copyright 2019 Google Inc. All Rights Reserved.

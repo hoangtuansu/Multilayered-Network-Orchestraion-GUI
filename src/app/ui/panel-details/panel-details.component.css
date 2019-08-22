@@ -1,6 +1,7 @@
 .example-headers-align .mat-expansion-panel-header-title,
 .example-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
+  vertical-align: middle;
 }
 
 .example-headers-align .mat-expansion-panel-header-description {
@@ -10,4 +11,8 @@
 
 mat-form-field {
   margin-right: 12px;
+}
+
+.mat-dialog-content {
+  padding: 0 !important;
 }
