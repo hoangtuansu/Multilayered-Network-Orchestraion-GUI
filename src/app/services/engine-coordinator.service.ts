@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Engine2DService } from './engine2d.service';
 import { Engine3DService } from './engine3d.service';
-import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { PanelDetailsComponent } from '../ui/panel-details/panel-details.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
-  constructor(private engine2DService: Engine2DService, private engine3DService: Engine3DService) { 
+  constructor(private engine2DService: Engine2DService, 
+    private engine3DService: Engine3DService, 
+    public detailInfoDialog: MatDialog) { 
     engine2DService.fadingOutCompleteNotifier.subscribe((value) => {
       if(value) {
         engine3DService.is3DFadingOutComplete = false;
         engine3DService.is3DFadingInStart = true;
         engine3DService.fadingInStartNotifier.next(engine3DService.is3DFadingInStart);
       }
+    });
+
+    engine2DService.selectedNodeForDetailNOtifier.subscribe((value)=> {
+      this.openDialog(value);
     });
 
     engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
@@ -30,6 +37,18 @@ export class EngineCoordinatorService {
       }
     });
 
+  }
+
+  private openDialog(entity: any): void {
+    const dialogRef = this.detailInfoDialog.open(PanelDetailsComponent, {
+      width: '350px',
+      data: entity,
+      position: {left: '20px', top: '20px'},
+      hasBackdrop: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   get2DService() {

@@ -28,7 +28,8 @@ export class Engine2DService {
   isCountryMapShown = false;
   isStateMapShown = false;
   displayWorldLevelNotifier: Subject<boolean> = new Subject<boolean>();
-  private isDetailEnabled: boolean = false;
+  isDetailEnabled: boolean = false;
+  selectedNodeForDetailNOtifier: Subject<any> = new Subject<any>();
 
   constructor(private animatorService: AnimatorService) {
     let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
@@ -54,7 +55,7 @@ export class Engine2DService {
   }
 
   private scale_ratio = (d: any) => {
-    let window_width = window.innerWidth*0.75, window_height = window.innerHeight*0.75;
+    let window_width = window.innerWidth, window_height = window.innerHeight;
     let bounds = this.path.bounds(d);
     let w_scale = (bounds[1][0] - bounds[0][0]) / (window_width);
     let h_scale = (bounds[1][1] - bounds[0][1]) / (window_height);
@@ -62,14 +63,6 @@ export class Engine2DService {
     let x = (bounds[1][0] + bounds[0][0]) / 2;
     let y = (bounds[1][1] + bounds[0][1]) / 2+ (window_height / z / 6);
     return [x, y, z];
-  }
-
-  private tooltipHtml = (n, d) => {	/* function to create html content string in tooltip div. */
-    return "<h4>"+n+"</h4><table>"+
-      "<tr><td>Low</td><td>"+(d.low)+"</td></tr>"+
-      "<tr><td>Average</td><td>"+(d.avg)+"</td></tr>"+
-      "<tr><td>High</td><td>"+(d.high)+"</td></tr>"+
-      "</table>";
   }
 
   private updateShownMode = (isWorldShown: boolean, isCountryShown: boolean, isStateShown: boolean) => {
@@ -85,24 +78,12 @@ export class Engine2DService {
     this.g.selectAll(".city-level-link").remove();
   }
 
-  private stateNetworkInfo = (d) => {
-    d3.select("#tooltip").transition().duration(200).style("opacity", .9); 
-
-    d3.select("#tooltip").html(this.tooltipHtml(d["properties"]["name"], this.sampleData[d["properties"]["abbrev"]]))  
-      .style("left", (d3.event.pageX) + "px")     
-      .style("top", (d3.event.pageY - 150) + "px");
-  }
-  
-  private stateNetworkInfoHide = () => {
-    d3.select("#tooltip").transition().duration(500).style("opacity", 0); 
-  }
-
-  private cityLinkSelecting = (d) => {
-    console.log(d);
-  }
-
-  private cityNodeSelecting = (d) => {
-    console.log(d);
+  private resetSelectedEntity = () => {
+    d3.selectAll('.country-level-mark').attr('selected', null);
+    d3.selectAll('.country-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
+    d3.selectAll('.country-level-link').attr('selected', null);
+    d3.selectAll('.state-level-mark').attr('selected', null);
+    d3.selectAll('.state-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
   }
 
   private stateClicked = (d) => {
@@ -120,7 +101,9 @@ export class Engine2DService {
         .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
         .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
         .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
-        .on("click", this.cityLinkSelecting);
+        .on("click", this.entitySelecting)
+        .on("mouseover", this.entityMouseOver)
+        .on("mouseout", this.entityMouseOut);
 
       this.g.selectAll(".city-level-mark")
         .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
@@ -131,53 +114,17 @@ export class Engine2DService {
         .attr('height', (d) => {return d.size[1];})
         .attr("xlink:href", (d) => {return d.icon_url;})
         .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
-        .on("click", this.cityNodeSelecting);
+        .on("click", this.entitySelecting)
+        .on("mouseover", this.entityMouseOver)
+        .on("mouseout", this.entityMouseOut);
       
     } else {
       this.selectedState = null;
-      this.countrySelecting(this.selectedCountry);
+      this.countryClicked(this.selectedCountry);
     }
-  }
-
-  private resetSelectedEntity = () => {
-    d3.selectAll('.country-level-mark').attr('selected', null);
-    d3.selectAll('.country-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
-    d3.selectAll('.country-level-link').attr('selected', null);
-    d3.selectAll('.state-level-mark').attr('selected', null);
-    d3.selectAll('.state-level-mark').attr("xlink:href", (e) => {return e['icon_url'];});
-  }
-
-  private entitySelecting = (d) => {
-    if(!this.isDetailEnabled)
-      return;
-    this.resetSelectedEntity();
-    d3.select('#' + d.id).attr('selected', true)
-    .attr('xlink:href', (e) => {return e["icon_selected_url"];});
-  }
-
-  private entityMouseOver = (d) => {
-    if(!this.isDetailEnabled)
-      return;
-    let did = '#' + d.id;
-    if(d3.select(did).attr('selected') == null) {
-      d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
-    }
-  }
-
-  private entityMouseOut = (d) => {
-    if(!this.isDetailEnabled)
-      return;
-    let did = '#' + d.id;
-    if(d3.select(did).attr('selected') == null) {
-      d3.select(did).attr("xlink:href", (e) => {return e["icon_url"];});
-    }
-  }
-
-  private stateLinkSelecting = (d) => {
-    console.log(d);
   }
   
-  private countrySelecting = (d) => {
+  private countryClicked = (d) => {
     let width = window.innerWidth*0.8, height = window.innerHeight;
     this.g.selectAll("#states").remove();
     if (this.selectedCountry) {
@@ -199,7 +146,6 @@ export class Engine2DService {
             .attr("class", "active")
             .style("fill",d => { return this.sampleData[d["properties"]["abbrev"]].color; })
             .style("opacity", 0.8).attr("d", this.path)
-            .on("mouseover", this.stateNetworkInfo).on("mouseout", this.stateNetworkInfoHide)
             .on("click", this.stateClicked);
 
           this.g.selectAll("#" + d["id"]).style('display', 'none');
@@ -212,7 +158,9 @@ export class Engine2DService {
             .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
             .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
             .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
-            .on("click", this.stateLinkSelecting);
+            .on("click", this.entitySelecting)
+            .on("mouseover", this.entityMouseOver)
+            .on("mouseout", this.entityMouseOut);
 
           this.g.selectAll(".state-level-mark")
             .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.STATE; }))
@@ -238,22 +186,9 @@ export class Engine2DService {
     }
   }
 
-  private countryLinkSelecting = (d) => {
-    this.resetSelectedEntity();
-
-  }
-
   createChart(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
     let width = window.innerWidth, height = window.innerHeight;
-
-    let cityNetworkInfo = (d) => {
-
-    }
-
-    let cityNetworkInfoHide = () => {
-
-    }
 
     let svg = d3.select(element).append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
@@ -265,7 +200,7 @@ export class Engine2DService {
     this.path = d3.geoPath().projection(this.projection);
 
     svg.append("rect").attr("class", "background").attr("width", width)
-      .attr("height", height).on("click", this.countrySelecting);
+      .attr("height", height).on("click", this.countryClicked);
 
     this.g = svg.append("g");
 
@@ -275,7 +210,7 @@ export class Engine2DService {
         .data(t.feature(us, us["objects"]["countries"])["features"])
         .enter().append("path")
         .attr("id", function(d) { return d["id"]; })
-        .attr("d", this.path).on("click", this.countrySelecting);
+        .attr("d", this.path).on("click", this.countryClicked);
 
       this.g.selectAll(".country-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
         .enter().append("line").attr('class', 'country-level-link')
@@ -285,7 +220,9 @@ export class Engine2DService {
         .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
         .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
         .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
-        .on("click", this.countryLinkSelecting);
+        .on("click", this.entitySelecting)
+        .on("mouseover", this.entityMouseOver)
+        .on("mouseout", this.entityMouseOut);
 
       this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
         .enter().append("image").attr('class', 'country-level-mark')
@@ -318,6 +255,37 @@ export class Engine2DService {
     }
 
   }
+
+  //#region Handling mouse click, hover, out event on network nodes/links
+  private entitySelecting = (d) => {
+    if(!this.isDetailEnabled)
+      return;
+    this.resetSelectedEntity();
+    d3.select('#' + d.id).attr('selected', true)
+    .attr('xlink:href', (e) => {return e["icon_selected_url"];});
+    this.selectedNodeForDetailNOtifier.next(d);
+  }
+
+
+  private entityMouseOver = (d) => {
+    if(!this.isDetailEnabled)
+      return;
+    let did = '#' + d.id;
+    if(d3.select(did).attr('selected') == null) {
+      d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
+    }
+  }
+
+  private entityMouseOut = (d) => {
+    if(!this.isDetailEnabled)
+      return;
+    let did = '#' + d.id;
+    if(d3.select(did).attr('selected') == null) {
+      d3.select(did).attr("xlink:href", (e) => {return e["icon_url"];});
+    }
+  }
+
+  //#endregion
 
 
 

@@ -1,11 +1,62 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<h1 mat-dialog-title>{{data.full_name}}</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
+  <div [@.disabled]="disableAnimation">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>account_circle</mat-icon>
+            Personal data
+          </mat-panel-title>
+          
+        </mat-expansion-panel-header>
+    
+          <mat-form-field>
+            <input matInput placeholder="First name">
+          </mat-form-field>
+      
+          <mat-form-field>
+            <input matInput type="number" min="1" placeholder="Age">
+          </mat-form-field>
+      
+      </mat-expansion-panel>
+    
+      <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>map</mat-icon>
+            Destination
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+          <mat-form-field>
+            <input matInput placeholder="Country">
+          </mat-form-field>
+      
+      </mat-expansion-panel>
+    
+      <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>date_range</mat-icon>
+            Day of the trip
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+          <mat-form-field>
+            <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+          </mat-form-field>
+          <mat-datepicker #picker></mat-datepicker>
+      
+      </mat-expansion-panel>
+    
+  </div>
+  
+  <!-- Copyright 2019 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->
+  
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
 </div>

@@ -7,15 +7,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
   styleUrls: ['./panel-details.component.css']
 })
 
-
-
 export class PanelDetailsComponent implements OnInit {
-
-  
-
   constructor(
     public dialogRef: MatDialogRef<PanelDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
       
     }
@@ -27,9 +22,9 @@ export class PanelDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-}
+  disableAnimation = true;
+  ngAfterViewInit(): void {
+    setTimeout(()=> this.disableAnimation = false);
+  }
 
-export interface DialogData {
-  animal: string;
-  name: string;
 }

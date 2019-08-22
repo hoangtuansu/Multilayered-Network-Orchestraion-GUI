@@ -25,15 +25,15 @@ export class GNObject2D implements NObject2D {
 }
 
 export const G2DNOs: GNObject2D[] = [
-  new GNObject2D ('gnobject2d1', 'a', 'a', NODE_LEVEL.COUNTRY, 
+  new GNObject2D ('gnobject2d1', 'a', 'Vancouver DC', NODE_LEVEL.COUNTRY, 
   'assets/images/world-data-center.png',
   'assets/images/world-data-center-hover.png',
   'assets/images/world-data-center-selected.png', [45, 45], [-135, 65]),
-  new GNObject2D ('gnobject2d2', 'a', 'a', NODE_LEVEL.COUNTRY, 
+  new GNObject2D ('gnobject2d2', 'a', 'Alberta DC', NODE_LEVEL.COUNTRY, 
   'assets/images/world-data-center.png', 
   'assets/images/world-data-center-hover.png', 
   'assets/images/world-data-center-selected.png', [45, 45], [-115, 60]),
-  new GNObject2D ('gnobject2d3', 'a', 'a', NODE_LEVEL.COUNTRY, 
+  new GNObject2D ('gnobject2d3', 'a', 'Montreal DC', NODE_LEVEL.COUNTRY, 
   'assets/images/world-data-center.png', 
   'assets/images/world-data-center-hover.png', 
   'assets/images/world-data-center-selected.png', [45, 45], [-78, 60]),
