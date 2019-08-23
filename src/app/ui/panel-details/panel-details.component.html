@@ -20,7 +20,7 @@
       
       </mat-expansion-panel>
     
-      <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel [expanded]="true" >
         <mat-expansion-panel-header>
           <mat-panel-title>
               <div style="height: 32px;"> 
@@ -30,9 +30,28 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
     
-          <mat-form-field>
-            <input matInput placeholder="Country">
-          </mat-form-field>
+        <mat-expansion-panel [expanded]="false" [togglePosition]="'before'">
+            <mat-expansion-panel-header class="link-header">
+              <div style="width:100%">
+                <div id='link-symbol'>
+                  <div id='mark1'></div>
+                  <div id='bar'></div>
+                  <div id='mark2'></div>
+                </div>
+                <div id='link-nodes'>
+                  <div id='src-name'>src1</div>
+                  <div id='dst-name'>dst1</div>
+                </div>
+              </div>
+            </mat-expansion-panel-header>
+        
+            <mat-action-list>
+                <button mat-list-item><img style="vertical-align:middle; padding-right: 10px" src="assets/images/ok_status.png"> router 1 </button>
+                <button mat-list-item ><img style="vertical-align:middle; padding-right: 10px" src="assets/images/nok_status.png"> router 2 </button>
+            </mat-action-list>
+          
+          
+        </mat-expansion-panel>
       
       </mat-expansion-panel>
     

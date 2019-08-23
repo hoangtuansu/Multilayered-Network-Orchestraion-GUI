@@ -16,3 +16,53 @@ mat-form-field {
 .mat-dialog-content {
   padding: 0 !important;
 }
+
+.link-header {
+  padding: 0 15px !important;
+}
+
+#link-symbol {
+  height: 15px;
+  width: 100%;
+  top: 2px;
+  position: relative;
+  display: flex;
+  align-items: center; 
+}
+
+#mark1 {
+  width: 15px;
+  height: 15px;
+  background:rgba(44, 62, 80,1.0);
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+}
+
+#bar {
+  height: 5px;
+  width: 100%;
+  background-color: rgba(0,0,0,.26);
+}
+
+#mark2 {
+  width: 15px;
+  height: 15px;
+  background: rgba(44, 62, 80,1.0);
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+}
+
+#link-nodes {
+  position: relative;
+  top: 5px;
+}
+
+#src-name {
+  float: left;
+}
+
+#dst-name {
+  float: right;
+}

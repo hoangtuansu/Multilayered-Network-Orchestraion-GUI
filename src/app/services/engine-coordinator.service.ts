@@ -41,7 +41,8 @@ export class EngineCoordinatorService {
 
   private openDialog(entity: any): void {
     const dialogRef = this.detailInfoDialog.open(PanelDetailsComponent, {
-      width: '350px',
+      width: '400px',
+      panelClass: '.custom-detail-dialog-container',
       data: entity,
       position: {left: '20px', top: '20px'},
       hasBackdrop: false

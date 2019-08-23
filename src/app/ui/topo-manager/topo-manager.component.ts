@@ -13,7 +13,7 @@ import { PanelDetailsComponent } from '../panel-details/panel-details.component'
 export class TopoManagerComponent implements OnInit {
 
   selectedDisplayMode: number = OBJ.DISPLAY_MODE.D2WORLD;
-  isDetailViewActivate: boolean = false;
+  isDetailViewActivate: boolean = true;
   constructor(private engineCoordinatorService: EngineCoordinatorService, public dialog: MatDialog) { }
 
   ngOnInit() {
