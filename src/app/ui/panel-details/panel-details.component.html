@@ -30,9 +30,13 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
     
-        <mat-expansion-panel [expanded]="false" [togglePosition]="'before'">
-            <mat-expansion-panel-header class="link-header">
-              <div style="width:100%">
+        <mat-expansion-panel [expanded]="false" [hideToggle]="'true'">
+            <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+              <div style="width:100%; height: 80px;">
+                <div id='link-title'>
+                  <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">link name</div>
+                  <div style="float: right;">100Gbps</div>
+                </div>
                 <div id='link-symbol'>
                   <div id='mark1'></div>
                   <div id='bar'></div>
@@ -45,10 +49,7 @@
               </div>
             </mat-expansion-panel-header>
         
-            <mat-action-list>
-                <button mat-list-item><img style="vertical-align:middle; padding-right: 10px" src="assets/images/ok_status.png"> router 1 </button>
-                <button mat-list-item ><img style="vertical-align:middle; padding-right: 10px" src="assets/images/nok_status.png"> router 2 </button>
-            </mat-action-list>
+            <div id='link-visual' #linkVisualization></div>
           
           
         </mat-expansion-panel>

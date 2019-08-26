@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
+import { NodeManagerService } from './node-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AnimatorService {
   isRedoPlanesFadeOutPhase: boolean = false;
   isredoProjectSpheresPhase: boolean = false;
   isRedoLinksFadeOutPhase: boolean = false;
-  constructor() { }
+  constructor(private nodeMngmt: NodeManagerService) { }
 
   resetAllSettings() {
     this.isPlanesFadeOutPhaseDone = false;
@@ -25,22 +26,6 @@ export class AnimatorService {
     this.isRedoPlanesFadeOutPhase = false;
     this.isredoProjectSpheresPhase = false;
     this.isRedoLinksFadeOutPhase = false;
-  }
-
-  getGPOs(): OBJ.GPOjbect[] {
-    return OBJ.GPOs;
-  }
-
-  getG3DNOs(): OBJ.GNObject[] {
-    return OBJ.G3DNOs;
-  }
-
-  getGLOs(): OBJ.GLObject[] {
-    return OBJ.GLOs;
-  }
-
-  getGNPrOs(): OBJ.GNPrObject[] {
-    return OBJ.GNPrOs;
   }
 
   fadingIn3D(scene: any): boolean {
@@ -62,7 +47,7 @@ export class AnimatorService {
   }
 
   fadingIn2D(): boolean {
-    for(let o of this.getGNPrOs()) {
+    for(let o of this.nodeMngmt.getGNPrOs()) {
 
     }
     return true;
@@ -85,7 +70,7 @@ export class AnimatorService {
   private linksFadeOutPhase() {
     if(this.isLinksFadeOutPhaseDone)
       return;
-    for(let l of this.getGLOs()) {
+    for(let l of this.nodeMngmt.getGLOs()) {
       l.mesh.visible = false;
     }
     this.isLinksFadeOutPhaseDone = true;
@@ -95,11 +80,11 @@ export class AnimatorService {
     if(this.isMergeSphere2Done) 
       return;
     let count_all_merged: number = 0;
-    for(let o of this.getGNPrOs()) {
+    for(let o of this.nodeMngmt.getGNPrOs()) {
       let p: [number, number, number] = [0,0,0];
       let flag: boolean = false;
       let count = 0;
-      for(let _o of this.getG3DNOs()) {
+      for(let _o of this.nodeMngmt.getG3DNOs()) {
         if(_o.box_id == o.id) {
           count += 1;
           p[0] += _o.position[0];
@@ -110,7 +95,7 @@ export class AnimatorService {
 
       p = [p[0]/count, p[1]/count, p[2]/count];
       
-      for(let _o of this.getG3DNOs()) {
+      for(let _o of this.nodeMngmt.getG3DNOs()) {
         if(_o.box_id == o.id) {
           let p_o = _o.position;
           p_o[0] += Math.abs(p_o[0] - p[0]) > 0.5 ? (p_o[0] > p[0] ? -1 : (p_o[0] < p[0] ? 1: 0)) : 0;
@@ -127,13 +112,13 @@ export class AnimatorService {
       }
       count_all_merged += flag ? 1 : 0;
     }
-    this.isMergeSphere2Done = (count_all_merged == this.getGNPrOs().length);
+    this.isMergeSphere2Done = (count_all_merged == this.nodeMngmt.getGNPrOs().length);
   }
 
   private planesFadeOutPhase() {
     if(this.isPlanesFadeOutPhaseDone)
       return;
-    let planes = this.getGPOs();
+    let planes = this.nodeMngmt.getGPOs();
     let nbr_plane_need_to_invisible = 0;
     for(let p of planes) {
       if(p.position[0] != 1 || p.position[1] != 1 || p.position[2] != 1) {
@@ -155,8 +140,8 @@ export class AnimatorService {
     if(this.isProjectSpheresPhase)
       return;
     let count = 0;
-    for(let o of this.getGNPrOs()) {
-      for(let _o of this.getG3DNOs()) {
+    for(let o of this.nodeMngmt.getGNPrOs()) {
+      for(let _o of this.nodeMngmt.getG3DNOs()) {
         if(_o.box_id == o.id) {
           let p = o.position;
           let p_o = _o.position;
@@ -174,11 +159,11 @@ export class AnimatorService {
         }
       }
     }
-    this.isProjectSpheresPhase = (count == this.getG3DNOs().length);
+    this.isProjectSpheresPhase = (count == this.nodeMngmt.getG3DNOs().length);
     if(this.isProjectSpheresPhase) {
-      for(let g of this.getG3DNOs())
+      for(let g of this.nodeMngmt.getG3DNOs())
         g.setVisible(false);
-      for(let g of this.getGNPrOs())
+      for(let g of this.nodeMngmt.getGNPrOs())
         g.setVisible(true);
     }
     
@@ -189,7 +174,7 @@ export class AnimatorService {
       return;
     
     let count = true;
-    for(let p of this.getGPOs()) {
+    for(let p of this.nodeMngmt.getGPOs()) {
       p.setVisible(true);
       console.log("test");
       if(p.layer == OBJ.LAYER.WORLD)
@@ -218,7 +203,7 @@ export class AnimatorService {
     if(this.isredoProjectSpheresPhase) 
       return;
     let count = true;
-    for(let o of this.getG3DNOs()) {
+    for(let o of this.nodeMngmt.getG3DNOs()) {
       o.setVisible(true);
       let upperbound = 5;
       switch(o.layer) {
@@ -248,7 +233,7 @@ export class AnimatorService {
   private redoLinksFadeOutPhase(scene: any) {
     if(this.isRedoLinksFadeOutPhase)
       return;
-    for(let l of this.getGLOs()) {
+    for(let l of this.nodeMngmt.getGLOs()) {
       let m = scene.getObjectById(l.mesh.id, true);
       scene.remove(m);
       l.updatePosition(l.node1, l.node2);

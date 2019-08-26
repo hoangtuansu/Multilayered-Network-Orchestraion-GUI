@@ -15,16 +15,28 @@ mat-form-field {
 
 .mat-dialog-content {
   padding: 0 !important;
+  max-height: 560px;
 }
+
 
 .link-header {
   padding: 0 15px !important;
+  color: rgba(0,0,0,.80);
+}
+
+#link-title {
+  top: 2px;
+  position: relative;
+  width: auto;
+  height: 30px;
 }
 
 #link-symbol {
+  margin-left: 15px;
+  margin-right: 10px;
   height: 15px;
-  width: 100%;
-  top: 2px;
+  width: auto;
+  
   position: relative;
   display: flex;
   align-items: center; 
@@ -57,12 +69,26 @@ mat-form-field {
 #link-nodes {
   position: relative;
   top: 5px;
+  height: 20px;
 }
 
 #src-name {
+  margin-left: 10px;
   float: left;
 }
 
 #dst-name {
   float: right;
+}
+
+#link-visual {
+  width: 100%;
+  max-height: 30vh;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#link-visual::-webkit-scrollbar {
+  display:none;
 }

@@ -1,4 +1,4 @@
-import { Injectable, ViewChild, ElementRef } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { AnimatorService } from './animator.service';
 import * as d3 from 'd3';
 import * as OBJ from '../models';
@@ -17,7 +17,7 @@ export class Engine2DService {
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
 
-  sampleData: any = { };
+  provinceColorMapping : any = { };
   
   g: any = null;
   selectedCountry: any = null;
@@ -37,7 +37,7 @@ export class Engine2DService {
     ["Ont.", "B.C.", "Alta.", "Sask.", "Man.", "Que.", "N.B.", "Yuk.", "Nun.", "N.L.", "N.S.",
 	"N.W.T.", "P.E.I."]
 		.forEach((d, idx) => { 
-			this.sampleData[d]={color:colors[idx]}; 
+			this.provinceColorMapping[d]={color:colors[idx]}; 
 		});
    }
 
@@ -144,7 +144,7 @@ export class Engine2DService {
             .data(t.feature(us, us["objects"]["states"])["features"]).enter().append("path")
             .attr("id", function(d) { return "state" + d["properties"]["gn_id"]; })
             .attr("class", "active")
-            .style("fill",d => { return this.sampleData[d["properties"]["abbrev"]].color; })
+            .style("fill",d => { return this.provinceColorMapping[d["properties"]["abbrev"]].color; })
             .style("opacity", 0.8).attr("d", this.path)
             .on("click", this.stateClicked);
 
