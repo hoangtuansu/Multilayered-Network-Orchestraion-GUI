@@ -27,7 +27,24 @@ export class LinkVisualizerService {
     .attr("viewBox", "0 0 " + width + " " + height)
     .attr("width", width).attr("height", height);
 
-    this.displayNodes(svg, listIDs, width);
+    let nbrCountryNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.COUNTRY;}) ? 1 : 0;
+    let nbrStateNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.STATE;}) ? 1 : 0;
+    let nbrCityNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.CITY;}) ? 1 : 0;
+    let numLayers = nbrCountryNode + nbrStateNode + nbrCityNode;
+    svg.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 12)
+      .attr("refY", 12)
+      .attr("markerUnits", "userSpaceOnUse")
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 24 12 0 24 6 12")
+      .style("stroke", "black");
+    let nodePositionArr = this.getNodePosition(svg, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
+    this.displayLogicalLink(svg, listIDs, nodePositionArr);
+    this.displayNodes(svg, listIDs, nodePositionArr);
   }
 
   private calculateHeight(nodeIDs: string[], offsetHeight1: number, offsetHeight2: number): number {
@@ -43,28 +60,50 @@ export class LinkVisualizerService {
     return h+30;  //for displaying the last node
   }
 
-  private displayNodes(svg, listIDs: string[], width: number) {
-    let nbrCountryNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.COUNTRY;}) ? 1 : 0;
-    let nbrStateNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.STATE;}) ? 1 : 0;
-    let nbrCityNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.CITY;}) ? 1 : 0;
-    let numLayers = nbrCountryNode + nbrStateNode + nbrCityNode;
-    let prevNode = null;
-    let prevPosY = 0;
-    let prevPosX = 0;
-    svg.append("svg:defs").append("svg:marker")
-      .attr("id", "triangle")
-      .attr("refX", 6)
-      .attr("refY", 6)
-      .attr("markerWidth", 30)
-      .attr("markerHeight", 30)
-      .attr("orient", "auto")
-      .append("path")
-      .attr("d", "M 0 0 12 6 0 12 3 6")
-      .style("stroke", "black");
-  
-  //line              
-  
+  private displayLogicalLink(svg, listIDs: string[], nodePositionArr) {
+    let prevCountryNodeID = null, prevStateNodeID = null;
+    for(let nid of listIDs) {
+      let curNode = this.nodeMngmnt.getNode2DObject(nid);
+      let i = listIDs.indexOf(nid);
+      let prevPos = null;
+      let prevOffset = 10;
+      let curOffset = 10; 
 
+      if(curNode.level == NODE_LEVEL.COUNTRY) {
+        if(prevCountryNodeID == null || i == (prevCountryNodeID + 1)) {
+          prevCountryNodeID = i;
+          continue;
+        } else if(i > (prevCountryNodeID + 1)){
+          prevPos = nodePositionArr[prevCountryNodeID];
+          this.drawLinkBetweenNodes(svg,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
+            nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
+        }
+      } else if(curNode.level == NODE_LEVEL.STATE) {
+        if(prevStateNodeID == null || i == (prevStateNodeID + 1)) {
+          prevStateNodeID = i;
+          continue;
+        } else if(i > (prevStateNodeID + 1)){
+          prevPos = nodePositionArr[prevStateNodeID];
+          this.drawLinkBetweenNodes(svg,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
+            nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
+        }
+      }
+      
+      
+    }
+  }
+
+  private displayNodes(svg, listIDs: string[], nodePositionArr) {
+    for(let i in listIDs) {
+      let node = this.nodeMngmnt.getNode2DObject(listIDs[i]);
+      let p = nodePositionArr[i];
+      this.drawNode(svg, node, i == '0', p[0], p[1]);
+    }
+  }
+
+  private getNodePosition(svg, listIDs, width, numLayers, nbrCountryNode, nbrCityNode) {
+    let prevNode = null, prevPosY = 0, prevPosX = 0;
+    let nodePositionArr = [];
     for(let i in listIDs) {
       let node = this.nodeMngmnt.getNode2DObject(listIDs[i]);
       let posX = 0, posY = 0;
@@ -88,37 +127,41 @@ export class LinkVisualizerService {
             posX = (numLayers == 1) ? width/2 : (numLayers == 2 ? width*3/4 : width*5/6);
             break;
       }
-
       if(prevNode !== null) {
         posY = prevPosY + (prevNode.level === node.level ? 100 : 70);
-        this.drawLinkBetweenNodes(svg, posX + 10, posY + 10, prevPosX + 10, prevPosY + 10);
+        let prevOffset = (prevNode.level === NODE_LEVEL.CITY ? 0 : 10); 
+        let curOffset = (node.level === NODE_LEVEL.CITY ? 0 : 10); 
+        this.drawLinkBetweenNodes(svg, prevPosX + prevOffset, prevPosY + prevOffset, posX + curOffset, posY + curOffset);
       }
-      //this.drawNode(svg, node, i == '0', posX, posY);
-      
+      nodePositionArr.push([posX, posY]);
       prevNode = node;
       prevPosY = posY;
       prevPosX = posX;
     }
+    return nodePositionArr;
   }
 
-  private drawLinkBetweenNodes(svg, posX1, posY1, posX2, posY2) {
-
-    svg.append("line")
-        .attr("x1", posX2)
-        .attr("y1", posY2)
-        .attr("x2", posX1)
-        .attr("y2", posY1)          
-        .attr("stroke-width", 2)
+  private drawLinkBetweenNodes(svg, posX1, posY1, posX2, posY2, isDash?: boolean) {
+    if(isDash) {
+      svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
+        .attr("stroke-width", 6)
         .attr("stroke", "black")
-        .attr("marker-end", "url(#triangle)");
+        .attr("stroke-dasharray", 8)
+        .attr("marker-mid", "url(#triangle)");  
+        return;
+    }
+    svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
+        .attr("stroke-width", 6)
+        .attr("stroke", "black")
+        .attr("marker-mid", "url(#triangle)");
   }
 
   private drawNode(svg, node, isSrcNode: boolean, posX: number, posY: number) {
     if(node.level == NODE_LEVEL.COUNTRY || node.level == NODE_LEVEL.STATE) {
       if(isSrcNode) {
         svg.append("rect").attr("x", posX).attr("y", posY)
-        .attr("width", 20).attr("height", 20)
-        .attr("fill", "none").attr("stroke-width", 1).attr("stroke", "black");
+          .attr("width", 20).attr("height", 20)
+          .attr("fill", "white").attr("stroke-width", 1).attr("stroke", "black");
         svg.append("rect").attr("x", posX + 3).attr("y", posY + 3)
           .attr("width", 14).attr("height", 14)
           .attr("fill", "#2c3e50");
