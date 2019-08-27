@@ -51,34 +51,34 @@ export class Engine3DService implements OnDestroy {
 
     this.controls.enabled = true;
 
-    for(let g of this.animatorService.getGPOs()) {
+    for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       this.scene.add(g.generateMesh())
     }
 
-    for(let g of this.animatorService.getG3DNOs()) {
+    for(let g of this.animatorService.nodeMngmt.getG3DNOs()) {
       this.scene.add(g.generateMesh())
     }
 
-    for(let g of this.animatorService.getGLOs()) {
+    for(let g of this.animatorService.nodeMngmt.getGLOs()) {
       this.scene.add(g.generateMesh())
     }
 
-    for(let g of this.animatorService.getGNPrOs()) {
+    for(let g of this.animatorService.nodeMngmt.getGNPrOs()) {
       this.scene.add(g.generateMesh());
     }
   }
 
   showPlane(plane_id, isShown) {
-    for(let g of this.animatorService.getGPOs()) {
+    for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       if(g.layer == plane_id) {
         g.setVisible(isShown);
       }
     }
 
-    for(let o of this.animatorService.getG3DNOs()) {
+    for(let o of this.animatorService.nodeMngmt.getG3DNOs()) {
       if(o.layer == plane_id) {
         console.log(o.id);
-        for(let l of this.animatorService.getGLOs()) {
+        for(let l of this.animatorService.nodeMngmt.getGLOs()) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
             console.log(l);
             l.mesh.visible = isShown;

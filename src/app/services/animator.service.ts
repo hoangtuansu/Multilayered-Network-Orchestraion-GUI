@@ -15,7 +15,7 @@ export class AnimatorService {
   isRedoPlanesFadeOutPhase: boolean = false;
   isredoProjectSpheresPhase: boolean = false;
   isRedoLinksFadeOutPhase: boolean = false;
-  constructor(private nodeMngmt: NodeManagerService) { }
+  constructor(public nodeMngmt: NodeManagerService) { }
 
   resetAllSettings() {
     this.isPlanesFadeOutPhaseDone = false;
