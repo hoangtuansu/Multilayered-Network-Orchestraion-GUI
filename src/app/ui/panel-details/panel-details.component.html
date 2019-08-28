@@ -34,7 +34,7 @@
             <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
               <div style="width:100%; height: 80px;">
                 <div id='link-title'>
-                  <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">link name</div>
+                  <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">vdc - adc</div>
                   <div style="float: right;">100Gbps</div>
                 </div>
                 <div id='link-symbol'>
@@ -43,13 +43,23 @@
                   <div id='mark2'></div>
                 </div>
                 <div id='link-nodes'>
-                  <div id='src-name'>src1</div>
-                  <div id='dst-name'>dst1</div>
+                  <div id='src-name'>van-dc</div>
+                  <div id='dst-name'>alberta-dc</div>
                 </div>
               </div>
             </mat-expansion-panel-header>
         
-            <div id='link-visual' #linkVisualization></div>
+            <div id='link-visual' #linkVisualization>
+              <!-- <div id="nodeInfo">
+                <h4>{{this.linkVisualizerService.selectedNode.name}}</h4>
+                <table>
+                  <tr>
+                    <td>Type</td>
+                    <td>{{this.linkVisualizerService.selectedNode.level}}</td>
+                  </tr>
+                </table>
+              </div> -->
+            </div>
           
           
         </mat-expansion-panel>

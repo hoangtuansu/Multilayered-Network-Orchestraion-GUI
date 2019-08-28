@@ -10,6 +10,8 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 })
 export class LinkVisualizerService {
   listOfNodeIDs: string[] = null;
+  selectedNode: GNObject2D = null;
+  
   constructor(private nodeMngmnt: NodeManagerService) { }
 
   getLinkInfo(): string[] {
@@ -156,6 +158,14 @@ export class LinkVisualizerService {
         .attr("marker-mid", "url(#triangle)");
   }
 
+  private nodeInfoLabel = (n, d) => { /* function to create html content string in tooltip div. */
+    return "<h4>"+n+"</h4><table>"+
+    "<tr><td>Low</td><td>"+(d.low)+"</td></tr>"+
+    "<tr><td>Average</td><td>"+(d.avg)+"</td></tr>"+
+    "<tr><td>High</td><td>"+(d.high)+"</td></tr>"+
+    "</table>";
+    }
+
   private drawNode(svg, node, isSrcNode: boolean, posX: number, posY: number) {
     if(node.level == NODE_LEVEL.COUNTRY || node.level == NODE_LEVEL.STATE) {
       if(isSrcNode) {
@@ -165,21 +175,26 @@ export class LinkVisualizerService {
         svg.append("rect").attr("x", posX + 3).attr("y", posY + 3)
           .attr("width", 14).attr("height", 14)
           .attr("fill", "#2c3e50");
+        svg.append("text").attr("x", posX - node.name.length*10).attr("y", posY + 15).attr("fill", "#2c3e50").text(node.name);
       } else {
         svg.append("rect").attr("x", posX).attr("y", posY)
         .attr("width", 20).attr("height", 20)
         .attr("fill", "#2c3e50");
+        svg.append("text").attr("x", posX - node.name.length*10).attr("y", posY + 15).attr("fill", "#2c3e50").text(node.name);
       }
+      
     } else {
       if(isSrcNode) {
         svg.append("circle").attr("cx", posX).attr("cy", posY)
         .attr("r", 12).attr("fill", "none").attr("stroke-width", 1).attr("stroke", "black");
         svg.append("circle").attr("cx", posX + 3).attr("cy", posY + 3)
           .attr("r", 10).attr("fill", "#2c3e50");
+        svg.append("text").attr("x", posX - node.name.length*12).attr("y", posY + 8).attr("fill", "#2c3e50").text(node.name);
       } else {
-        svg.append("circle").attr("cx", posX).attr("cy", posY)
-        .attr("r", 12).attr("fill", "#2c3e50");
+        svg.append("circle").attr("cx", posX).attr("cy", posY).attr("r", 12).attr("fill", "#2c3e50");
+        svg.append("text").attr("x", posX + 8).attr("y", posY - 10).attr("fill", "#2c3e50").text(node.name);
       }
+      
     }
   }
 
