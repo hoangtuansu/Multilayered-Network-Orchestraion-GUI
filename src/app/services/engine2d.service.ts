@@ -29,7 +29,7 @@ export class Engine2DService {
   isStateMapShown = false;
   displayWorldLevelNotifier: Subject<boolean> = new Subject<boolean>();
   isDetailEnabled: boolean = false;
-  selectedNodeForDetailNOtifier: Subject<any> = new Subject<any>();
+  selectedNodeForDetailNotifier: Subject<any> = new Subject<any>();
 
   constructor(private animatorService: AnimatorService) {
     let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
@@ -263,7 +263,8 @@ export class Engine2DService {
     this.resetSelectedEntity();
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
-    this.selectedNodeForDetailNOtifier.next(d);
+    console.log(d);
+    this.selectedNodeForDetailNotifier.next(d);
   }
 
 

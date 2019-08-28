@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChange, Input, ViewEncapsulation } from '@angular/core';
 import { Engine2DService } from 'src/app/services/engine2d.service';
 import { trigger, style, state, transition, animate } from '@angular/animations';
-import * as OBJ from '../../models';
-import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.service';
+import * as OBJ from '../../../models';
 
 @Component({
   selector: 'app-topo2d',

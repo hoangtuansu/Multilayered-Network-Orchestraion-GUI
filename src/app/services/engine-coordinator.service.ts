@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Engine2DService } from './engine2d.service';
 import { Engine3DService } from './engine3d.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PanelDetailsComponent } from '../ui/panel-details/panel-details.component';
+import { DialogDetailsComponent } from '../ui/panel-details/dialog/dialog-details.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class EngineCoordinatorService {
       }
     });
 
-    engine2DService.selectedNodeForDetailNOtifier.subscribe((value)=> {
+    engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
       this.openDialog(value);
     });
 
@@ -40,7 +40,7 @@ export class EngineCoordinatorService {
   }
 
   private openDialog(entity: any): void {
-    const dialogRef = this.detailInfoDialog.open(PanelDetailsComponent, {
+    const dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
       width: '400px',
       panelClass: '.custom-detail-dialog-container',
       data: entity,

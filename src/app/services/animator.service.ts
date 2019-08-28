@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
-import { NodeManagerService } from './node-manager.service';
+import { NetworkManagerService } from './network-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AnimatorService {
   isRedoPlanesFadeOutPhase: boolean = false;
   isredoProjectSpheresPhase: boolean = false;
   isRedoLinksFadeOutPhase: boolean = false;
-  constructor(public nodeMngmt: NodeManagerService) { }
+  constructor(public nodeMngmt: NetworkManagerService) { }
 
   resetAllSettings() {
     this.isPlanesFadeOutPhaseDone = false;

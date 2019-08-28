@@ -27,29 +27,29 @@
   }
 
   #layer-show .layer1 {
-    background: #ecf0f1 url("../../../assets/images/layer1-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer1-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #ecf0f1;
   }
 
   #layer-show .layer1-shown {
-    background: #ecf0f1 url("../../../assets/images/layer1-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer1-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #2a81b8;
   }
 
   #layer-show .layer2 {
-    background: #ecf0f1 url("../../../assets/images/layer2-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer2-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #ecf0f1;
   }
   #layer-show .layer2-shown {
-    background: #ecf0f1 url("../../../assets/images/layer2-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer2-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #2a81b8;
   }
 
   #layer-show .layer3 {
-    background: #ecf0f1 url("../../../assets/images/layer3-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer3-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #ecf0f1;
   }
   #layer-show .layer3-shown {
-    background: #ecf0f1 url("../../../assets/images/layer3-selected.png") center bottom no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/layer3-selected.png") center bottom no-repeat;
     border-bottom: 4px solid #2a81b8;
   }

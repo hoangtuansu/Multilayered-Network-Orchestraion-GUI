@@ -20,14 +20,14 @@ export class GLObject2D implements LObject2D {
   }
   
   export const G2DLOs: GLObject2D[] = [
-    new GLObject2D ('globject2d1', 'cl1', 'red', 3, G2DNOs[0], G2DNOs[1]),
-    new GLObject2D ('globject2d2', 'cl2', 'red', 3, G2DNOs[1], G2DNOs[2]),
-    new GLObject2D ('globject2d3', 'cl3', 'red', 3, G2DNOs[3], G2DNOs[8]),
+    new GLObject2D ('globject2d1', 'bdc-adc', 'red', 3, G2DNOs[0], G2DNOs[1]),
+    new GLObject2D ('globject2d2', 'adc-mdc', 'red', 3, G2DNOs[1], G2DNOs[2]),
+    new GLObject2D ('globject2d3', 'vco-ico', 'red', 3, G2DNOs[3], G2DNOs[8]),
     new GLObject2D ('globject2d4', 'cl3', 'white', 2, G2DNOs[3], G2DNOs[13]),
     new GLObject2D ('globject2d5', 'cl3', 'white', 2, G2DNOs[9], G2DNOs[11]),
     new GLObject2D ('globject2d6', 'cl3', 'white', 2, G2DNOs[3], G2DNOs[7]),
     new GLObject2D ('globject2d7', 'cl3', 'white', 2, G2DNOs[12], G2DNOs[13]),
-    new GLObject2D ('globject2d8', 'cl3', 'white', 2, G2DNOs[7], G2DNOs[8]),
+    new GLObject2D ('globject2d8', 'yco-ico', 'white', 2, G2DNOs[7], G2DNOs[8]),
     new GLObject2D ('globject2d9', 'cl3', 'white', 2, G2DNOs[7], G2DNOs[4]),
     new GLObject2D ('globject2d10', 'cl3', 'white', 2, G2DNOs[7], G2DNOs[13]),
     new GLObject2D ('globject2d11', 'cl3', 'white', 2, G2DNOs[7], G2DNOs[5]),

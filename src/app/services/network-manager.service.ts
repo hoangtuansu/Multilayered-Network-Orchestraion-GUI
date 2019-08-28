@@ -4,7 +4,7 @@ import * as OBJ from '../models';
 @Injectable({
   providedIn: 'root'
 })
-export class NodeManagerService {
+export class NetworkManagerService {
 
   constructor() { }
 
@@ -16,12 +16,16 @@ export class NodeManagerService {
     return OBJ.G3DNOs;
   }
 
-  getG2DNOs(): OBJ.GNObject[] {
+  getG2DNOs(): OBJ.GNObject2D[] {
     return OBJ.G2DNOs;
   }
 
   getGLOs(): OBJ.GLObject[] {
     return OBJ.GLOs;
+  }
+
+  getG2DLOs(): OBJ.GLObject2D[] {
+    return OBJ.G2DLOs;
   }
 
   getGNPrOs(): OBJ.GNPrObject[] {
@@ -34,5 +38,9 @@ export class NodeManagerService {
         return n;
       }
     }
+  }
+
+  get2DLinksOfNode(nid: string): OBJ.GLObject2D[] {
+    return this.getG2DLOs().filter(d => {return d.node1.id === nid || d.node2.id === nid;});
   }
 }

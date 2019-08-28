@@ -1,9 +1,8 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 import { GNObject2D } from '../models/2d-object/gnobject2D';
-import { NodeManagerService } from './node-manager.service';
+import { NetworkManagerService } from './network-manager.service';
 import { NODE_LEVEL } from '../models/object-interfaces';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class LinkVisualizerService {
   listOfNodeIDs: string[] = null;
   selectedNode: GNObject2D = null;
   
-  constructor(private nodeMngmnt: NodeManagerService) { }
+  constructor(private nodeMngmnt: NetworkManagerService) { }
 
   getLinkInfo(): string[] {
     return ['gnobject2d1', 'gnobject2d4', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];

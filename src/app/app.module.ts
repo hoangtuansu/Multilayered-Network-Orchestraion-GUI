@@ -2,15 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Topo3dComponent } from './ui/topo3d/topo3d.component';
-import { Topo2dComponent } from './ui/topo2d/topo2d.component';
+import { Topo3dComponent } from './ui/topo/topo3d/topo3d.component';
+import { Topo2dComponent } from './ui/topo/topo2d/topo2d.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { TopoManagerComponent } from './ui/topo-manager/topo-manager.component';
-import { PanelDetailsComponent } from './ui/panel-details/panel-details.component';
+import { TopoManagerComponent } from './ui/topo/topo-manager/topo-manager.component';
+import { DialogDetailsComponent } from './ui/panel-details/dialog/dialog-details.component';
 import {DemoMaterialModule} from './material-module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LinkVisualComponent } from './ui/panel-details/link-visual/link-visual.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     Topo3dComponent,
     Topo2dComponent,
     TopoManagerComponent,
-    PanelDetailsComponent
+    DialogDetailsComponent,
+    LinkVisualComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AngularFontAwesomeModule
   ],
-  entryComponents: [PanelDetailsComponent],
+  entryComponents: [DialogDetailsComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import * as OBJ from '../../models';
+import * as OBJ from '../../../models';
 import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PanelDetailsComponent } from '../panel-details/panel-details.component';
+import { DialogDetailsComponent } from '../../panel-details/dialog/dialog-details.component';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class TopoManagerComponent implements OnInit {
   animal: string;
   name: string;
   openDialog(): void {
-    const dialogRef = this.dialog.open(PanelDetailsComponent, {
+    const dialogRef = this.dialog.open(DialogDetailsComponent, {
       width: '250px',
       data: {name: this.name, animal: this.animal},
       hasBackdrop: false

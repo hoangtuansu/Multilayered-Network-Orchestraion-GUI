@@ -10,7 +10,7 @@
 a.switch-view-2d {
     width:35px;
     height: 35px;
-    background: #ecf0f1 url("../../../assets/images/switch-view-3d.png") center center no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/switch-view-3d.png") center center no-repeat;
     text-decoration: none;
     text-transform: uppercase;
     display: inline-block;
@@ -18,13 +18,13 @@ a.switch-view-2d {
 }
 
 a.switch-view-2d:hover{
-    background: #ecf0f1 url("../../../assets/images/switch-view-2d-hover.png") center center no-repeat;
+    background: #ecf0f1 url("../../../../assets/images/switch-view-2d-hover.png") center center no-repeat;
 }
 
 a.switch-view-3d {
   width:35px;
   height: 35px;
-  background: #ecf0f1 url("../../../assets/images/switch-view-2d.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/switch-view-2d.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   display: inline-block;
@@ -32,14 +32,14 @@ a.switch-view-3d {
 }
 
 a.switch-view-3d:hover{
-  background: #ecf0f1 url("../../../assets/images/switch-view-3d-hover.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/switch-view-3d-hover.png") center center no-repeat;
   padding: 3px;
 }
 
 a.switch-view-disable {
   width:35px;
   height: 35px;
-  background: #ecf0f1 url("../../../assets/images/switch-view-disable.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/switch-view-disable.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   display: inline-block;
@@ -49,7 +49,7 @@ a.switch-view-disable {
 .detail-view-enabled {
   width:35px;
   height: 35px;
-  background: #ecf0f1 url("../../../assets/images/detail-view-enabled.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/detail-view-enabled.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   float: right;
@@ -60,7 +60,7 @@ a.switch-view-disable {
 .detail-view-disabled {
   width:35px;
   height: 35px;
-  background: #ecf0f1 url("../../../assets/images/detail-view-disabled.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/detail-view-disabled.png") center center no-repeat;
   text-decoration: none;
   text-transform: uppercase;
   float: right;
@@ -69,5 +69,5 @@ a.switch-view-disable {
 }
 
 .detail-view-disabled:hover {
-  background: #ecf0f1 url("../../../assets/images/detail-view-hover.png") center center no-repeat;
+  background: #ecf0f1 url("../../../../assets/images/detail-view-hover.png") center center no-repeat;
 }
