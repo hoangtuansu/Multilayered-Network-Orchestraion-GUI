@@ -1,6 +1,8 @@
 export enum LAYER { WORLD, OPTICAL, LAYER1, IP }
 export enum DISPLAY_MODE {D2 = 0, D3 = 1, ONGOING = 2, D2WORLD = 3}
 export enum NODE_LEVEL {COUNTRY, STATE, CITY}
+export enum LINK_TYPE {DOMAIN, BOUNDARY}
+
 export interface Object {
     id: number;
     name: string;

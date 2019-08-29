@@ -152,7 +152,7 @@ export class Engine2DService {
 
           this.g.selectAll(".state-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
             .enter().append("line").attr('class', 'state-level-link')
-            .style("stroke", "red").style("stroke-width", 1)
+            .style("stroke", d => {return d.color;}).style("stroke-width", 1)
             .attr("id", (d) => {return d.name;})
             .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
             .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
