@@ -10,8 +10,13 @@ import { Subject } from 'rxjs';
 })
 export class LinkVisualizerService {
   listOfNodeIDs: string[] = null;
+  linkID: string = "";
   
   constructor(private nodeMngmnt: NetworkManagerService) { }
+
+  setSelectedLinkID(lid: string) {
+    this.linkID = lid;
+  }
 
   getLinkInfo(): string[] {
     return ['gnobject2d1', 'gnobject2d4', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];
@@ -99,7 +104,7 @@ export class LinkVisualizerService {
       .style("stroke", "black");
     let nodePositionArr = this.getNodePosition(svg, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
     this.displayLogicalLink(svg, listIDs, nodePositionArr);
-    this.displayNodes(svg, listIDs, nodePositionArr);
+    this.displayNodes(svg, nodePositionArr);
   }
 
   private displayLogicalLink(svg, listIDs: string[], nodePositionArr) {
@@ -134,7 +139,7 @@ export class LinkVisualizerService {
     }
   }
 
-  private displayNodes(svg, listIDs: string[], nodePositionArr) {
+  private displayNodes(svg, nodePositionArr) {
     let arr1 = nodePositionArr.filter(d => {return d[2].level == NODE_LEVEL.COUNTRY || d[2].level == NODE_LEVEL.STATE});
     let arr2 = nodePositionArr.filter(d => {return d[2].level == NODE_LEVEL.CITY});
     svg.selectAll(".noncity-nodes-of-link").data(arr1).enter().append("rect")
@@ -143,11 +148,13 @@ export class LinkVisualizerService {
         .attr("width", 20).attr("height", 20)
         .attr("fill", "#2c3e50")
         .on("mouseover", this.entityHover)
+        .on("mouseout", this.entityOut)
         .on("click", this.entitySelecting);
     svg.selectAll(".city-nodes-of-link").data(arr2).enter().append("circle")
         .attr("cx", d => {return d[0];})
         .attr("cy", d => {return d[1];}).attr("r", 12).attr("fill", "#2c3e50")
         .on("mouseover", this.entityHover)
+        .on("mouseout", this.entityOut)
         .on("click", this.entitySelecting);
 
     svg.selectAll(".node-labels-of-link").data(nodePositionArr).enter().append("text")
@@ -186,8 +193,11 @@ export class LinkVisualizerService {
       .style("top", posY + "px");
   }
 
+  private entityOut = selectedNode => {
+    d3.select("#nodeInfo").transition().duration(200).style("opacity", 0);
+  }
+
   private entitySelecting = selectedNode => {
 
   }
-
 }

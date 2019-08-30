@@ -16,6 +16,7 @@ export class LinkVisualComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.linkVisualizerService.setSelectedLinkID(this.selectedLinkID);
     this.linkVisualizerService.createLinkVisualization(this.linkVisualizer);
   }
   

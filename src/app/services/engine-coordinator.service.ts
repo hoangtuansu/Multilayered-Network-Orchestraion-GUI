@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Engine2DService } from './engine2d.service';
 import { Engine3DService } from './engine3d.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogDetailsComponent } from '../ui/panel-details/dialog/dialog-details.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
+  dialogRef: MatDialogRef<any> = null;
+  isShown: boolean = false;
   constructor(private engine2DService: Engine2DService, 
     private engine3DService: Engine3DService, 
     public detailInfoDialog: MatDialog) { 
@@ -40,16 +42,22 @@ export class EngineCoordinatorService {
   }
 
   private openDialog(entity: any): void {
-    const dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
-      width: '400px',
-      panelClass: '.custom-detail-dialog-container',
-      data: entity,
-      position: {left: '20px', top: '20px'},
-      hasBackdrop: false
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    if(!this.isShown) {
+      this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
+        width: '400px',
+        panelClass: '.custom-detail-dialog-container',
+        data: entity,
+        position: {left: '20px', top: '20px'},
+        hasBackdrop: false
+      });
+      this.isShown = true;
+      this.dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.isShown = false;
+      });
+    }
+    this.dialogRef.componentInstance.selectedEntity = entity;
+    
   }
 
   get2DService() {
