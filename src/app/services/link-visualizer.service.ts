@@ -75,7 +75,8 @@ export class LinkVisualizerService {
   createLinkVisualization(mapRenderer: ElementRef): void {
     let element = mapRenderer.nativeElement;
     let listIDs = this.getLinkInfo();
-    let width = mapRenderer.nativeElement.offsetWidth
+    //let width = mapRenderer.nativeElement.offsetWidth;
+    let width = 304;
     let height = this.calculateHeight(listIDs, 100, 70);
     let svg = d3.select(element).append("svg").attr("preserveAspectRatio", "xMidYMid")
     .attr("viewBox", "0 0 " + width + " " + height)
@@ -129,7 +130,6 @@ export class LinkVisualizerService {
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
         }
       }
-      
       
     }
   }

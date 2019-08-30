@@ -40,7 +40,11 @@ export class NetworkManagerService {
     }
   }
 
-  get2DLinksOfNode(nid: string): OBJ.GLObject2D[] {
-    return this.getG2DLOs().filter(d => {return d.node1.id === nid || d.node2.id === nid;});
+  get2DDomainLinksOfNode(nid: string): OBJ.GLObject2D[] {
+    return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.DOMAIN;});
+  }
+
+  get2DBoundaryLinksOfNode(nid: string): OBJ.GLObject2D[] {
+    return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
 }
