@@ -34,7 +34,7 @@
         
         <mat-tab-group dynamicHeight>
             <mat-tab label="Domain"> 
-              
+              <mat-accordion>
                 <mat-expansion-panel *ngFor="let l of netManagerService.get2DDomainLinksOfNode(selectedEntity.id); let i = index;" [expanded]="false" [hideToggle]="'true'">
                     <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                       <div style="width:100%; height: 80px;">
@@ -54,13 +54,13 @@
                       </div>
                     </mat-expansion-panel-header>
                     
-                    <app-link-visual [selectedLinkID] = "selectedDisplayMode"></app-link-visual>
+                    <app-link-visual [selectedLinkID] = "l.id"></app-link-visual>
                     
                 </mat-expansion-panel>
-              
+              </mat-accordion>
             </mat-tab>
             <mat-tab label="Boundary"> 
-              <mat-accordion >
+              <mat-accordion>
                 <mat-expansion-panel *ngFor="let l of netManagerService.get2DBoundaryLinksOfNode(selectedEntity.id); let i = index;" [expanded]="false" [hideToggle]="'true'">
                     <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                       <div style="width:100%; height: 80px;">
@@ -79,7 +79,7 @@
                         </div>
                       </div>
                     </mat-expansion-panel-header>
-                    <app-link-visual [selectedLinkID] = "selectedDisplayMode"></app-link-visual>
+                    <app-link-visual [selectedLinkID] = "l.id"></app-link-visual>
                     
                   
                 </mat-expansion-panel>

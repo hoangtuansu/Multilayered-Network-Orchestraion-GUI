@@ -69,7 +69,7 @@ export class LinkVisualizerService {
         let curOffset = (node.level === NODE_LEVEL.CITY ? 0 : 10); 
         this.drawLinkBetweenNodes(svg, prevPosX + prevOffset, prevPosY + prevOffset, posX + curOffset, posY + curOffset);
       }
-      nodePositionArr.push([posX, posY, node]);
+      nodePositionArr.push([posX, posY, node, this.linkID]);
       prevNode = node;
       prevPosY = posY;
       prevPosX = posX;
@@ -83,9 +83,11 @@ export class LinkVisualizerService {
     //let width = mapRenderer.nativeElement.offsetWidth;
     let width = 304;
     let height = this.calculateHeight(listIDs, 100, 70);
-    let svg = d3.select(element).append("svg").attr("preserveAspectRatio", "xMidYMid")
-    .attr("viewBox", "0 0 " + width + " " + height)
-    .attr("width", width).attr("height", height);
+    d3.select(element).append("div").attr("id", "tooltip" + this.linkID).attr("class", "nodeInfo");
+    let svg = d3.select(element).append("svg")
+                .attr("preserveAspectRatio", "xMidYMid")
+                .attr("viewBox", "0 0 " + width + " " + height)
+                .attr("width", width).attr("height", height);
 
     let nbrCountryNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.COUNTRY;}) ? 1 : 0;
     let nbrStateNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.STATE;}) ? 1 : 0;
@@ -164,8 +166,6 @@ export class LinkVisualizerService {
         .text(d => {return d[2].name;});
   }
 
-  
-
   private drawLinkBetweenNodes(svg, posX1, posY1, posX2, posY2, isDash?: boolean) {
     if(isDash) {
       svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
@@ -183,18 +183,19 @@ export class LinkVisualizerService {
 
   
   private entityHover = selectedNode => {
-    d3.select("#nodeInfo").transition().duration(200).style("opacity", .9); 
+    
+    d3.select("#" + "tooltip" + selectedNode[3]).transition().duration(200).style("opacity", .9); 
     let posX = selectedNode[0] - selectedNode[2].full_name.length, posY = selectedNode[1] + 12;
     if(selectedNode[2].level === NODE_LEVEL.CITY) {
       posX = posX - 10;
     }
-    d3.select("#nodeInfo").html(selectedNode[2].full_name)
+    d3.select("#" + "tooltip" + selectedNode[3]).html(selectedNode[2].full_name)
       .style("left", posX + "px")
       .style("top", posY + "px");
   }
 
   private entityOut = selectedNode => {
-    d3.select("#nodeInfo").transition().duration(200).style("opacity", 0);
+    d3.select("#" + "tooltip" + selectedNode[3]).transition().duration(200).style("opacity", 0);
   }
 
   private entitySelecting = selectedNode => {

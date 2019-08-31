@@ -1,4 +1,4 @@
-#link-visual {
+.link-visual {
     width: 100%;
     max-height: 35vh;
     position: relative;
@@ -6,23 +6,17 @@
     overflow-x: hidden;
   }
   
-#link-visual::-webkit-scrollbar {
+.link-visual::-webkit-scrollbar {
     display:none;
 }
 
-#nodeInfo {   
+.nodeInfo {   
   position: absolute;           
   text-align: center;
   margin: 10px;
   font: 12px sans-serif;        
   border: 1px;      
   pointer-events: none;         
-}
-#nodeInfo h4{
-  margin:0;
-  font-size:14px;
-}
-#nodeInfo{
   background:rgba(0,0,0,0.9);
   border:1px solid grey;
   border-radius:5px;
@@ -30,17 +24,4 @@
   padding:4px;
   color:white;
   opacity:0;
-}
-#nodeInfo table{
-  table-layout:fixed;
-}
-#nodeInfo tr td{
-  padding:0;
-  margin:0;
-}
-#nodeInfo tr td:nth-child(1){
-  width:50px;
-}
-#nodeInfo tr td:nth-child(2){
-  text-align:center;
 }
