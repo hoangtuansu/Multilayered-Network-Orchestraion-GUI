@@ -37,7 +37,7 @@ export class LinkVisualizerService {
     return h+30;  //for displaying the last node
   }
 
-  private getNodePosition(svg, listIDs, width, numLayers, nbrCountryNode, nbrCityNode) {
+  private getNodePosition(svg, arrowID, listIDs, width, numLayers, nbrCountryNode, nbrCityNode) {
     let prevNode = null, prevPosY = 0, prevPosX = 0;
     let nodePositionArr = [];
     for(let i in listIDs) {
@@ -67,7 +67,7 @@ export class LinkVisualizerService {
         posY = prevPosY + (prevNode.level === node.level ? 100 : 70);
         let prevOffset = (prevNode.level === NODE_LEVEL.CITY ? 0 : 10); 
         let curOffset = (node.level === NODE_LEVEL.CITY ? 0 : 10); 
-        this.drawLinkBetweenNodes(svg, prevPosX + prevOffset, prevPosY + prevOffset, posX + curOffset, posY + curOffset);
+        this.drawLinkBetweenNodes(svg, arrowID, prevPosX + prevOffset, prevPosY + prevOffset, posX + curOffset, posY + curOffset);
       }
       nodePositionArr.push([posX, posY, node, this.linkID]);
       prevNode = node;
@@ -94,7 +94,7 @@ export class LinkVisualizerService {
     let nbrCityNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.CITY;}) ? 1 : 0;
     let numLayers = nbrCountryNode + nbrStateNode + nbrCityNode;
     svg.append("svg:defs").append("svg:marker")
-      .attr("id", "triangle")
+      .attr("id", "triangle" + this.linkID)
       .attr("refX", 12)
       .attr("refY", 12)
       .attr("markerUnits", "userSpaceOnUse")
@@ -104,12 +104,12 @@ export class LinkVisualizerService {
       .append("path")
       .attr("d", "M 0 0 24 12 0 24 6 12")
       .style("stroke", "black");
-    let nodePositionArr = this.getNodePosition(svg, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
-    this.displayLogicalLink(svg, listIDs, nodePositionArr);
+    let nodePositionArr = this.getNodePosition(svg, "triangle" + this.linkID, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
+    this.displayLogicalLink(svg, "triangle" + this.linkID, listIDs, nodePositionArr);
     this.displayNodes(svg, nodePositionArr);
   }
 
-  private displayLogicalLink(svg, listIDs: string[], nodePositionArr) {
+  private displayLogicalLink(svg, arrowID, listIDs: string[], nodePositionArr) {
     let prevCountryNodeID = null, prevStateNodeID = null;
     for(let nid of listIDs) {
       let curNode = this.nodeMngmnt.getNode2DObject(nid);
@@ -124,7 +124,7 @@ export class LinkVisualizerService {
           continue;
         } else if(i > (prevCountryNodeID + 1)){
           prevPos = nodePositionArr[prevCountryNodeID];
-          this.drawLinkBetweenNodes(svg,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
+          this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
         }
       } else if(curNode.level == NODE_LEVEL.STATE) {
@@ -133,7 +133,7 @@ export class LinkVisualizerService {
           continue;
         } else if(i > (prevStateNodeID + 1)){
           prevPos = nodePositionArr[prevStateNodeID];
-          this.drawLinkBetweenNodes(svg,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
+          this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
         }
       }
@@ -166,19 +166,19 @@ export class LinkVisualizerService {
         .text(d => {return d[2].name;});
   }
 
-  private drawLinkBetweenNodes(svg, posX1, posY1, posX2, posY2, isDash?: boolean) {
+  private drawLinkBetweenNodes(svg, arrowID, posX1, posY1, posX2, posY2, isDash?: boolean) {
     if(isDash) {
       svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
         .attr("stroke-width", 6)
         .attr("stroke", "black")
         .attr("stroke-dasharray", 8)
-        .attr("marker-mid", "url(#triangle)");
+        .attr("marker-mid", "url(#" + arrowID + ")");
         return;
     }
     svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
         .attr("stroke-width", 6)
         .attr("stroke", "black")
-        .attr("marker-mid", "url(#triangle)");
+        .attr("marker-mid", "url(#" + arrowID + ")");
   }
 
   
