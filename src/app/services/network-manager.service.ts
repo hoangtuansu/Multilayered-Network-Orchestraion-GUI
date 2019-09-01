@@ -47,4 +47,15 @@ export class NetworkManagerService {
   get2DBoundaryLinksOfNode(nid: string): OBJ.GLObject2D[] {
     return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
+
+  get2DContainedNetworkElement(nid: string): OBJ.GNObject2D[] {
+    return this.getG2DNOs().filter(d => { 
+      for(let l of this.getG2DLOs()) {
+        if((l.node1.id == nid && d.id == l.node2.id) || (l.node2.id == nid && d.id == l.node1.id)) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }
 }

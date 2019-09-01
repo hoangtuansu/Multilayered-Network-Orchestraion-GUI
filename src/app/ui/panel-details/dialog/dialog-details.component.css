@@ -25,14 +25,14 @@ mat-form-field {
   color: rgba(0,0,0,.80);
 }
 
-#link-title {
+.link-title {
   top: 2px;
   position: relative;
   width: auto;
   height: 30px;
 }
 
-#link-symbol {
+.link-symbol {
   margin-left: 15px;
   margin-right: 10px;
   height: 15px;
@@ -43,7 +43,7 @@ mat-form-field {
   align-items: center; 
 }
 
-#mark1 {
+.mark1 {
   width: 15px;
   height: 15px;
   background:rgba(44, 62, 80,1.0);
@@ -52,13 +52,13 @@ mat-form-field {
   left: 0;
 }
 
-#bar {
+.bar {
   height: 5px;
   width: 100%;
   background-color: rgba(0,0,0,.26);
 }
 
-#mark2 {
+.mark2 {
   width: 15px;
   height: 15px;
   background: rgba(44, 62, 80,1.0);
@@ -67,17 +67,39 @@ mat-form-field {
   right: 0;
 }
 
-#link-nodes {
+.link-nodes {
   position: relative;
   top: 5px;
   height: 20px;
 }
 
-#src-name {
+.src-name {
   margin-left: 10px;
   float: left;
 }
 
-#dst-name {
+.dst-name {
   float: right;
+}
+
+.router-name {
+  font-size: 15px;
+  font-weight: 400;
+  
+}
+
+.router-name span {
+  margin-right: 10px;
+  background-color: #6c757d;
+  width: 30px;
+  text-align: center;
+  padding: .20em .2em;
+  color: white;
+  vertical-align: baseline;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.router-name p {
+  font-size: 13px;
 }
