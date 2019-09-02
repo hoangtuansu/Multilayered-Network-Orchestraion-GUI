@@ -28,8 +28,8 @@ export class Engine3DService implements OnDestroy {
   is3DFadingInStart: boolean = false;
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
-  private isDetailEnabled: boolean = false;
-
+  isDetailEnabled: boolean = false;
+  
   constructor(private animatorService: AnimatorService ) {
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
@@ -46,7 +46,7 @@ export class Engine3DService implements OnDestroy {
     light.position.set( -25, 50, 15 );
     this.scene.add(light );
 
-    this.camera.position.set( 36, 25, 26 );
+    this.camera.position.set( 25, 20, 20 );
     this.camera.rotation.set( -Math.PI/4.5, Math.PI/4, Math.PI/6);
 
     this.controls.enabled = true;
@@ -80,7 +80,6 @@ export class Engine3DService implements OnDestroy {
         console.log(o.id);
         for(let l of this.animatorService.nodeMngmt.getGLOs()) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
-            console.log(l);
             l.mesh.visible = isShown;
           }
         }
@@ -93,7 +92,7 @@ export class Engine3DService implements OnDestroy {
 
   render() {
     this.animate();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(window.innerWidth*0.45, window.innerHeight*0.45);
   }
 
   private animate() {

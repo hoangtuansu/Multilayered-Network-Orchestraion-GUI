@@ -65,21 +65,6 @@ export class Topo3dComponent implements OnInit, OnChanges {
       this.engine3DService.enableDetailView(changes["isDetailShown"].currentValue);
       return;
     }
-    let change = changes["displayMode"];
-    if(change.firstChange)
-      return;
-    
-    this.engine3DService.is3DFadingOutComplete = false;
-    this.engine3DService.is3DFadingInStart = false;
-
-    if(change.previousValue == OBJ.DISPLAY_MODE.D2 && change.currentValue == OBJ.DISPLAY_MODE.D3) {
-      //not fade in the behind 3D scene yet, wait until animation3DEnd is done
-      /* this.engine3DService.is3DFadingIn = true;
-      this.engine3DService.is3DFadingOut = false;  */   
-    } else if(change.previousValue == OBJ.DISPLAY_MODE.D3 && change.currentValue == OBJ.DISPLAY_MODE.D2) {
-      this.engine3DService.is3DFadingIn = false;
-      this.engine3DService.is3DFadingOut = true;
-    }
   }
 
   animation3DEnd($event) {

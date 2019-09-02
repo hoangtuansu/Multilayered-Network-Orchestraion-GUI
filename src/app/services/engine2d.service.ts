@@ -238,24 +238,6 @@ export class Engine2DService {
     this.updateShownMode(true, false, false)
   }
 
-  update() {
-    if(this.is2DFadingOut) {
-      this.is2DFadingOutComplete = this.animatorService.fadingOut2D();
-      if(this.is2DFadingOutComplete) {
-        this.fadingOutCompleteNotifier.next(this.is2DFadingOutComplete);
-      } else {
-        this.update();
-      }
-    }
-
-    if(this.is2DFadingIn) {
-      if(!this.animatorService.fadingIn2D())
-        this.update();
-      
-    }
-
-  }
-
   //#region Handling mouse click, hover, out event on network nodes/links
   private entitySelecting = (d) => {
     if(!this.isDetailEnabled)

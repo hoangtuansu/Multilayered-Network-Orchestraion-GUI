@@ -86,16 +86,17 @@ export const G2DNOs: GNObject2D[] = [
   assets_path + 'country-switch.png', 
   assets_path + 'country-switch-hover.png', 
   assets_path + 'country-switch-selected.png', [15, 15], [-115, 64], ['/1', '/2', '3']),
-  new GNObject2D ('gnobject2d15', 'bbld', 'Buffalo Building', NODE_LEVEL.CITY, 
+  new GNObject2D ('gnobject2d15', 'bbn', 'Buffalo Net', NODE_LEVEL.CITY, 
   assets_path + 'router.png', 
   assets_path + 'world-data-center-hover.png', 
   assets_path + 'world-data-center-selected.png', [6, 6], [-113, 55], ['/1', '/2', '3']),
-  new GNObject2D ('gnobject2d16', 'ebld', 'Edmonton Building', NODE_LEVEL.CITY, 
+  new GNObject2D ('gnobject2d16', 'edn', 'Edmonton Net', NODE_LEVEL.CITY, 
   assets_path + 'router.png', 
   assets_path + 'world-data-center-hover.png', 
   assets_path + 'world-data-center-selected.png', [6, 6], [-117, 53], ['/1', '/2', '3']),
-  new GNObject2D ('gnobject2d17', 'cbld', 'Calgary Building', NODE_LEVEL.CITY, 
+  new GNObject2D ('gnobject2d17', 'can', 'Calgary Net', NODE_LEVEL.CITY, 
   assets_path + 'router.png', 
   assets_path + 'world-data-center-hover.png', 
   assets_path + 'world-data-center-selected.png', [6, 6], [-115, 59], ['/1', '/2', '3'])
 ];
+

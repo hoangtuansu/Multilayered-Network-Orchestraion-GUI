@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NetworkManagerService } from 'src/app/services/network-manager.service';
+import { Engine3DService } from 'src/app/services/engine3d.service';
 
 @Component({
   selector: 'app-dialog-details',
@@ -9,10 +10,12 @@ import { NetworkManagerService } from 'src/app/services/network-manager.service'
 })
 
 export class DialogDetailsComponent implements OnInit {
+  is3DBeingShown: boolean = false;
   
   constructor(
     public dialogRef: MatDialogRef<DialogDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public selectedEntity: any,
+    private engine3DService: Engine3DService,
     private netManagerService: NetworkManagerService) {
       dialogRef.disableClose = true;
       
@@ -23,6 +26,20 @@ export class DialogDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  display3DTopo() {
+    if(!this.is3DBeingShown) {
+      this.engine3DService.is3DFadingOutComplete = false;
+      this.engine3DService.is3DFadingInStart = true;
+      this.engine3DService.fadingInStartNotifier.next(this.engine3DService.is3DFadingInStart);
+    } else {
+      this.engine3DService.is3DFadingOutComplete = false;
+      this.engine3DService.is3DFadingInStart = false;
+      this.engine3DService.is3DFadingIn = false;
+      this.engine3DService.is3DFadingOut = true;
+    }
+    this.is3DBeingShown = !this.is3DBeingShown;
   }
 
   disableAnimation = true;

@@ -103,3 +103,7 @@ mat-form-field {
 .router-name p {
   font-size: 13px;
 }
+
+.router-name a {
+  float: right;
+}

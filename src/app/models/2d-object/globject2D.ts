@@ -61,6 +61,10 @@ export class GLObject2D implements LObject2D {
 
     new GLObject2D ('globject2d30', 'mdc-tco', 'white', 2, G2DNOs[2], '/1', G2DNOs[9], '/2', '60Gbps', LINK_TYPE.BOUNDARY),
     new GLObject2D ('globject2d31', 'mdc-mco', 'white', 2, G2DNOs[2], '/1', G2DNOs[10], '/2', '110Gbps', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d32', 'mdc-lco', 'white', 2, G2DNOs[2], '/1', G2DNOs[11], '/2', '180Gbps', LINK_TYPE.BOUNDARY)
+    new GLObject2D ('globject2d32', 'mdc-lco', 'white', 2, G2DNOs[2], '/1', G2DNOs[11], '/2', '180Gbps', LINK_TYPE.BOUNDARY),
+
+    new GLObject2D ('globject2d32', 'cco-bbn', 'white', 2, G2DNOs[4], '/1', G2DNOs[14], '/2', '180Gbps', LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d32', 'cco-edn', 'white', 2, G2DNOs[4], '/1', G2DNOs[15], '/2', '180Gbps', LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d32', 'cco-can', 'white', 2, G2DNOs[4], '/1', G2DNOs[16], '/2', '180Gbps', LINK_TYPE.BOUNDARY)
 
   ];

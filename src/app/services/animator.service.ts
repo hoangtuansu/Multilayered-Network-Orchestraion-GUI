@@ -176,7 +176,6 @@ export class AnimatorService {
     let count = true;
     for(let p of this.nodeMngmt.getGPOs()) {
       p.setVisible(true);
-      console.log("test");
       if(p.layer == OBJ.LAYER.WORLD)
         continue;
       let upperbound = 5;

@@ -10,13 +10,15 @@
               <span>Routers</span>
             </div>
           </mat-panel-title>
-          
         </mat-expansion-panel-header>
     
-        <mat-action-list *ngFor="let n of netManagerService.get2DContainedNetworkElement(selectedEntity.id); let i = index;">
-            <button mat-list-item class="router-name">
-              <span>{{n.name}}</span>
-              <p> {{n.full_name}} </p>
+        <mat-action-list dense *ngFor="let n of netManagerService.get2DContainedNetworkElement(selectedEntity.id); let i = index;">
+            <button mat-list-item>
+              <h3 mat-line> {{n.full_name}} </h3>
+              <p mat-line>
+                <span> {{n.name}} </span>
+              </p>
+              <mat-icon md-list-icon (click)="display3DTopo(n);">delete</mat-icon>
             </button>
           </mat-action-list>
       
