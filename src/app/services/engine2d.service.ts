@@ -138,7 +138,7 @@ export class Engine2DService {
       this.selectedCountry = d;
 
       if (d["id"]  == 'CAN') {
-        d3.json("../../assets/states.topo.json").then((us) => {
+        d3.json("../../assets/states.topo.json").then((us: any) => {
           this.g.append("g")
             .attr("id", "states").selectAll("path")
             .data(t.feature(us, us["objects"]["states"])["features"]).enter().append("path")
@@ -204,7 +204,7 @@ export class Engine2DService {
 
     this.g = svg.append("g");
 
-    d3.json("../../assets/countries.topo.json").then((us) => {
+    d3.json("../../assets/countries.topo.json").then((us: any) => {
       this.g.append("g")
         .attr("id", "countries").selectAll("path")
         .data(t.feature(us, us["objects"]["countries"])["features"])

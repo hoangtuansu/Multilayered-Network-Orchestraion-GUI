@@ -1,25 +1,22 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
-import { GNObject2D } from '../models/2d-object/gnobject2D';
 import { NetworkManagerService } from './network-manager.service';
 import { NODE_LEVEL } from '../models/object-interfaces';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinkVisualizerService {
-  listOfNodeIDs: string[] = null;
-  linkID: string = "";
+  selectedLinkID: string = "";
   
   constructor(private nodeMngmnt: NetworkManagerService) { }
 
   setSelectedLinkID(lid: string) {
-    this.linkID = lid;
+    this.selectedLinkID = lid;
   }
 
   getLinkInfo(): string[] {
-    return ['gnobject2d1', 'gnobject2d4', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];
+    return ['gnobject2d1', 'gnobject2d4', 'gnobject2d2', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];
     //return ['gnobject2d1', 'gnobject2d4', 'gnobject2d5', 'gnobject2d3' ];
     //return ['gnobject2d1', 'gnobject2d2', 'gnobject2d3' ];
   }
@@ -69,7 +66,7 @@ export class LinkVisualizerService {
         let curOffset = (node.level === NODE_LEVEL.CITY ? 0 : 10); 
         this.drawLinkBetweenNodes(svg, arrowID, prevPosX + prevOffset, prevPosY + prevOffset, posX + curOffset, posY + curOffset);
       }
-      nodePositionArr.push([posX, posY, node, this.linkID]);
+      nodePositionArr.push([posX, posY, node, this.selectedLinkID]);
       prevNode = node;
       prevPosY = posY;
       prevPosX = posX;
@@ -83,7 +80,7 @@ export class LinkVisualizerService {
     //let width = mapRenderer.nativeElement.offsetWidth;
     let width = 304;
     let height = this.calculateHeight(listIDs, 100, 70);
-    d3.select(element).append("div").attr("id", "tooltip" + this.linkID).attr("class", "nodeInfo");
+    d3.select(element).append("div").attr("id", "tooltip" + this.selectedLinkID).attr("class", "nodeInfo");
     let svg = d3.select(element).append("svg")
                 .attr("preserveAspectRatio", "xMidYMid")
                 .attr("viewBox", "0 0 " + width + " " + height)
@@ -94,7 +91,7 @@ export class LinkVisualizerService {
     let nbrCityNode = listIDs.some(id => {return this.nodeMngmnt.getNode2DObject(id).level === NODE_LEVEL.CITY;}) ? 1 : 0;
     let numLayers = nbrCountryNode + nbrStateNode + nbrCityNode;
     svg.append("svg:defs").append("svg:marker")
-      .attr("id", "triangle" + this.linkID)
+      .attr("id", "triangle" + this.selectedLinkID)
       .attr("refX", 12)
       .attr("refY", 12)
       .attr("markerUnits", "userSpaceOnUse")
@@ -104,8 +101,8 @@ export class LinkVisualizerService {
       .append("path")
       .attr("d", "M 0 0 24 12 0 24 6 12")
       .style("stroke", "black");
-    let nodePositionArr = this.getNodePosition(svg, "triangle" + this.linkID, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
-    this.displayLogicalLink(svg, "triangle" + this.linkID, listIDs, nodePositionArr);
+    let nodePositionArr = this.getNodePosition(svg, "triangle" + this.selectedLinkID, listIDs, width, numLayers, nbrCountryNode, nbrCityNode);
+    this.displayLogicalLink(svg, "triangle" + this.selectedLinkID, listIDs, nodePositionArr);
     this.displayNodes(svg, nodePositionArr);
   }
 
@@ -119,22 +116,27 @@ export class LinkVisualizerService {
       let curOffset = 10; 
 
       if(curNode.level == NODE_LEVEL.COUNTRY) {
-        if(prevCountryNodeID == null || i == (prevCountryNodeID + 1)) {
+        if(prevCountryNodeID == null) {
           prevCountryNodeID = i;
           continue;
-        } else if(i > (prevCountryNodeID + 1)){
+        }
+        if(i > (prevCountryNodeID + 1)){
           prevPos = nodePositionArr[prevCountryNodeID];
           this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
+          prevCountryNodeID = i;
         }
       } else if(curNode.level == NODE_LEVEL.STATE) {
-        if(prevStateNodeID == null || i == (prevStateNodeID + 1)) {
+        if(prevStateNodeID == null) {
           prevStateNodeID = i;
           continue;
-        } else if(i > (prevStateNodeID + 1)){
+        }
+        if(i > (prevStateNodeID + 1)){
           prevPos = nodePositionArr[prevStateNodeID];
+          if(this.nodeMngmnt.getNode2DObject(listIDs[i-1]).level == NODE_LEVEL.CITY)
           this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
+            prevStateNodeID = i;
         }
       }
       
