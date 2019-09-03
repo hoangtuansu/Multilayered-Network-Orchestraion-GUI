@@ -1,12 +1,17 @@
-.example-headers-align .mat-expansion-panel-header-title,
-.example-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
-  vertical-align: middle;
+.detail-dialog-header {
+  width: 100%;
+  position: relative;
 }
 
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
+.detail-dialog-header > button {
+  position: absolute;
+  top: -25px;
+  right: -20px;
+}
+
+.link-list .mat-list-item {
+  height: auto;
+  font-size: 12px;
 }
 
 mat-form-field {
@@ -15,10 +20,16 @@ mat-form-field {
 
 .mat-dialog-content {
   padding: 0 !important;
-  max-height: 100vh;
-  overflow: hidden;
+  height: 100%;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  overflow-y: scroll;
 }
 
+.mat-dialog-content::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
 
 .link-header {
   padding: 0 15px !important;

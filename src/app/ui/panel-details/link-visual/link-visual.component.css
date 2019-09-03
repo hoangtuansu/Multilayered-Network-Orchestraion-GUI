@@ -3,6 +3,8 @@
     max-height: 35vh;
     position: relative;
     overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  
     overflow-x: hidden;
   }
   

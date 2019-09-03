@@ -25,11 +25,11 @@ export class EngineCoordinatorService {
         panelClass: '.custom-detail-dialog-container',
         data: entity,
         position: {left: '20px', top: '20px'},
-        hasBackdrop: false
+        hasBackdrop: false,
+        disableClose: false
       });
       this.isShown = true;
       this.dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
         this.isShown = false;
       });
     }
