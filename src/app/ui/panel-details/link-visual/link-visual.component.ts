@@ -11,14 +11,15 @@ export class LinkVisualComponent implements OnInit {
   @ViewChild('linkVisualization', { static: false }) linkVisualizer: ElementRef;
   @Input() selectedLinkID: any = null;
   constructor(private linkVisualizerService: LinkVisualizerService) {
-   }
+  }
+  
 
   ngOnInit() {
   }
 
   ngAfterViewInit(): void {
     this.linkVisualizerService.setSelectedLinkID(this.selectedLinkID);
-    this.linkVisualizerService.createLinkVisualization(this.linkVisualizer);
+    this.linkVisualizerService.createLinkVisualization(this.linkVisualizer); 
   }
   
 
