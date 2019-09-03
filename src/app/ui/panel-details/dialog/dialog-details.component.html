@@ -1,5 +1,5 @@
 <div class="detail-dialog-header">
-  <h1 mat-dialog-title>{{selectedEntity.full_name}}</h1>
+  <h1 mat-dialog-title>{{data['selectedEntity'].full_name}}</h1>
   <button mat-icon-button (click)="dialogRef.close()">
       <mat-icon>close</mat-icon>
   </button>
@@ -17,7 +17,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
     
-        <mat-action-list dense *ngFor="let n of netManagerService.get2DContainedNetworkElement(selectedEntity.id); let i = index;">
+        <mat-action-list dense *ngFor="let n of data['containedNetEles']; let i = index;">
           <button mat-list-item>
             <h3 mat-line> {{n.full_name}} </h3>
             <p mat-line>
@@ -42,11 +42,11 @@
         <mat-tab-group dynamicHeight>
             <mat-tab label="Domain"> 
               <mat-list class="link-list">
-                  <mat-list-item matRipple *ngFor="let l of netManagerService.get2DDomainLinksOfNode(selectedEntity.id); let i = index;">
+                  <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;">
                       <div style="width:100%; height: 80px; padding-top: 5px;">
                         <div class='link-title'>
                           <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                              {{selectedEntity.full_name}} &#8596; {{selectedEntity.full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
+                              {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
                           </div>
                           <div style="float: right;">{{l.bandwidth}}</div>
                         </div>
@@ -56,8 +56,8 @@
                           <div class='mark2'></div>
                         </div>
                         <div class='link-nodes'>
-                            <div class='src-name'>{{selectedEntity.name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                            <div class='dst-name'>{{selectedEntity.name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                            <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
+                            <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
                         </div>
                       </div>
                       <mat-divider></mat-divider>
@@ -68,11 +68,11 @@
             </mat-tab>
             <mat-tab label="Boundary"> 
               <mat-list class="link-list">
-                <mat-list-item matRipple *ngFor="let l of netManagerService.get2DBoundaryLinksOfNode(selectedEntity.id); let i = index;">
+                <mat-list-item matRipple *ngFor="let l of data['boundaryLinks']; let i = index;">
                     <div style="width:100%; height: 80px; padding-top: 5px;">
                       <div class='link-title'>
                         <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                            {{selectedEntity.full_name}} &#8596; {{selectedEntity.full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
+                            {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
                         </div>
                         <div style="float: right;">{{l.bandwidth}}</div>
                       </div>
@@ -82,8 +82,8 @@
                         <div class='mark2'></div>
                       </div>
                       <div class='link-nodes'>
-                          <div class='src-name'>{{selectedEntity.name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                          <div class='dst-name'>{{selectedEntity.name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                          <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
+                          <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
                       </div>
                     </div>
                     <mat-divider></mat-divider>
@@ -103,14 +103,14 @@
         </mat-expansion-panel-header>
     
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let l of netManagerService.get2DDomainLinksOfNode(selectedEntity.id); let i = index;" [expanded]="false" [hideToggle]="'true'">
+          <mat-expansion-panel *ngFor="let p of data['crossingPaths']; let i = index;" [expanded]="false" [hideToggle]="'true'">
               <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                 <div style="width:100%; height: 80px; font-size: 13px;">
                   <div class='link-title'>
                     <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                      {{selectedEntity.full_name}} &#8596; {{selectedEntity.full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
+                      {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === p[0].full_name ? p[p.length-1].full_name : p[0].full_name}}
                     </div>
-                    <div style="float: right;">{{l.bandwidth}}</div>
+                    <div style="float: right;">100Gbps</div>
                   </div>
                   <div class='link-symbol'>
                     <div class='mark1'></div>
@@ -118,12 +118,12 @@
                     <div class='mark2'></div>
                   </div>
                   <div class='link-nodes'>
-                      <div class='src-name'>{{selectedEntity.name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                      <div class='dst-name'>{{selectedEntity.name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                      <div class='src-name'>{{data['selectedEntity'].name === p[0].name ? p[0].name : p[p.length-1].name}}</div>
+                      <div class='dst-name'>{{data['selectedEntity'].name === p[0].name ? p[p.length-1].name : p[0].name}}</div>
                   </div>
                 </div>
               </mat-expansion-panel-header>
-              <app-link-visual [selectedLinkID] = "l.id"></app-link-visual>
+              <app-link-visual [selectedLinkID] = "i" [obtainedPath]= "p"></app-link-visual>
           </mat-expansion-panel>
         </mat-accordion>
       

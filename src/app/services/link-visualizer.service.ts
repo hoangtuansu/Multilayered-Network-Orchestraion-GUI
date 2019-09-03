@@ -8,15 +8,17 @@ import { NODE_LEVEL } from '../models/object-interfaces';
 })
 export class LinkVisualizerService {
   selectedLinkID: string = "";
-  
+  obtainedPath: string[] = null;
   constructor(private nodeMngmnt: NetworkManagerService) { }
 
-  setSelectedLinkID(lid: string) {
+  setSelectedLinkID(lid: string, op: string[]) {
     this.selectedLinkID = lid;
+    this.obtainedPath = op;
   }
 
   getLinkInfo(): string[] {
-    return ['gnobject2d1', 'gnobject2d4', 'gnobject2d2', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];
+    return this.obtainedPath;
+    //return ['gnobject2d1', 'gnobject2d4', 'gnobject2d2', 'gnobject2d5', 'gnobject2d15', 'gnobject2d16', 'gnobject2d13', 'gnobject2d17', 'gnobject2d3' ];
     //return ['gnobject2d1', 'gnobject2d4', 'gnobject2d5', 'gnobject2d3' ];
     //return ['gnobject2d1', 'gnobject2d2', 'gnobject2d3' ];
   }
@@ -116,7 +118,7 @@ export class LinkVisualizerService {
       let curOffset = 10; 
 
       if(curNode.level == NODE_LEVEL.COUNTRY) {
-        if(prevCountryNodeID == null) {
+        if(prevCountryNodeID == null || i == (prevCountryNodeID + 1)) {
           prevCountryNodeID = i;
           continue;
         }
@@ -127,16 +129,16 @@ export class LinkVisualizerService {
           prevCountryNodeID = i;
         }
       } else if(curNode.level == NODE_LEVEL.STATE) {
-        if(prevStateNodeID == null) {
+        if(prevStateNodeID == null || i == (prevStateNodeID + 1)) {
           prevStateNodeID = i;
           continue;
         }
         if(i > (prevStateNodeID + 1)){
           prevPos = nodePositionArr[prevStateNodeID];
           if(this.nodeMngmnt.getNode2DObject(listIDs[i-1]).level == NODE_LEVEL.CITY)
-          this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
+            this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
-            prevStateNodeID = i;
+          prevStateNodeID = i;
         }
       }
       

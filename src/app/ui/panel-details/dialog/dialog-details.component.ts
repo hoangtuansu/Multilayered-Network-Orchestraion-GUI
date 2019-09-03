@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { NetworkManagerService } from 'src/app/services/network-manager.service';
 import { Engine3DService } from 'src/app/services/engine3d.service';
+import { PathComputationService } from 'src/app/services/path-computation.service';
+import { NetworkManagerService } from 'src/app/services/network-manager.service';
+import * as OBJ from 'src/app/models';
 
 @Component({
   selector: 'app-dialog-details',
@@ -11,12 +13,12 @@ import { Engine3DService } from 'src/app/services/engine3d.service';
 
 export class DialogDetailsComponent implements OnInit {
   is3DBeingShown: boolean = false;
-  
   constructor(
     public dialogRef: MatDialogRef<DialogDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedEntity: any,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private engine3DService: Engine3DService,
-    private netManagerService: NetworkManagerService) {
+    private netManagerService: NetworkManagerService,
+    private pathComputationService: PathComputationService) {
       dialogRef.disableClose = true;
       
     }
@@ -44,8 +46,7 @@ export class DialogDetailsComponent implements OnInit {
 
   disableAnimation = true;
   ngAfterViewInit(): void {
-    setTimeout(()=> this.disableAnimation = false);
-    
+    setTimeout(()=> this.disableAnimation = false);   
   }
   
 

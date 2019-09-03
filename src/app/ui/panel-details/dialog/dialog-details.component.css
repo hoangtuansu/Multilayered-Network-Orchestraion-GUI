@@ -20,7 +20,7 @@ mat-form-field {
 
 .mat-dialog-content {
   padding: 0 !important;
-  height: 100%;
+  height: auto;
   scrollbar-width: none; 
   -ms-overflow-style: none; 
   overflow-y: scroll;

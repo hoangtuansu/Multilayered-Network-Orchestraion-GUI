@@ -243,6 +243,7 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     this.resetSelectedEntity();
+    console.log(d.id);
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
     this.selectedNodeForDetailNotifier.next(d);

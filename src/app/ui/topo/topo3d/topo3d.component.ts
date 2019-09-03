@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, SimpleChange, ElementRef, Input, ViewEnca
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Engine3DService } from 'src/app/services/engine3d.service';
 import * as OBJ from '../../../models';
+import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-topo3d',
@@ -17,6 +18,7 @@ import * as OBJ from '../../../models';
       state('3d-hide', style({
         position: 'absolute',
         'z-index': 0,
+        display: 'none',
         opacity: 0
       })),
       transition('3d-hide <=> 3d-show', animate('1500ms'))])],
