@@ -6,50 +6,47 @@
     position: absolute;
 }
 
-#layer-show {
+.control-buttons {
+  position: absolute;
+  transition: .9s ease-in-out all;
+  z-index: 10;
+  height: auto;
+  width: 30px;
+}
+
+.layer-show {
     position: absolute;
-    left: 105px;
-    bottom: 20px;
-    height: 45px;
+    right: 15px;
+    top: 10px;
     transition: .9s ease-in-out all;
     z-index: 10;
-    float: right;
+    height: auto;
+    width: 30px;
   }
   
-  #layer-show a {
-    width:35px;
-    height: 32px;
-    padding: 3px;
-    text-decoration: none;
-    text-transform: uppercase;
-    margin-left: 5px;
-    float:right;
-  }
+.layer-show a {
+  width:32px;
+  height: 32px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: 5px;
+  float: right;
+}
 
-  #layer-show .layer1 {
-    background: #ecf0f1 url("../../../../assets/images/layer1-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #ecf0f1;
-  }
+.layer-show .layer1 {
+  background: #ffffff url("../../../../assets/images/layer1-selected.png") center center no-repeat;
+}
 
-  #layer-show .layer1-shown {
-    background: #ecf0f1 url("../../../../assets/images/layer1-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #2a81b8;
-  }
+.layer-show .layer1.shown, .layer-show .layer2.shown, .layer-show .layer3.shown {
+  background-color: #b3b3b3;
+  transition: background-color 1s ease-in 0.1 ease-out;
+}
 
-  #layer-show .layer2 {
-    background: #ecf0f1 url("../../../../assets/images/layer2-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #ecf0f1;
-  }
-  #layer-show .layer2-shown {
-    background: #ecf0f1 url("../../../../assets/images/layer2-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #2a81b8;
-  }
+.layer-show .layer2 {
+  background: #ffffff url("../../../../assets/images/layer2-selected.png") center no-repeat;
+}
 
-  #layer-show .layer3 {
-    background: #ecf0f1 url("../../../../assets/images/layer3-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #ecf0f1;
-  }
-  #layer-show .layer3-shown {
-    background: #ecf0f1 url("../../../../assets/images/layer3-selected.png") center bottom no-repeat;
-    border-bottom: 4px solid #2a81b8;
-  }
+.layer-show .layer3 {
+  background: #ffffff url("../../../../assets/images/layer3-selected.png") center no-repeat;
+}

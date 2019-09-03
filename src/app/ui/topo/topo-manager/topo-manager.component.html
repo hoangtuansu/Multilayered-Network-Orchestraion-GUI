@@ -1,8 +1,5 @@
 <div id="controls">
     <a [ngClass]=
-    "selectedDisplayMode == 1 ? 'switch-view-2d' : (selectedDisplayMode == 3 ? 'switch-view-disable' : 'switch-view-3d')" 
-    (click)="switchDisplayMode()"></a>
-    <a [ngClass]=
     "isDetailViewActivate ? 'detail-view-enabled' : 'detail-view-disabled'" 
     (click)="isDetailViewActivate = !isDetailViewActivate;"></a>
 </div>
@@ -10,4 +7,4 @@
 <br/>
 <!-- <topo-visual [displayMode] = "selectedDisplayMode"></topo-visual>  -->
 <app-topo2d [isDetailShown] = "isDetailViewActivate"></app-topo2d>
-<app-topo3d [displayMode] = "selectedDisplayMode" [isDetailShown] = "isDetailViewActivate"></app-topo3d>
+<app-topo3d [isDetailShown] = "isDetailViewActivate"></app-topo3d>

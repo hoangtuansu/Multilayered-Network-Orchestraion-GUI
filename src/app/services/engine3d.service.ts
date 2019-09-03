@@ -77,7 +77,6 @@ export class Engine3DService implements OnDestroy {
 
     for(let o of this.animatorService.nodeMngmt.getG3DNOs()) {
       if(o.layer == plane_id) {
-        console.log(o.id);
         for(let l of this.animatorService.nodeMngmt.getGLOs()) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
             l.mesh.visible = isShown;
