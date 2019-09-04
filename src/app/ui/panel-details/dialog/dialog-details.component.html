@@ -48,7 +48,7 @@
                           <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                               {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
                           </div>
-                          <div style="float: right;">{{l.bandwidth}}</div>
+                          <div style="float: right;">{{l.bandwidth}}Gbps</div>
                         </div>
                         <div class='link-symbol'>
                           <div class='mark1'></div>
@@ -74,7 +74,7 @@
                         <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                             {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
                         </div>
-                        <div style="float: right;">{{l.bandwidth}}</div>
+                        <div style="float: right;">{{l.bandwidth}}Gbps</div>
                       </div>
                       <div class='link-symbol'>
                         <div class='mark1'></div>
@@ -94,7 +94,7 @@
         </mat-tab-group>
       </mat-expansion-panel>
     
-      <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
             <div style="height: 32px;"> 
               <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/path.png"></div>
@@ -110,7 +110,7 @@
                     <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                       {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === p[0].full_name ? p[p.length-1].full_name : p[0].full_name}}
                     </div>
-                    <div style="float: right;">100Gbps</div>
+                    <div style="float: right;">{{data['bandwidth'][i]}}Gbps</div>
                   </div>
                   <div class='link-symbol'>
                     <div class='mark1'></div>

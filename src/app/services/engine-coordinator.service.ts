@@ -23,16 +23,19 @@ export class EngineCoordinatorService {
   }
 
   private openDialog(entity: any): void {
+    let dLs = this.netManagerService.get2DDomainLinksOfNode(entity.id),
+        bLs = this.netManagerService.get2DBoundaryLinksOfNode(entity.id),
+        cNEs = this.netManagerService.get2DContainedNetworkElement(entity.id),
+        cPs = this.pathComputationService.getCrossingPath(entity.id),
+        bWs = this.pathComputationService.getBandwidth(cPs);
+    let dataDlg = { selectedEntity: entity, domainLinks: dLs, 
+                    boundaryLinks: bLs, containedNetEles: cNEs, 
+                    crossingPaths: cPs, bandwidth: bWs};
     if(!this.isShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
         width: '400px',
         panelClass: 'custom-detail-dialog-container',
-        data: {
-          selectedEntity: entity, 
-          domainLinks: this.netManagerService.get2DDomainLinksOfNode(entity.id),
-          boundaryLinks: this.netManagerService.get2DBoundaryLinksOfNode(entity.id),
-          containedNetEles: this.netManagerService.get2DContainedNetworkElement(entity.id),
-          crossingPaths: this.pathComputationService.getCrossingPath(entity.id)},
+        data: dataDlg,
         position: {left: '20px', top: '20px'},
         hasBackdrop: false,
         disableClose: false
@@ -41,13 +44,9 @@ export class EngineCoordinatorService {
       this.dialogRef.afterClosed().subscribe(result => {
         this.isShown = false;
       });
+      return;
     }
-    this.dialogRef.componentInstance.data = {
-      selectedEntity: entity, 
-      domainLinks: this.netManagerService.get2DDomainLinksOfNode(entity.id),
-      boundaryLinks: this.netManagerService.get2DBoundaryLinksOfNode(entity.id),
-      containedNetEles: this.netManagerService.get2DContainedNetworkElement(entity.id),
-      crossingPaths: this.pathComputationService.getCrossingPath(entity.id)};
+    this.dialogRef.componentInstance.data = dataDlg;
   }
 
   get2DService() {

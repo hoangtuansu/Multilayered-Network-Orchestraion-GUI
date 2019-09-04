@@ -1,13 +1,31 @@
 import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { GNObject2D } from '../models/2d-object/gnobject2D';
+import { NetworkManagerService } from './network-manager.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PathComputationService {
-  construct() {
-    
+  constructor(private netMngtService: NetworkManagerService) {}
+
+  getBandwidth(listOfPaths: GNObject2D[][]): number[] {
+    let bw: number[] = new Array(listOfPaths.length).fill(1000);
+    for(let path of listOfPaths) {
+      for(let n of path) {
+        let idx = path.indexOf(n);
+        if(idx == path.length -1)
+          break;
+        for(let l of this.netMngtService.getG2DLOs()) {
+          if((l.node1 === n && l.node2 === path[idx+1]) 
+          || (l.node2 === n && l.node1 === path[idx+1])) {
+            if(l.bandwidth < bw[listOfPaths.indexOf(path)])
+            bw[listOfPaths.indexOf(path)] = l.bandwidth;
+          }
+        }
+      }
+    }
+    return bw;
   }
 
   getCrossingPath(nodeID: string): any {
