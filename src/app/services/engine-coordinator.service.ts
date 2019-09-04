@@ -38,7 +38,7 @@ export class EngineCoordinatorService {
         data: dataDlg,
         position: {left: '20px', top: '20px'},
         hasBackdrop: false,
-        disableClose: false
+        autoFocus: false
       });
       this.isShown = true;
       this.dialogRef.afterClosed().subscribe(result => {

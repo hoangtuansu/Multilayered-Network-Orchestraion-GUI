@@ -21,7 +21,7 @@ import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
         display: 'none',
         opacity: 0
       })),
-      transition('3d-hide <=> 3d-show', animate('1500ms'))])],
+      transition('3d-hide <=> 3d-show', animate('500ms'))])],
       encapsulation: ViewEncapsulation.None
 })
 export class Topo3dComponent implements OnInit, OnChanges {
@@ -79,6 +79,13 @@ export class Topo3dComponent implements OnInit, OnChanges {
       this.engine3DService.is3DFadingOut = false;
     }
     
+  }
+
+  close3DLayout() {
+    this.engine3DService.is3DFadingOutComplete = false;
+    this.engine3DService.is3DFadingInStart = false;
+    this.engine3DService.is3DFadingIn = false;
+    this.engine3DService.is3DFadingOut = true;
   }
 
   detach3DLayout() {

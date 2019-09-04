@@ -11,6 +11,7 @@ import { DialogDetailsComponent } from './ui/panel-details/dialog/dialog-details
 import {DemoMaterialModule} from './material-module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LinkVisualComponent } from './ui/panel-details/link-visual/link-visual.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LinkVisualComponent } from './ui/panel-details/link-visual/link-visual.
     BrowserAnimationsModule,
     FormsModule,
     DemoMaterialModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule
   ],

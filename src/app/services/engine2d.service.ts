@@ -1,9 +1,9 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { AnimatorService } from './animator.service';
 import * as d3 from 'd3';
 import * as OBJ from '../models';
 import { Subject } from 'rxjs';
 import * as t from 'topojson-client';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class Engine2DService {
   isDetailEnabled: boolean = false;
   selectedNodeForDetailNotifier: Subject<any> = new Subject<any>();
 
-  constructor(private animatorService: AnimatorService) {
+  constructor(private matIconRegistry: MatIconRegistry) {
     let colors = ["#e74c3c", "#2ecc71", "#34495e", "#5b2c6f", "#117a65", "#f1c40f", "#2e86c1", "#1abc9c", "#8e44ad", "#e67e22", 
   "#1e8449", "#b9770e"];
     ["Ont.", "B.C.", "Alta.", "Sask.", "Man.", "Que.", "N.B.", "Yuk.", "Nun.", "N.L.", "N.S.",
@@ -223,7 +223,7 @@ export class Engine2DService {
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
-
+        
       this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
         .enter().append("image").attr('class', 'country-level-mark')
         .attr('id', d => {return d.id;})
@@ -233,6 +233,7 @@ export class Engine2DService {
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
+      
     });
 
     this.updateShownMode(true, false, false)

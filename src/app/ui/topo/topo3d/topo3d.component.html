@@ -1,6 +1,6 @@
 <div class="topo3d" #renderer3DContainer [@fadeOut3DDiv]="isHide3DDiv ? '3d-hide' : '3d-show'" (@fadeOut3DDiv.done)="animation3DEnd($event)">
     <div class="control-buttons">
-        <button mat-icon-button (click)="detach3DLayout()">
+        <button mat-icon-button (click)="close3DLayout()">
             <mat-icon>close</mat-icon>
         </button>
         <button mat-icon-button>
