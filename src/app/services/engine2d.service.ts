@@ -20,6 +20,9 @@ export class Engine2DService {
   provinceColorMapping : any = { };
   
   g: any = null;
+  width: number = 0;
+  height: number = 0;
+  lastXYZ: any = null;
   selectedCountry: any = null;
   selectedState: any = null;
   projection: any = null;
@@ -38,7 +41,10 @@ export class Engine2DService {
 	"N.W.T.", "P.E.I."]
 		.forEach((d, idx) => { 
 			this.provinceColorMapping[d]={color:colors[idx]}; 
-		});
+    });
+    
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
    }
 
   enableDetailView(e: boolean) {
@@ -47,6 +53,7 @@ export class Engine2DService {
   }
 
   private zoom = (xyz: any) => {
+    this.lastXYZ = xyz;
     this.resetSelectedEntity();
     this.g.transition().duration(750)
         .attr("transform", "translate(" + this.projection.translate() + ") scale(" + xyz[2] + ") translate(-" + xyz[0] + ",-" + xyz[1] + ")")
@@ -55,13 +62,12 @@ export class Engine2DService {
   }
 
   private scale_ratio = (d: any) => {
-    let window_width = window.innerWidth, window_height = window.innerHeight;
     let bounds = this.path.bounds(d);
-    let w_scale = (bounds[1][0] - bounds[0][0]) / (window_width);
-    let h_scale = (bounds[1][1] - bounds[0][1]) / (window_height);
+    let w_scale = (bounds[1][0] - bounds[0][0]) / (this.width);
+    let h_scale = (bounds[1][1] - bounds[0][1]) / (this.height);
     let z = .96 / Math.max(w_scale, h_scale);
     let x = (bounds[1][0] + bounds[0][0]) / 2;
-    let y = (bounds[1][1] + bounds[0][1]) / 2+ (window_height / z / 6);
+    let y = (bounds[1][1] + bounds[0][1]) / 2+ (this.height / z / 6);
     return [x, y, z];
   }
 
@@ -125,7 +131,6 @@ export class Engine2DService {
   }
   
   private countryClicked = (d) => {
-    let width = window.innerWidth*0.8, height = window.innerHeight;
     this.g.selectAll("#states").remove();
     if (this.selectedCountry) {
       this.g.selectAll("#" + this.selectedCountry.id).style('display', null);
@@ -179,7 +184,7 @@ export class Engine2DService {
       }
       this.zoom(xyz);
     } else {
-      let xyz = [width / 2, height / 1.5, 1];
+      let xyz = [this.width / 2, this.height / 1.5, 1];
       this.selectedCountry = null;
       this.zoom(xyz);
       this.updateShownMode(true, false, false)
@@ -188,19 +193,18 @@ export class Engine2DService {
 
   createChart(mapRenderer: ElementRef) {
     let element = mapRenderer.nativeElement;
-    let width = window.innerWidth, height = window.innerHeight;
-
+    
     let svg = d3.select(element).append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
-      .attr("viewBox", "0 0 " + width + " " + height)
-      .attr("width", width).attr("height", height);
+      .attr("viewBox", "0 0 " + this.width + " " + this.height)
+      .attr("width", this.width).attr("height", this.height);
 
-    this.projection = d3.geoMercator().scale(150).translate([width / 2, height / 1.5]);
+    this.projection = d3.geoMercator().scale(150).translate([this.width / 2, this.height / 1.5]);
 
     this.path = d3.geoPath().projection(this.projection);
 
-    svg.append("rect").attr("class", "background").attr("width", width)
-      .attr("height", height).on("click", this.countryClicked);
+    svg.append("rect").attr("class", "background").attr("width", this.width)
+      .attr("height", this.height).on("click", this.countryClicked);
 
     this.g = svg.append("g");
 
@@ -223,7 +227,7 @@ export class Engine2DService {
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
-        
+
       this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
         .enter().append("image").attr('class', 'country-level-mark')
         .attr('id', d => {return d.id;})
@@ -258,10 +262,19 @@ export class Engine2DService {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
     }
     d3.select("#toolTip").transition().duration(200).style("opacity", .9); 
-    let pos = d3.mouse(d3.event.currentTarget);
+    let pos = this.projection([d.long_pos[0], d.long_pos[1]]);
+    let offsetX = 20, offsetY = 20;
+    if(d.level === OBJ.NODE_LEVEL.STATE || d.level === OBJ.NODE_LEVEL.CITY) {
+      let tmp = this.projection.translate();
+      pos[0] = (pos[0] - this.lastXYZ[0])*this.lastXYZ[2] +  tmp[0];
+      pos[1] = (pos[1] - this.lastXYZ[1])*this.lastXYZ[2] +  tmp[1];
+      offsetX = d.level === OBJ.NODE_LEVEL.STATE ? 30 : 70;
+      offsetY = d.level === OBJ.NODE_LEVEL.STATE ? 30 : 70;
+    }
+
     d3.select("#toolTip").html(d.full_name)
-      .style("left", (pos[0] + 10) + "px")
-      .style("top", (pos[1] + 10) + "px");
+      .style("left", (pos[0] + offsetX) + "px")
+      .style("top", (pos[1] + offsetY) + "px");
   }
 
   private entityMouseOut = (d) => {
@@ -271,6 +284,7 @@ export class Engine2DService {
     if(d3.select(did).attr('selected') == null) {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_url"];});
     }
+    d3.select("#toolTip").transition().duration(200).style("opacity", 0); 
   }
 
   //#endregion

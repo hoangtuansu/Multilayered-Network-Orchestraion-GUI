@@ -12,7 +12,7 @@ import { DialogDetailsComponent } from '../../panel-details/dialog/dialog-detail
 })
 export class TopoManagerComponent implements OnInit {
 
-  isDetailViewActivate: boolean = false;
+  isDetailViewActivate: boolean = true;
   constructor(private engineCoordinatorService: EngineCoordinatorService, public dialog: MatDialog) { }
 
   ngOnInit() {
