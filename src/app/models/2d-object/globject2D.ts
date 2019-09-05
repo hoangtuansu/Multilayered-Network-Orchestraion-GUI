@@ -29,7 +29,7 @@ export class GLObject2D implements LObject2D {
   
   export const G2DLOs: GLObject2D[] = [
     new GLObject2D ('globject2d1', 'bdc-adc', 'red', 3, G2DNOs[0], '1', G2DNOs[1], '1', 400, LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d2', 'adc-mdc', 'red', 3, G2DNOs[1], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN),
+    new GLObject2D ('globject2d2', 'adc-odc', 'red', 3, G2DNOs[1], '1', G2DNOs[17], '2', 250, LINK_TYPE.DOMAIN),
     new GLObject2D ('globject2d3', 'vco-ico', 'red', 3, G2DNOs[3], '1', G2DNOs[8], '2',  200, LINK_TYPE.DOMAIN),
     new GLObject2D ('globject2d4', 'cl1', 'red', 2, G2DNOs[3], '1', G2DNOs[13], '2', 110, LINK_TYPE.DOMAIN),
     new GLObject2D ('globject2d5', 'cl2', 'red', 2, G2DNOs[9], '1', G2DNOs[11], '2', 100, LINK_TYPE.DOMAIN),
@@ -63,8 +63,11 @@ export class GLObject2D implements LObject2D {
     new GLObject2D ('globject2d31', 'mdc-mco', 'red', 2, G2DNOs[2], '1', G2DNOs[10], '2', 110, LINK_TYPE.BOUNDARY),
     new GLObject2D ('globject2d32', 'mdc-lco', 'red', 2, G2DNOs[2], '1', G2DNOs[11], '2', 180, LINK_TYPE.BOUNDARY),
 
-    new GLObject2D ('globject2d32', 'cco-bbn', 'red', 2, G2DNOs[4], '1', G2DNOs[14], '2', 180, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d32', 'cco-edn', 'red', 2, G2DNOs[4], '1', G2DNOs[15], '2', 180, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d32', 'cco-can', 'red', 2, G2DNOs[4], '1', G2DNOs[16], '2', 180, LINK_TYPE.BOUNDARY)
+    new GLObject2D ('globject2d33', 'cco-bbn', 'red', 2, G2DNOs[4], '1', G2DNOs[14], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d34', 'cco-edn', 'red', 2, G2DNOs[4], '1', G2DNOs[15], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d35', 'cco-can', 'red', 2, G2DNOs[4], '1', G2DNOs[16], '2', 180, LINK_TYPE.BOUNDARY),
+
+    new GLObject2D ('globject2d36', 'odc-mdc', 'red', 3, G2DNOs[17], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN),
+    new GLObject2D ('globject2d37', 'bdc-mdc', 'red', 3, G2DNOs[0], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN)
 
   ];

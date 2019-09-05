@@ -45,7 +45,7 @@ export const G2DNOs: GNObject2D[] = [
   new GNObject2D ('gnobject2d2', 'adc', 'Alberta DC', NODE_LEVEL.COUNTRY, 
   assets_path + 'world-data-center.png', 
   assets_path + 'world-data-center-hover.png', 
-  assets_path + 'world-data-center-selected.png', [45, 45], [-115, 60], ['1', '2', '3']),
+  assets_path + 'world-data-center-selected.png', [45, 45], [-118, 56], ['1', '2', '3']),
   new GNObject2D ('gnobject2d3', 'mdc', 'Montreal DC', NODE_LEVEL.COUNTRY, 
   assets_path + 'world-data-center.png', 
   assets_path + 'world-data-center-hover.png', 
@@ -105,6 +105,11 @@ export const G2DNOs: GNObject2D[] = [
   new GNObject2D ('gnobject2d17', 'can', 'Calgary Net', NODE_LEVEL.CITY, 
   assets_path + 'router.png', 
   assets_path + 'world-data-center-hover.png', 
-  assets_path + 'world-data-center-selected.png', [6, 6], [-115, 59], ['1', '2', '3'])
+  assets_path + 'world-data-center-selected.png', [6, 6], [-115, 59], ['1', '2', '3']),
+
+  new GNObject2D ('gnobject2d18', 'odc', 'Ontario DC', NODE_LEVEL.COUNTRY, 
+  assets_path + 'world-data-center.png', 
+  assets_path + 'world-data-center-hover.png', 
+  assets_path + 'world-data-center-selected.png', [45, 45], [-98, 55], ['1', '2', '3']),
 ];
 

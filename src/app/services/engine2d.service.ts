@@ -244,7 +244,6 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     this.resetSelectedEntity();
-    console.log(d.id);
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
     this.selectedNodeForDetailNotifier.next(d);
@@ -258,6 +257,11 @@ export class Engine2DService {
     if(d3.select(did).attr('selected') == null) {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
     }
+    d3.select("#toolTip").transition().duration(200).style("opacity", .9); 
+    let pos = d3.mouse(d3.event.currentTarget);
+    d3.select("#toolTip").html(d.full_name)
+      .style("left", (pos[0] + 10) + "px")
+      .style("top", (pos[1] + 10) + "px");
   }
 
   private entityMouseOut = (d) => {

@@ -32,3 +32,18 @@ pre.prettyprint {
   padding: 9.5px;
 }
 
+#toolTip {   
+  position: absolute;           
+  text-align: center;
+  margin: 10px;
+  font: 12px sans-serif;        
+  border: 1px;      
+  pointer-events: none;         
+  background:rgba(0,0,0,0.9);
+  border:1px solid grey;
+  border-radius:5px;
+  width:auto;
+  padding:4px;
+  color:white;
+  opacity:0;
+}
