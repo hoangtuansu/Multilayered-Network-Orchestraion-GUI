@@ -20,7 +20,11 @@ export class DialogDetailsComponent implements OnInit {
     private netManagerService: NetworkManagerService,
     private pathComputationService: PathComputationService) {
       dialogRef.disableClose = true;
-      
+      engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
+        if(value) {
+          this.is3DBeingShown = false;
+        }
+      });
     }
 
   onNoClick(): void {
