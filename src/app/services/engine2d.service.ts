@@ -268,10 +268,10 @@ export class Engine2DService {
       let tmp = this.projection.translate();
       pos[0] = (pos[0] - this.lastXYZ[0])*this.lastXYZ[2] +  tmp[0];
       pos[1] = (pos[1] - this.lastXYZ[1])*this.lastXYZ[2] +  tmp[1];
-      offsetX = d.level === OBJ.NODE_LEVEL.STATE ? 30 : 70;
-      offsetY = d.level === OBJ.NODE_LEVEL.STATE ? 30 : 70;
+      offsetX = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
+      offsetY = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
     }
-
+    
     d3.select("#toolTip").html(d.full_name)
       .style("left", (pos[0] + offsetX) + "px")
       .style("top", (pos[1] + offsetY) + "px");

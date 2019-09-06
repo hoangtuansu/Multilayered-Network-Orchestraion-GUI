@@ -53,21 +53,24 @@ export class GLObject2D implements LObject2D {
     new GLObject2D ('globject2d22', 'bdc-ico', 'red', 2, G2DNOs[0], '1', G2DNOs[8], '2', 110, LINK_TYPE.BOUNDARY),
     new GLObject2D ('globject2d23', 'bdc-yco', 'red', 2, G2DNOs[0], '1', G2DNOs[3], '2', 300, LINK_TYPE.BOUNDARY),
     new GLObject2D ('globject2d24', 'bdc-vco', 'red', 2, G2DNOs[0], '1', G2DNOs[7], '2', 110, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d25', 'adc-fco', 'red', 2, G2DNOs[1], '1', G2DNOs[13], '2', 100, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d26', 'adc-cco', 'red', 2, G2DNOs[1], '1', G2DNOs[4], '2', 80, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d27', 'adc-sco', 'red', 2, G2DNOs[1], '1', G2DNOs[5], '2', 70, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d28', 'adc-chco', 'red', 2, G2DNOs[1], '1', G2DNOs[6], '2', 140, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d29', 'adc-rco', 'red', 2, G2DNOs[1], '1', G2DNOs[12], '2', 100, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d25', 'adc-vco', 'red', 2, G2DNOs[1], '1', G2DNOs[7], '2', 100, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d26', 'adc-fco', 'red', 2, G2DNOs[1], '1', G2DNOs[13], '2', 100, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d27', 'adc-cco', 'red', 2, G2DNOs[1], '1', G2DNOs[4], '2', 80, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d28', 'adc-sco', 'red', 2, G2DNOs[1], '1', G2DNOs[5], '2', 70, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d28', 'odc-sco', 'red', 2, G2DNOs[17], '1', G2DNOs[5], '2', 70, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d29', 'odc-chco', 'red', 2, G2DNOs[17], '1', G2DNOs[6], '2', 140, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d30', 'odc-rco', 'red', 2, G2DNOs[17], '1', G2DNOs[12], '2', 100, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d31', 'odc-tco', 'red', 2, G2DNOs[17], '1', G2DNOs[9], '2', 60, LINK_TYPE.BOUNDARY),
 
-    new GLObject2D ('globject2d30', 'mdc-tco', 'red', 2, G2DNOs[2], '1', G2DNOs[9], '2', 60, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d31', 'mdc-mco', 'red', 2, G2DNOs[2], '1', G2DNOs[10], '2', 110, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d32', 'mdc-lco', 'red', 2, G2DNOs[2], '1', G2DNOs[11], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d32', 'mdc-tco', 'red', 2, G2DNOs[2], '1', G2DNOs[9], '2', 60, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d33', 'mdc-mco', 'red', 2, G2DNOs[2], '1', G2DNOs[10], '2', 110, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d34', 'mdc-lco', 'red', 2, G2DNOs[2], '1', G2DNOs[11], '2', 180, LINK_TYPE.BOUNDARY),
 
-    new GLObject2D ('globject2d33', 'cco-bbn', 'red', 2, G2DNOs[4], '1', G2DNOs[14], '2', 180, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d34', 'cco-edn', 'red', 2, G2DNOs[4], '1', G2DNOs[15], '2', 180, LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d35', 'cco-can', 'red', 2, G2DNOs[4], '1', G2DNOs[16], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d35', 'cco-bbn', 'red', 2, G2DNOs[4], '1', G2DNOs[14], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d36', 'cco-edn', 'red', 2, G2DNOs[4], '1', G2DNOs[15], '2', 180, LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d37', 'cco-can', 'red', 2, G2DNOs[4], '1', G2DNOs[16], '2', 180, LINK_TYPE.BOUNDARY),
 
-    new GLObject2D ('globject2d36', 'odc-mdc', 'red', 3, G2DNOs[17], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d37', 'bdc-mdc', 'red', 3, G2DNOs[0], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN)
+    new GLObject2D ('globject2d38', 'odc-mdc', 'red', 3, G2DNOs[17], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN),
+    new GLObject2D ('globject2d39', 'bdc-mdc', 'red', 3, G2DNOs[0], '1', G2DNOs[2], '2', 250, LINK_TYPE.DOMAIN)
 
   ];
