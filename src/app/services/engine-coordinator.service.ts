@@ -25,11 +25,11 @@ export class EngineCoordinatorService {
   private openDialog(entity: any): void {
     let dLs = this.netManagerService.get2DDomainLinksOfNode(entity.id),
         bLs = this.netManagerService.get2DBoundaryLinksOfNode(entity.id),
-        cNEs = this.netManagerService.get2DContainedNetworkElement(entity.id),
+        cNEs = this.netManagerService.getNeighborNetworkElements(entity.id),
         cPs = this.pathComputationService.getCrossingPath(entity.id),
         bWs = this.pathComputationService.getBandwidth(cPs);
     let dataDlg = { selectedEntity: entity, domainLinks: dLs, 
-                    boundaryLinks: bLs, containedNetEles: cNEs, 
+                    boundaryLinks: bLs, connectedNetEles: cNEs, 
                     crossingPaths: cPs, bandwidth: bWs};
     if(!this.isShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
