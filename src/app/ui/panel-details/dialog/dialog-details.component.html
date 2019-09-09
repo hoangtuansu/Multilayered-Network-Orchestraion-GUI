@@ -1,7 +1,7 @@
 <div class="detail-dialog-header">
   <h1 mat-dialog-title>{{data['selectedEntity'].full_name}}</h1>
-  <button mat-icon-button (click)="dialogRef.close()">
-      <mat-icon>close</mat-icon>
+  <button mat-icon-button>
+      <mat-icon svgIcon="switch-3d" (click)="display3DTopo(data['selectedEntity']);"></mat-icon>
   </button>
 </div>
 <div mat-dialog-content>
@@ -17,13 +17,14 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
     
-        <mat-action-list dense *ngFor="let n of data['containedNetEles']; let i = index;">
+        <mat-action-list dense *ngFor="let n of data['connectedNetEles']; let i = index;">
           <button mat-list-item>
+            <mat-icon matListIcon svgIcon="{{n.level == 0 ? 'world-dc' : (n.level == 1 ? 'country-sw' : 'city-router')}}"></mat-icon>
             <h3 mat-line> {{n.full_name}} </h3>
             <p mat-line>
               <span> {{n.name}}-{{n.getInterfaces()}} </span>
             </p>
-            <img src="../../../../assets/images/switch-view-3d.png" (click)="display3DTopo(n);"/>
+            <mat-icon svgIcon="switch-3d" (click)="display3DTopo(n);"></mat-icon>
           </button>
         </mat-action-list>
       

@@ -16,6 +16,21 @@ export class AppComponent {
         "world-dc",
         this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/world-data-center.svg")
       );
+
+      this.matIconRegistry.addSvgIcon(
+        "country-sw",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/country-switch.svg")
+      );
+
+      this.matIconRegistry.addSvgIcon(
+        "city-router",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/router.svg")
+      );
+
+      this.matIconRegistry.addSvgIcon(
+        "switch-3d",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/switch-view-3d.svg")
+      );
   }
   
 }

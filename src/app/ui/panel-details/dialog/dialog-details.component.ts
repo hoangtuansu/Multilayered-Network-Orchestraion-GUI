@@ -3,7 +3,6 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Engine3DService } from 'src/app/services/engine3d.service';
 import { PathComputationService } from 'src/app/services/path-computation.service';
 import { NetworkManagerService } from 'src/app/services/network-manager.service';
-import * as OBJ from 'src/app/models';
 
 @Component({
   selector: 'app-dialog-details',
@@ -19,17 +18,12 @@ export class DialogDetailsComponent implements OnInit {
     private engine3DService: Engine3DService,
     private netManagerService: NetworkManagerService,
     private pathComputationService: PathComputationService) {
-      dialogRef.disableClose = true;
       engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
         if(value) {
           this.is3DBeingShown = false;
         }
       });
     }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 
   ngOnInit() {
   }
