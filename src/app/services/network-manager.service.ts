@@ -49,6 +49,14 @@ export class NetworkManagerService {
     return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
 
+  getLink(sid: string, did: string) {
+    for(let l of this.getG2DLOs()) {
+      if((l.node1.id === sid && l.node2.id === did) || ((l.node2.id === sid && l.node1.id === did)))
+        return l;
+    }
+    return null;
+  }
+
   get2DContainedNetworkElement(nid: string): OBJ.GNObject2D[] {
     let nlevel = this.getNode2DObject(nid).level;
     if(nlevel === OBJ.NODE_LEVEL.CITY) 
@@ -79,7 +87,4 @@ export class NetworkManagerService {
     });
   }
 
-  getConnected3DNetworkElements(nid: string): OBJ.GNObject[] {
-    return null;
-  }
 }

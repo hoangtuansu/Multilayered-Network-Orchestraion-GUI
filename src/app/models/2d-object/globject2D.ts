@@ -1,5 +1,6 @@
-import { NObject2D, LObject2D, LINK_TYPE } from '../object-interfaces';
+import { NObject2D, LObject2D} from '../object-interfaces';
 import { GNObject2D, G2DNOs } from './gnobject2D';
+import { LINK_TYPE } from '../constants';
 
 export class GLObject2D implements LObject2D {
     id: any = 0;

@@ -3,6 +3,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Engine3DService } from 'src/app/services/engine3d.service';
 import { PathComputationService } from 'src/app/services/path-computation.service';
 import { NetworkManagerService } from 'src/app/services/network-manager.service';
+import { EntityLocatorService } from 'src/app/services/entity-locator.service';
 
 @Component({
   selector: 'app-dialog-details',
@@ -17,6 +18,7 @@ export class DialogDetailsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private engine3DService: Engine3DService,
     private netManagerService: NetworkManagerService,
+    
     private pathComputationService: PathComputationService) {
       engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
         if(value) {
@@ -28,8 +30,13 @@ export class DialogDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  display3DTopo() {
+  display3DTopo(pickedNode) {
+    if(this.is3DBeingShown && pickedNode != null) {
+      this.engine3DService.refreshScene(pickedNode.id);
+      return;
+    }
     if(!this.is3DBeingShown) {
+      
       this.engine3DService.is3DFadingOutComplete = false;
       this.engine3DService.is3DFadingInStart = true;
       this.engine3DService.fadingInStartNotifier.next(this.engine3DService.is3DFadingInStart);

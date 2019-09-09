@@ -25,15 +25,15 @@ export class EntityLocatorService {
     for(let node of e) {
       switch(node.level) {
         case OBJ.NODE_LEVEL.COUNTRY:
-          posArr.push(new THREE.Vector2((idxCountry%c)*deltaCountryX + deltaCountryX/2, Math.floor(idxCountry/c)*deltaCountryY + deltaCountryY/2));
+          node.update3DPosition([(idxCountry%c)*deltaCountryX + deltaCountryX/2, 1, Math.floor(idxCountry/c)*deltaCountryY + deltaCountryY/2]);
           idxCountry++;
           break;
         case OBJ.NODE_LEVEL.STATE:
-          posArr.push(new THREE.Vector2((idxState%s)*deltaStateX + deltaStateX/2, Math.floor(idxState/s)*deltaStateY + deltaStateY/2));
+          node.update3DPosition([(idxState%s)*deltaStateX + deltaStateX/2, 1, Math.floor(idxState/s)*deltaStateY + deltaStateY/2]);
           idxState++;
           break;
         case OBJ.NODE_LEVEL.CITY:
-          posArr.push(new THREE.Vector2((idxCity%ci)*deltaCityX + deltaCityX/2, Math.floor(idxCity/ci)*deltaCityY + deltaCityY/2));
+          node.update3DPosition([(idxCity%ci)*deltaCityX + deltaCityX/2, 1, Math.floor(idxCity/ci)*deltaCityY + deltaCityY/2]);
           idxCity++;
           break;
         }

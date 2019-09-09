@@ -7,6 +7,16 @@ import { NetworkManagerService } from './network-manager.service';
   providedIn: 'root'
 })
 export class PathComputationService {
+  listOfPaths = [
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[1], OBJ.G2DNOs[2]], 
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]], 
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[3], OBJ.G2DNOs[13], OBJ.G2DNOs[6], OBJ.G2DNOs[9], OBJ.G2DNOs[2]],
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[1]],
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1]],
+    [OBJ.G2DNOs[1], OBJ.G2DNOs[2]],
+    [ OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]]
+  ];
+
   constructor(private netMngtService: NetworkManagerService) {}
 
   getBandwidth(listOfPaths: GNObject2D[][]): number[] {
@@ -29,17 +39,8 @@ export class PathComputationService {
   }
 
   getCrossingPath(nodeID: string): any {
-    let listOfPaths = [
-      [OBJ.G2DNOs[0], OBJ.G2DNOs[1], OBJ.G2DNOs[2]], 
-      [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]], 
-      [OBJ.G2DNOs[0], OBJ.G2DNOs[3], OBJ.G2DNOs[13], OBJ.G2DNOs[6], OBJ.G2DNOs[9], OBJ.G2DNOs[2]],
-      [OBJ.G2DNOs[0], OBJ.G2DNOs[1]],
-      [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1]],
-      [OBJ.G2DNOs[1], OBJ.G2DNOs[2]],
-      [ OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]]
-    ];
     let arr = [];
-    for(let p of listOfPaths) {
+    for(let p of this.listOfPaths) {
       for(let n of p) {
         if(n.id == nodeID) {
           arr.push(p);
@@ -49,5 +50,26 @@ export class PathComputationService {
     }
     return arr;
     
+  }
+
+  getReachedNetworkElements(nid: string): [OBJ.GNObject2D[], OBJ.GLObject[]] {
+    let target = this.netMngtService.getNode2DObject(nid);
+    let nodes = [], links = [];
+    for(let p of this.listOfPaths) {
+       if(p.indexOf(target) >= 0) {
+         for(let np of p) {
+           let  inp = p.indexOf(np),
+                l = this.netMngtService.getLink(np, p[inp+1]);
+           if(nodes.indexOf(np) < 0) {
+             nodes.push(np);
+           }
+           
+           if(inp < p.length - 1 && links.indexOf(l) < 0) {
+              links.push(l)
+           }
+         }
+       }
+    }
+    return [nodes, links];
   }
 }

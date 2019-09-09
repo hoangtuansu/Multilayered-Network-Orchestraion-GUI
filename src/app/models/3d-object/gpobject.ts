@@ -1,5 +1,6 @@
-import { NObject, LAYER } from '../object-interfaces';
+import { NObject} from '../object-interfaces';
 import * as THREE from 'three';
+import { LAYER } from '../constants';
 
 export class GPOjbect implements NObject {
     id: number = 0;
@@ -50,13 +51,6 @@ export class GPOjbect implements NObject {
       return this.mesh;
     }
   }
-
-  /* export const GPOs: GPOjbect[] = [
-    new GPOjbect ( 'OPT', "OPTICAL", 0, [1, 5, 1]),
-    new GPOjbect ( 'DLK', "DLK", 1, [1, 10, 1]),
-    new GPOjbect ( 'IP', "IP", 2, [1, 15, 1]),
-    new GPOjbect ( 'WD', "WORLD", 0, [1, 1, 1], "assets/canada-alberta.png"),
-  ]; */
 
   export const GPOs: GPOjbect[] = [
     new GPOjbect ( 'OPT', "OPTICAL", LAYER.OPTICAL, [1, 1, 1]),

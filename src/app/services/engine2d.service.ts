@@ -103,10 +103,10 @@ export class Engine2DService {
         .enter().append("line").attr('class', 'city-level-link')
         .style("stroke", (d) => {return d.color;}).style("stroke-width", (d) => {return d.width;})
         .attr("id", (d) => {return d.name;})
-        .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
-        .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
-        .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
-        .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+        .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
+        .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
+        .attr("x2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[0] + d.node2.icon_size[0]/2;})
+        .attr("y2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[1] + d.node2.icon_size[0]/2;})
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
@@ -116,10 +116,10 @@ export class Engine2DService {
         .enter().append("image")
         .attr('id', d => {return d.id;})
         .attr('class', 'city-level-mark')
-        .attr('width', (d) => {return d.size[0];})
-        .attr('height', (d) => {return d.size[1];})
+        .attr('width', (d) => {return d.icon_size[0];})
+        .attr('height', (d) => {return d.icon_size[1];})
         .attr("xlink:href", (d) => {return d.icon_url;})
-        .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+        .attr("transform", (d) => {return "translate(" + this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]) + ")";})
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
@@ -159,10 +159,10 @@ export class Engine2DService {
             .enter().append("line").attr('class', 'state-level-link')
             .style("stroke", d => {return d.color;}).style("stroke-width", 1)
             .attr("id", (d) => {return d.name;})
-            .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
-            .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
-            .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
-            .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+            .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
+            .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
+            .attr("x2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[0] + d.node2.icon_size[0]/2;})
+            .attr("y2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[1] + d.node2.icon_size[0]/2;})
             .on("click", this.entitySelecting)
             .on("mouseover", this.entityMouseOver)
             .on("mouseout", this.entityMouseOut);
@@ -172,10 +172,10 @@ export class Engine2DService {
             .enter().append("image")
             .attr('id', d => {return d.id;})
             .attr('class', 'state-level-mark')
-            .attr('width', (d) => {return d.size[0];})
-            .attr('height', (d) => {return d.size[1];})
+            .attr('width', (d) => {return d.icon_size[0];})
+            .attr('height', (d) => {return d.icon_size[1];})
             .attr("xlink:href", (d) => {return d.icon_url;})
-            .attr("transform", (d) => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+            .attr("transform", (d) => {return "translate(" + this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]) + ")";})
             .on("click", this.entitySelecting)
             .on("mouseover", this.entityMouseOver)
             .on("mouseout", this.entityMouseOut);
@@ -220,10 +220,10 @@ export class Engine2DService {
         .enter().append("line").attr('class', 'country-level-link')
         .style("stroke", "red").style("stroke-width", 3)
         .attr("id", (d) => {return d.name;})
-        .attr("x1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[0] + d.node1.size[0]/2;})
-        .attr("y1", (d) => {return this.projection([d.node1.long_pos[0], d.node1.long_pos[1]])[1] + d.node1.size[1]/2;})
-        .attr("x2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[0] + d.node2.size[0]/2;})
-        .attr("y2", (d) => {return this.projection([d.node2.long_pos[0], d.node2.long_pos[1]])[1] + d.node2.size[0]/2;})
+        .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
+        .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
+        .attr("x2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[0] + d.node2.icon_size[0]/2;})
+        .attr("y2", (d) => {return this.projection([d.node2.position_2dtopo[0], d.node2.position_2dtopo[1]])[1] + d.node2.icon_size[0]/2;})
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
@@ -231,9 +231,9 @@ export class Engine2DService {
       this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
         .enter().append("image").attr('class', 'country-level-mark')
         .attr('id', d => {return d.id;})
-        .attr('width', d => {return d.size[0];}).attr('height', d => {return d.size[1];})
+        .attr('width', d => {return d.icon_size[0];}).attr('height', d => {return d.icon_size[1];})
         .attr("xlink:href", d => {return d.icon_url;})
-        .attr("transform", d => {return "translate(" + this.projection([d.long_pos[0], d.long_pos[1]]) + ")";})
+        .attr("transform", d => {return "translate(" + this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]) + ")";})
         .on("click", this.entitySelecting)
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
@@ -262,7 +262,7 @@ export class Engine2DService {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
     }
     d3.select("#toolTip").transition().duration(200).style("opacity", .9); 
-    let pos = this.projection([d.long_pos[0], d.long_pos[1]]);
+    let pos = this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]);
     let offsetX = 20, offsetY = 20;
     if(d.level === OBJ.NODE_LEVEL.STATE || d.level === OBJ.NODE_LEVEL.CITY) {
       let tmp = this.projection.translate();

@@ -1,7 +1,8 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
-import { NODE_LEVEL } from '../models/object-interfaces';
+import {  } from '../models/object-interfaces';
 import { GNObject2D } from '../models/2d-object/gnobject2D';
+import { NODE_LEVEL } from '../models/constants';
 
 @Injectable({
   providedIn: 'root'

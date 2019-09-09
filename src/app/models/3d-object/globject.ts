@@ -56,19 +56,6 @@ export class GLObject implements LObject {
   
   };
 
-  /* export const GLOs: GLObject[] = [
-    new GLObject (1, '100GB', G3DNOs[0], GNPrOs[1], 5, 0xffff00, 0x66C6C),
-    new GLObject (2, '10GB', G3DNOs[9], GNPrOs[2], 5, 0xffff00, 0x66C6C),
-  
-    new GLObject (3, '20GB', G3DNOs[10], GNPrOs[3], 5, 0xffff00, 0x66C6C),
-    new GLObject (4, '40GB', G3DNOs[7], GNPrOs[4], 5, 0xffff00, 0x66C6C),
-  
-    new GLObject (5, '200GB', G3DNOs[8], GNPrOs[0], 10, 0xffff00, 0x66C6C),
-  
-    new GLObject (6, '100GB', G3DNOs[11], GNPrOs[5], 5, 0xffff00, 0x66C6C)
-  
-  ]; */
-
   export const GLOs: GLObject[] = [
     new GLObject ('globject0', '100GB', G3DNOs[5], GNPrOs[2], 5, 0xffff00, 0x66C6C),
     new GLObject ('globject1', '10GB', G3DNOs[6], GNPrOs[5], 5, 0xffff00, 0x66C6C),

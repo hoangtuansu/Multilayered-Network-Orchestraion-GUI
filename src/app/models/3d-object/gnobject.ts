@@ -1,5 +1,6 @@
-import { NObject, LAYER, NPrObject } from '../object-interfaces';
+import { NObject, NPrObject } from '../object-interfaces';
 import * as THREE from 'three';
+import { LAYER } from '../constants';
 
 export class GNObject implements NObject{
     id: any = 0;
@@ -112,29 +113,11 @@ export class GNPrObject implements NPrObject {
     new GNObject ('gnobj6', 'gnprobj5', 'fws3', 'FW9500-SITE3', LAYER.LAYER1, [7.5, 1, 2.5], 0x0080ff, 0x404040),
     new GNObject ('gnobj7', 'gnprobj4', 'fws4', 'FW9500-SITE4', LAYER.LAYER1, [-2.5, 1, -12.5], 0x0080ff, 0x404040),
   
-    new GNObject ('gnobj8', 'gnprobj0', 'qfx2', 'EDTNLABQFX-01', LAYER.IP, [0, 1, 12.5], 0x008000, 0x008000),
+    new GNObject ('gnobj8', 'gnprobj0', 'qfx1', 'EDTNLABQFX-01', LAYER.IP, [0, 1, 12.5], 0x008000, 0x008000),
     new GNObject ('gnobj9', 'gnprobj2', 'qfx2', 'EDTNLABQFX-02', LAYER.IP, [-5, 1, 0], 0x008000, 0x008000),
     new GNObject ('gnobj10', 'gnprobj3', 'qfx3', 'EDTNLABQFX-03', LAYER.IP, [5, 1, -5], 0x008000, 0x008000),
     new GNObject ('gnobj11', 'gnprobj5', 'qfx4', 'EDTNLABQFX-04', LAYER.IP, [7.5, 1, 2.5], 0x008000, 0x008000)
     
   ];
-
-  /* export const G3DNOs: GNObject[] = [
-    new GNObject (1, 2, 'poc1', 'EDTNLABPOC-01', 0, [0, 5, 12.5], 0x4B0082, 0x400080),
-    new GNObject (2, 3, 'poc2', 'EDTNLABPOC-02', 0, [-5, 5, 0], 0x4B0082, 0x400080),
-    new GNObject (3, 4, 'poc3', 'EDTNLABPOC-03', 0, [5, 5, -5], 0x4B0082, 0x400080),
-    new GNObject (4, 5, 'poc4', 'EDTNLABPOC-04', 0, [-2.5, 5, -12.5], 0x4B0082, 0x400080),
-  
-    new GNObject (5, 1, 'fws1', 'FW9500-SITE1', 1, [0, 10, 12.5], 0x0080ff, 0x404040),
-    new GNObject (6, 3, 'fws2', 'FW9500-SITE2', 1, [-5, 10, 0], 0x0080ff, 0x404040),
-    new GNObject (7, 6, 'fws3', 'FW9500-SITE3', 1, [7.5, 10, 2.5], 0x0080ff, 0x404040),
-    new GNObject (8, 5, 'fws4', 'FW9500-SITE4', 1, [-2.5, 10, -12.5], 0x0080ff, 0x404040),
-  
-    new GNObject (9, 1, 'qfx2', 'EDTNLABQFX-01', 2, [0, 15, 12.5], 0x008000, 0x008000),
-    new GNObject (10, 3, 'qfx2', 'EDTNLABQFX-02', 2, [-5, 15, 0], 0x008000, 0x008000),
-    new GNObject (11, 4, 'qfx3', 'EDTNLABQFX-03', 2, [5, 15, -5], 0x008000, 0x008000),
-    new GNObject (12, 6, 'qfx4', 'EDTNLABQFX-04', 2, [7.5, 15, 2.5], 0x008000, 0x008000)
-    
-  ]; */
 
   

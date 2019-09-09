@@ -4,6 +4,9 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import * as THREE from 'three';
 import { AnimatorService } from './animator.service';
 import { Subject } from 'rxjs';
+import { NetworkManagerService } from './network-manager.service';
+import { EntityLocatorService } from './entity-locator.service';
+import { PathComputationService } from './path-computation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,7 @@ export class Engine3DService implements OnDestroy {
         cancelAnimationFrame(this.frameId);
   }
 
+  
   private frameId: number = null;
 
   renderer: THREE.WebGLRenderer = null;
@@ -30,16 +34,17 @@ export class Engine3DService implements OnDestroy {
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
   isDetailEnabled: boolean = false;
   
-  constructor(private animatorService: AnimatorService ) {
+  constructor(private animatorService: AnimatorService,
+              private nodeMngmt: NetworkManagerService,
+              private entityLocatorService: EntityLocatorService,
+              private pathComputationService: PathComputationService) {
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
     this.renderer = new THREE.WebGLRenderer({antialias: false});
     this.camera = new THREE.PerspectiveCamera( 50, this.renderer.domElement.width/this.renderer.domElement.height, 0.01, 500 );
     this.controls = new OrbitControls(this.camera , this.renderer.domElement );
     this.raycaster.linePrecision = 0.1;
-  }
 
-  createScene() {
     this.scene.background = new THREE.Color( 0xa0a0a0 );
 
     let light = new THREE.SpotLight( 0xffffff, 1, 0, 1, 1, 1);
@@ -51,21 +56,31 @@ export class Engine3DService implements OnDestroy {
 
     this.controls.enabled = true;
 
-    for(let g of this.animatorService.nodeMngmt.getGPOs()) {
+    for(let g of this.nodeMngmt.getGPOs()) {
+      this.scene.add(g.generateMesh())
+    }
+  }
+
+  createScene() {
+    //let [nodes, links] = this.nodeMngmt.getReachedNetworkElements(pickedNodeID);
+    let nodes = this.nodeMngmt.getG3DNOs();
+    let links = this.nodeMngmt.getGLOs();
+    for(let g of nodes) {
       this.scene.add(g.generateMesh())
     }
 
-    for(let g of this.animatorService.nodeMngmt.getG3DNOs()) {
+    for(let g of links) {
       this.scene.add(g.generateMesh())
     }
 
-    for(let g of this.animatorService.nodeMngmt.getGLOs()) {
-      this.scene.add(g.generateMesh())
-    }
-
-    for(let g of this.animatorService.nodeMngmt.getGNPrOs()) {
+    for(let g of this.nodeMngmt.getGNPrOs()) {
       this.scene.add(g.generateMesh());
     }
+  }
+
+  refreshScene(pickedNodeID: string) {
+    let [nodes, links] = this.pathComputationService.getReachedNetworkElements(pickedNodeID);
+    this.entityLocatorService.locatingNetworkElements(nodes);
   }
 
   showPlane(plane_id, isShown) {
