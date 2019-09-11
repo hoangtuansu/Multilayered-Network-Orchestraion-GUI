@@ -18,6 +18,7 @@ export class GLObject2D implements LObject2D {
     position_3dtopo: [number, number, number] = [0, 0, 0];
     mesh_color: number = 0;
     mesh_emissive: number = 0;
+    mesh_highlightcolor: number = 0;
     mesh: THREE.Mesh = null;
   
     constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: number, tp: LINK_TYPE) {
@@ -33,26 +34,30 @@ export class GLObject2D implements LObject2D {
       this.type = tp;
       this.mesh_color = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[0] : CONSTANTS.LINK_BOUNDARY[0];
       this.mesh_emissive = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[1] : CONSTANTS.LINK_BOUNDARY[1];
+      this.mesh_highlightcolor = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[2] : CONSTANTS.LINK_BOUNDARY[2];
     }
 
-    updatePosition(n1: any, n2: any) {
+    generateHighlightedMesh(): THREE.Mesh {
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
-
       let vec = B.clone(); vec.sub(A);
       var h = vec.length();
       vec.normalize();
       let quaternion = new THREE.Quaternion();
       quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vec);
-      var geometry = new THREE.CylinderBufferGeometry(0.25, 0.25, h, 32);
+      var geometry = new THREE.CylinderBufferGeometry(0.45, 0.45, h, 32);
       geometry.translate(0, h / 2, 0);
-      let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
-      this.mesh = new THREE.Mesh(geometry, material14);
-      this.mesh.applyQuaternion(quaternion);
-      this.mesh.position.set(A.x, A.y, A.z);
+      let material14 = new THREE.MeshStandardMaterial({color: this.mesh_highlightcolor, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
+      let mesh = new THREE.Mesh(geometry, material14);
+      mesh.applyQuaternion(quaternion);
+      mesh.position.set(A.x, A.y, A.z);
+      return mesh;
     }
 
     generateMesh(): THREE.Mesh {
+      if(this.mesh != null) {
+        return this.mesh;
+      }
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
       let vec = B.clone(); vec.sub(A);

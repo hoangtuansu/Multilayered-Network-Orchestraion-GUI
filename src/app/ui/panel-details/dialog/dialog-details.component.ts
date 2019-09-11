@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Engine3DService } from 'src/app/services/engine3d.service';
 import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.service';
 @Component({
   selector: 'app-dialog-details',
@@ -32,6 +31,18 @@ export class DialogDetailsComponent implements OnInit {
       this.engineService.engine3DService.is3DFadingOutComplete = false;
       this.engineService.engine3DService.is3DFadingInStart = true;
       this.engineService.engine3DService.fadingInStartNotifier.next(this.engineService.engine3DService.is3DFadingInStart);
+    }
+  }
+
+  highlight3DLink(pickedLink: any) {
+    if(this.is3DBeingShown) {
+      this.engineService.engine3DService.highlightLink(pickedLink);
+    }
+  }
+
+  highlight3DLSP(pickedLSP: any) {
+    if(this.is3DBeingShown) {
+      this.engineService.engine3DService.highlightLSP(pickedLSP);
     }
   }
 

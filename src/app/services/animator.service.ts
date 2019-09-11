@@ -234,11 +234,6 @@ export class AnimatorService {
         count = false;
       }
     }
-
-    /* if(count) {
-      for(let g of this.getGNPrOs())
-        g.setVisible(false);
-    } */
     this.isredoProjectSpheresPhase = count;
   }
 
@@ -246,10 +241,6 @@ export class AnimatorService {
     if(this.isRedoLinksFadeOutPhase)
       return;
     for(let l of this.links) {
-      let m = scene.getObjectById(l.mesh.id, true);
-      scene.remove(m);
-      l.updatePosition(l.node1, l.node2);
-      scene.add(l.mesh);
       l.mesh.visible = true;
     }
     this.isRedoLinksFadeOutPhase = true;

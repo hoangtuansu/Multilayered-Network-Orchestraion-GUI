@@ -1,9 +1,9 @@
-<div class="topo3d" #renderer3DContainer [@fadeOut3DDiv]="is3DTopoActive ? '3d-show' : '3d-hide'" (@fadeOut3DDiv.done)="animation3DEnd($event)">
+<div class="topo3d" #renderer3DContainer [@zoom3DDiv]="isZoomedOut ? '3d-zoomout' : '3d-zoomin' " [@fadeOut3DDiv]="is3DTopoActive ? '3d-show' : '3d-hide'" (@fadeOut3DDiv.done)="animation3DEnd($event)">
     <div class="control-buttons">
         <button mat-icon-button (click)="close3DLayout()">
             <mat-icon>close</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="zoomOut3DLayout()">
             <mat-icon>zoom_out_map</mat-icon>
         </button>
         

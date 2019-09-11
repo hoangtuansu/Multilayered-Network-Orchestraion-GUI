@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { NetworkManagerService } from './network-manager.service';
 import { EntityLocatorService } from './entity-locator.service';
 import { PathComputationService } from './path-computation.service';
+import * as OBJ from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class Engine3DService implements OnDestroy {
         cancelAnimationFrame(this.frameId);
   }
 
-  
   private frameId: number = null;
 
   renderer: THREE.WebGLRenderer = null;
@@ -33,7 +33,12 @@ export class Engine3DService implements OnDestroy {
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
   isDetailEnabled: boolean = false;
-  
+  highlightedLink: OBJ.GLObject2D = null;
+  highlightedLSP: OBJ.GLObject2D[] = [];
+  highlightedLinkName: string = "hlL";
+  highlightedLSPName: string = "hlLSP";
+  width: number = 0;
+  height: number = 0;
   constructor(private animatorService: AnimatorService,
               private nodeMngmt: NetworkManagerService,
               private entityLocatorService: EntityLocatorService,
@@ -59,20 +64,29 @@ export class Engine3DService implements OnDestroy {
     for(let g of this.nodeMngmt.getGPOs()) {
       this.scene.add(g.generateMesh())
     }
-
+    this.width = window.innerWidth*0.45;
+    this.height = window.innerHeight*0.45;
    
+  }
+
+  private resetHighlightedEntity() {
+    
   }
 
   refreshScene(pickedNodeID: string) {
     for(let g of this.animatorService.nodes) {
-      let og = this.scene.getObjectByName(g.name);
+      let og = this.scene.getObjectById(g.mesh.id);
       this.scene.remove(og);
     }
 
     for(let l of this.animatorService.links) {
-      let ol = this.scene.getObjectByName(l.name);
+      let ol = this.scene.getObjectById(l.mesh.id);
       this.scene.remove(ol);
     }
+
+    this.highlightedLink = null;
+    let hlLink = this.scene.getObjectByName(this.highlightedLinkName);
+    this.scene.remove(hlLink);
 
     let [nodes, links] = this.pathComputationService.getReachedNetworkElements(pickedNodeID);
     this.entityLocatorService.locatingNetworkElements(nodes);
@@ -104,13 +118,71 @@ export class Engine3DService implements OnDestroy {
         o.mesh.visible = isShown;
       }
     }
+  }
 
+  highlightLink(pickedLink: OBJ.GLObject2D) {
+    this.undoHighlightLink();
+    this.undoHighlightLSP();
+    this.highlightedLink = pickedLink;
+    this.highlightedLink.mesh.visible = false;
+    let hlLink = pickedLink.generateHighlightedMesh();
+    hlLink.name = this.highlightedLinkName;
+    this.scene.add(hlLink);
+  }
+
+  private undoHighlightLink() {
+    let hlLink = null;
+    if(this.highlightedLink != null) { //there is already a highlighted link
+      this.highlightedLink.mesh.visible = true;
+      hlLink = this.scene.getObjectByName(this.highlightedLinkName);
+      this.scene.remove(hlLink);
+    }
+  }
+
+  highlightLSP(pickedLSP: OBJ.GNObject2D[]) {
+    this.undoHighlightLink();
+    this.undoHighlightLSP();
+    this.highlightedLSP = [];
+    for(let n of pickedLSP) {
+      let nIdx = pickedLSP.indexOf(n);
+      if(nIdx == pickedLSP.length - 1)
+        break;
+      let l: OBJ.GLObject2D = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
+      l.mesh.visible = false;
+      this.highlightedLSP.push(l);
+      let hlLink = l.generateHighlightedMesh();
+      hlLink.name = this.highlightedLSPName;
+      this.scene.add(hlLink);
+
+    }
+  }
+
+  private undoHighlightLSP() {
+    let l = this.scene.getObjectByName(this.highlightedLSPName);
+    while(l != undefined) {
+      this.scene.remove(l);
+      l = this.scene.getObjectByName(this.highlightedLSPName);
+    }
+    if(this.highlightedLSP.length > 0) {
+      for(let l of this.highlightedLSP)
+        l.mesh.visible = true;
+    }
     
+  }
+
+  enableDetailView(e: boolean) {
+    this.isDetailEnabled = e;
+  }
+
+  setRendererDimension(_w, _h) {
+    this.width = _w;
+    this.height = _h;
+    this.renderer.setSize(this.width, this.height);
   }
 
   render() {
     this.animate();
-    this.renderer.setSize(window.innerWidth*0.45, window.innerHeight*0.45);
+    this.renderer.setSize(this.width, this.height);
   }
 
   private animate() {
@@ -130,26 +202,4 @@ export class Engine3DService implements OnDestroy {
     this.renderer.render(this.scene, this.camera);
   }
 
-  enableDetailView(e: boolean) {
-    this.isDetailEnabled = e;
-  }
-
 }
-
-export const AnimationTriggers: any = [
-  trigger('fadeOut2DDiv', [
-    state('2d-show', style({
-      width: '100%',
-      height: '75vh',
-      position: 'absolute',
-      opacity: 1
-    })),
-    state('2d-hide', style({
-      position: 'absolute',
-      width: '100%',
-      height: '75vh',
-      display: 'none',
-      opacity: 0
-    })),
-    transition('2d-hide <=> 2d-show', animate('1500ms'))])
-];
