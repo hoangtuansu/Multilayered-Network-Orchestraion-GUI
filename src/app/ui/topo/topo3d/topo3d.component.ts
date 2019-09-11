@@ -20,7 +20,17 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
         display: 'none',
         opacity: 0
       })),
-      transition('3d-hide <=> 3d-show', animate('500ms'))])],
+      transition('3d-hide <=> 3d-show', animate('500ms'))]),
+      trigger('zoom3DDiv', [
+        state('3d-zoomout', style({
+          width: '75%',
+          height: '75vh'
+        })),
+        state('3d-zoomin', style({
+          width: '45%',
+          height: '45vh'
+        })),
+        transition('3d-zoomout <=> 3d-zoomin', animate('500ms'))])],
       encapsulation: ViewEncapsulation.None
 })
 export class Topo3dComponent implements OnInit, OnChanges {
@@ -29,6 +39,7 @@ export class Topo3dComponent implements OnInit, OnChanges {
 
   onActive: Subject<boolean> = new Subject<boolean>();;
   is3DTopoActive: boolean = false;
+  isZoomedOut: boolean = false;
   @Input() isDetailShown: boolean = false;
   isLayer1Shown: boolean = true;
   isLayer2Shown: boolean = true;
@@ -83,6 +94,12 @@ export class Topo3dComponent implements OnInit, OnChanges {
     this.engineService.engine3DService.is3DFadingInStart = false;
     this.engineService.engine3DService.is3DFadingIn = false;
     this.engineService.engine3DService.is3DFadingOut = true;
+  }
+
+  zoomOut3DLayout() {
+    this.isZoomedOut = !this.isZoomedOut;
+    this.engineService.engine3DService.setRendererDimension(this.renderer3DContainer.nativeElement.offsetWidth, 
+      this.renderer3DContainer.nativeElement.offsetHeight);
   }
 
   attach3DLayout(a: boolean) {
