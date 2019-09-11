@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, SimpleChange, ElementRef, Input, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, SimpleChange, ElementRef, Input, ViewEncapsulation, OnChanges, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Engine3DService } from 'src/app/services/engine3d.service';
-import * as OBJ from '../../../models';
-import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+import { Subject } from 'rxjs';
+import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.service';
 
 @Component({
   selector: 'app-topo3d',
@@ -28,43 +27,41 @@ export class Topo3dComponent implements OnInit, OnChanges {
   
   @ViewChild('renderer3DContainer', { static: false }) renderer3DContainer: ElementRef;
 
-  @Input() displayMode: number = OBJ.DISPLAY_MODE.D3;
-  isHide3DDiv: boolean = true;
+  onActive: Subject<boolean> = new Subject<boolean>();;
+  is3DTopoActive: boolean = false;
   @Input() isDetailShown: boolean = false;
   isLayer1Shown: boolean = true;
   isLayer2Shown: boolean = true;
   isLayer3Shown: boolean = true;
 
-  constructor(private engine3DService: Engine3DService) { 
-    engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
+  constructor(private engineService: EngineCoordinatorService) { 
+    engineService.engine3DService.fadingOutCompleteNotifier.subscribe((value) => {
       if(value) {
-        this.detach3DLayout();
+        this.attach3DLayout(false);
       }
     });
 
-    engine3DService.fadingInStartNotifier.subscribe((value) => {
+    engineService.engine3DService.fadingInStartNotifier.subscribe((value) => {
       if(value) {
         this.isLayer1Shown = true;
         this.isLayer2Shown = true;
         this.isLayer3Shown = true;
-        this.attach3DLayout();
+        this.attach3DLayout(true);
       }
     });
   }
 
   ngOnInit() {
-    this.engine3DService.createScene();
-    
   }
 
   ngAfterViewInit() {
-    this.renderer3DContainer.nativeElement.appendChild(this.engine3DService.renderer.domElement);
-    this.engine3DService.render();
+    this.renderer3DContainer.nativeElement.appendChild(this.engineService.engine3DService.renderer.domElement);
+    this.engineService.engine3DService.render();
   }
 
   ngOnChanges(changes: {[property: number]: SimpleChange}) {
     if(changes["isDetailShown"] != undefined){
-      this.engine3DService.enableDetailView(changes["isDetailShown"].currentValue);
+      this.engineService.engine3DService.enableDetailView(changes["isDetailShown"].currentValue);
       return;
     }
   }
@@ -75,25 +72,22 @@ export class Topo3dComponent implements OnInit, OnChanges {
     }
 
     if($event.fromState == "3d-hide" && $event.toState == "3d-show") {
-      this.engine3DService.is3DFadingIn = true;
-      this.engine3DService.is3DFadingOut = false;
+      this.engineService.engine3DService.is3DFadingIn = true;
+      this.engineService.engine3DService.is3DFadingOut = false;
     }
     
   }
 
   close3DLayout() {
-    this.engine3DService.is3DFadingOutComplete = false;
-    this.engine3DService.is3DFadingInStart = false;
-    this.engine3DService.is3DFadingIn = false;
-    this.engine3DService.is3DFadingOut = true;
+    this.engineService.engine3DService.is3DFadingOutComplete = false;
+    this.engineService.engine3DService.is3DFadingInStart = false;
+    this.engineService.engine3DService.is3DFadingIn = false;
+    this.engineService.engine3DService.is3DFadingOut = true;
   }
 
-  detach3DLayout() {
-    this.isHide3DDiv = true;
-  }
-
-  attach3DLayout() {
-    this.isHide3DDiv = false;
+  attach3DLayout(a: boolean) {
+    this.is3DTopoActive = a;
+    this.engineService.isShowing3DTopoNotifier.next(a);
   }
 
 }

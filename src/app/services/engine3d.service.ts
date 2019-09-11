@@ -51,7 +51,7 @@ export class Engine3DService implements OnDestroy {
     light.position.set( -25, 50, 15 );
     this.scene.add(light );
 
-    this.camera.position.set( 25, 20, 20 );
+    this.camera.position.set( 25, 25, 20 );
     this.camera.rotation.set( -Math.PI/4.5, Math.PI/4, Math.PI/6);
 
     this.controls.enabled = true;
@@ -59,12 +59,25 @@ export class Engine3DService implements OnDestroy {
     for(let g of this.nodeMngmt.getGPOs()) {
       this.scene.add(g.generateMesh())
     }
+
+   
   }
 
-  createScene() {
-    //let [nodes, links] = this.nodeMngmt.getReachedNetworkElements(pickedNodeID);
-    let nodes = this.nodeMngmt.getG3DNOs();
-    let links = this.nodeMngmt.getGLOs();
+  refreshScene(pickedNodeID: string) {
+    for(let g of this.animatorService.nodes) {
+      let og = this.scene.getObjectByName(g.name);
+      this.scene.remove(og);
+    }
+
+    for(let l of this.animatorService.links) {
+      let ol = this.scene.getObjectByName(l.name);
+      this.scene.remove(ol);
+    }
+
+    let [nodes, links] = this.pathComputationService.getReachedNetworkElements(pickedNodeID);
+    this.entityLocatorService.locatingNetworkElements(nodes);
+    this.animatorService.nodes = nodes;
+    this.animatorService.links = links;
     for(let g of nodes) {
       this.scene.add(g.generateMesh())
     }
@@ -72,15 +85,6 @@ export class Engine3DService implements OnDestroy {
     for(let g of links) {
       this.scene.add(g.generateMesh())
     }
-
-    for(let g of this.nodeMngmt.getGNPrOs()) {
-      this.scene.add(g.generateMesh());
-    }
-  }
-
-  refreshScene(pickedNodeID: string) {
-    let [nodes, links] = this.pathComputationService.getReachedNetworkElements(pickedNodeID);
-    this.entityLocatorService.locatingNetworkElements(nodes);
   }
 
   showPlane(plane_id, isShown) {

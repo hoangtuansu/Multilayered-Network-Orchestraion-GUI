@@ -16,5 +16,7 @@ export const CONSTANTS = {
                         'assets/images/router-hover.png',
                         'assets/images/router-selected.png', [6, 6]
                         , 0x4B0082, 0x400080],
-                        
+    PLANE_SIZE:     [25, 20],
+    LINK_DOMAIN:    [0xffff00, 0xc0392b],
+    LINK_BOUNDARY:    [0xffff00, 0x66C6C]
 }

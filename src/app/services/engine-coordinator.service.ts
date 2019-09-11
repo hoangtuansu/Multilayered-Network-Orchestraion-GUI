@@ -4,22 +4,35 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogDetailsComponent } from '../ui/panel-details/dialog/dialog-details.component';
 import { NetworkManagerService } from './network-manager.service';
 import { PathComputationService } from './path-computation.service';
+import { Engine3DService } from './engine3d.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
   dialogRef: MatDialogRef<any> = null;
-  isShown: boolean = false;
-  constructor(private engine2DService: Engine2DService, 
+  isDetailedDialogShown: boolean = false;
+  isShowing3DTopoNotifier:Subject<boolean> = new Subject<boolean>();
+  
+  constructor(private _engine2DService: Engine2DService,
+    private _engine3DService: Engine3DService, 
     private netManagerService: NetworkManagerService,
     private pathComputationService: PathComputationService,
     public detailInfoDialog: MatDialog) { 
     
-    engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
+    _engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
       this.openDialog(value);
     });
 
+  }
+
+  get engine3DService(): Engine3DService {
+    return this._engine3DService;
+  }
+
+  get engine2DService(): Engine2DService {
+    return this._engine2DService;
   }
 
   private openDialog(entity: any): void {
@@ -31,7 +44,7 @@ export class EngineCoordinatorService {
     let dataDlg = { selectedEntity: entity, domainLinks: dLs, 
                     boundaryLinks: bLs, connectedNetEles: cNEs, 
                     crossingPaths: cPs, bandwidth: bWs};
-    if(!this.isShown) {
+    if(!this.isDetailedDialogShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
         width: '400px',
         panelClass: 'custom-detail-dialog-container',
@@ -40,9 +53,9 @@ export class EngineCoordinatorService {
         hasBackdrop: false,
         autoFocus: false
       });
-      this.isShown = true;
+      this.isDetailedDialogShown = true;
       this.dialogRef.afterClosed().subscribe(result => {
-        this.isShown = false;
+        this.isDetailedDialogShown = false;
       });
       return;
     }

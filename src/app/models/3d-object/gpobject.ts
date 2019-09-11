@@ -1,6 +1,6 @@
 import { NObject} from '../object-interfaces';
 import * as THREE from 'three';
-import { LAYER } from '../constants';
+import { LAYER, CONSTANTS } from '../constants';
 
 export class GPOjbect implements NObject {
     id: number = 0;
@@ -29,7 +29,7 @@ export class GPOjbect implements NObject {
     }
   
     generateMesh(): THREE.Mesh {
-      let geometry = new THREE.BoxBufferGeometry(40, 20, 0.1);
+      let geometry = new THREE.BoxBufferGeometry(CONSTANTS.PLANE_SIZE[1], CONSTANTS.PLANE_SIZE[0], 0.1);
       let material = null;
       let isVisible: boolean = false;
       if(this.background_image !== undefined) {
@@ -56,5 +56,5 @@ export class GPOjbect implements NObject {
     new GPOjbect ( 'OPT', "OPTICAL", LAYER.OPTICAL, [1, 1, 1]),
     new GPOjbect ( 'DLK', "DLK", LAYER.LAYER1, [1, 1, 1]),
     new GPOjbect ( 'IP', "IP", LAYER.IP, [1, 1, 1]),
-    new GPOjbect ( 'WD', "WORLD", LAYER.WORLD, [1, 1, 1], "assets/canada-alberta.png"),
+    //new GPOjbect ( 'WD', "WORLD", LAYER.WORLD, [1, 1, 1], "assets/canada-alberta.png"),
   ];

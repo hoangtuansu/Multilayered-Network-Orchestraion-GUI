@@ -15,6 +15,8 @@ export class AnimatorService {
   isRedoPlanesFadeOutPhase: boolean = false;
   isredoProjectSpheresPhase: boolean = false;
   isRedoLinksFadeOutPhase: boolean = false;
+  private _nodes: OBJ.GNObject2D[] = [];
+  private _links: OBJ.GLObject2D[] = [];
   constructor(public nodeMngmt: NetworkManagerService) { }
 
   resetAllSettings() {
@@ -26,6 +28,20 @@ export class AnimatorService {
     this.isRedoPlanesFadeOutPhase = false;
     this.isredoProjectSpheresPhase = false;
     this.isRedoLinksFadeOutPhase = false;
+  }
+
+  get nodes(): OBJ.GNObject2D[] {
+    return this._nodes;
+  }
+  set nodes(n: OBJ.GNObject2D[]) {
+    this._nodes = n;
+  }
+
+  get links(): OBJ.GLObject2D[] {
+    return this._links;
+  }
+  set links(l: OBJ.GLObject2D[]) {
+    this._links = l;
   }
 
   fadingIn3D(scene: any): boolean {
@@ -58,10 +74,7 @@ export class AnimatorService {
     if(this.isLinksFadeOutPhaseDone) {
       this.planesFadeOutPhase();
       if(this.isPlanesFadeOutPhaseDone) {
-        this.projectSpheresPhase();
-        if(this.isProjectSpheresPhase) {
-          return true;
-        }
+        return true;
       }
     }
     return false;
@@ -70,7 +83,7 @@ export class AnimatorService {
   private linksFadeOutPhase() {
     if(this.isLinksFadeOutPhaseDone)
       return;
-    for(let l of this.nodeMngmt.getGLOs()) {
+    for(let l of this.links) {
       l.mesh.visible = false;
     }
     this.isLinksFadeOutPhaseDone = true;
@@ -84,20 +97,20 @@ export class AnimatorService {
       let p: [number, number, number] = [0,0,0];
       let flag: boolean = false;
       let count = 0;
-      for(let _o of this.nodeMngmt.getG3DNOs()) {
+      for(let _o of this.nodes) {
         if(_o.box_id == o.id) {
           count += 1;
-          p[0] += _o.position[0];
-          p[1] += _o.position[1];
-          p[2] += _o.position[2];
+          p[0] += _o.position_3dtopo[0];
+          p[1] += _o.position_3dtopo[1];
+          p[2] += _o.position_3dtopo[2];
         }
       }
 
       p = [p[0]/count, p[1]/count, p[2]/count];
       
-      for(let _o of this.nodeMngmt.getG3DNOs()) {
+      for(let _o of this.nodes) {
         if(_o.box_id == o.id) {
-          let p_o = _o.position;
+          let p_o = _o.position_3dtopo;
           p_o[0] += Math.abs(p_o[0] - p[0]) > 0.5 ? (p_o[0] > p[0] ? -1 : (p_o[0] < p[0] ? 1: 0)) : 0;
           p_o[1] += Math.abs(p_o[1] - p[1]) > 0.5 ? (p_o[1] > p[1] ? -1 : (p_o[1] < p[1] ? 1: 0)) : 0;
           p_o[2] += Math.abs(p_o[2] - p[2]) > 0.5 ? (p_o[2] > p[2] ? -1 : (p_o[2] < p[2] ? 1: 0)) : 0;
@@ -141,10 +154,10 @@ export class AnimatorService {
       return;
     let count = 0;
     for(let o of this.nodeMngmt.getGNPrOs()) {
-      for(let _o of this.nodeMngmt.getG3DNOs()) {
+      for(let _o of this.nodes) {
         if(_o.box_id == o.id) {
           let p = o.position;
-          let p_o = _o.position;
+          let p_o = _o.position_3dtopo;
 
           p_o[0] += Math.abs(p_o[0] - p[0]) > 0.5 ? (p_o[0] > p[0] ? -1 : (p_o[0] < p[0] ? 1: 0)) : 0;
           p_o[1] += Math.abs(p_o[1] - p[1]) > 0.5 ? (p_o[1] > p[1] ? -1 : (p_o[1] < p[1] ? 1: 0)) : 0;
@@ -159,9 +172,9 @@ export class AnimatorService {
         }
       }
     }
-    this.isProjectSpheresPhase = (count == this.nodeMngmt.getG3DNOs().length);
+    this.isProjectSpheresPhase = (count == this.nodes.length);
     if(this.isProjectSpheresPhase) {
-      for(let g of this.nodeMngmt.getG3DNOs())
+      for(let g of this.nodes)
         g.setVisible(false);
       for(let g of this.nodeMngmt.getGNPrOs())
         g.setVisible(true);
@@ -202,7 +215,7 @@ export class AnimatorService {
     if(this.isredoProjectSpheresPhase) 
       return;
     let count = true;
-    for(let o of this.nodeMngmt.getG3DNOs()) {
+    for(let o of this.nodes) {
       o.setVisible(true);
       let upperbound = 5;
       switch(o.layer) {
@@ -216,8 +229,8 @@ export class AnimatorService {
           upperbound = 5;
       }
 
-      if(o.position[1] + 1 <= upperbound) {
-        o.updatePosition([o.position[0], o.position[1] + 1, o.position[2]]);
+      if(o.position_3dtopo[1] + 1 <= upperbound) {
+        o.update3DPosition([o.position_3dtopo[0], o.position_3dtopo[1] + 1, o.position_3dtopo[2]]);
         count = false;
       }
     }
@@ -232,7 +245,7 @@ export class AnimatorService {
   private redoLinksFadeOutPhase(scene: any) {
     if(this.isRedoLinksFadeOutPhase)
       return;
-    for(let l of this.nodeMngmt.getGLOs()) {
+    for(let l of this.links) {
       let m = scene.getObjectById(l.mesh.id, true);
       scene.remove(m);
       l.updatePosition(l.node1, l.node2);
