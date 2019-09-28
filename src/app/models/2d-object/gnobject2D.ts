@@ -15,9 +15,11 @@ export class GNObject2D implements NObject2D{
   position_3dtopo: [number, number, number];
   interfaces: string[] = [];
 
+  mesh_text: THREE.Mesh = null;
   mesh_color: number = 0;
   mesh_emissive: number = 0;
   mesh: THREE.Mesh = null;
+  text_mesh: THREE.Mesh = null;
 
   constructor(_id: any, n: string, fn: string, l: NODE_LEVEL, p2: [number, number], ifs: string[]) {
     this.id = _id;
@@ -34,6 +36,14 @@ export class GNObject2D implements NObject2D{
     this.position_2dtopo = p2;
     this.position_3dtopo = [0, 0, 0];
     this.interfaces = ifs;
+
+    new THREE.FontLoader().load( 'assets/fonts/optimer_bold.typeface.json', font => {
+      let textGeom = new THREE.TextGeometry( this.name, { size: 1, height: 0, curveSegments: 3, font: font}),
+              textMaterial = new THREE.MeshBasicMaterial( { color: 0x2194ce} );
+      this.mesh_text = new THREE.Mesh(textGeom, textMaterial );
+      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
+    } );
+
   }
 
   getInterfaces(): string {
@@ -46,27 +56,35 @@ export class GNObject2D implements NObject2D{
 
   update3DPosition(_p): void {
     this.position_3dtopo = _p;
-    if(this.mesh != null)
+    if(this.mesh != null) {
       this.mesh.position.set(this.position_3dtopo[0], this.position_3dtopo[1], this.position_3dtopo[2]);
+    }
+
+      
+    if(this.mesh_text != null)
+      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
   }
 
   getVisible(): boolean {
-    return this.mesh.visible;
+    return this.mesh.visible && this.mesh_text.visible;
   }
 
   setVisible(v: boolean) {
     this.mesh.visible = v;
+    this.mesh_text.visible = v;
   }
 
-  generateMesh(): THREE.Mesh {
+  generateMesh(): THREE.Mesh[] {
+    
     let geometry11 = new THREE.SphereBufferGeometry(1, 128, 128);
     let material11 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 0.5, metalness: 0.5});
     this.mesh = new THREE.Mesh(geometry11, material11);
     this.mesh.name = this.name;
     this.mesh.position.set(this.position_3dtopo[0], this.position_3dtopo[1], this.position_3dtopo[2]);
     this.mesh.visible = false;
-    return this.mesh;
+    return [this.mesh, this.mesh_text];
   }
+
 }
 
 export const G2DNOs: GNObject2D[] = [

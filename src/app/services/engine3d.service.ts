@@ -75,8 +75,8 @@ export class Engine3DService implements OnDestroy {
 
   refreshScene(pickedNodeID: string) {
     for(let g of this.animatorService.nodes) {
-      let og = this.scene.getObjectById(g.mesh.id);
-      this.scene.remove(og);
+      this.scene.remove(this.scene.getObjectById(g.mesh.id));
+      this.scene.remove(this.scene.getObjectById(g.mesh_text.id));
     }
 
     for(let l of this.animatorService.links) {
@@ -93,7 +93,8 @@ export class Engine3DService implements OnDestroy {
     this.animatorService.nodes = nodes;
     this.animatorService.links = links;
     for(let g of nodes) {
-      this.scene.add(g.generateMesh())
+      for(let _n of g.generateMesh())
+        this.scene.add(_n);
     }
 
     for(let g of links) {

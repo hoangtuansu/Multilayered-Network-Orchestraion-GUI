@@ -10,10 +10,10 @@
     </div>
     <div class="layer-show">
         <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer1Shown ? 'layer1 shown' : 'layer1'" 
-            (click)="isLayer1Shown = !isLayer1Shown; engine3DService.showPlane(1, isLayer1Shown);"></a>
+            (click)="isLayer1Shown = !isLayer1Shown; engineService.engine3DService.showPlane(1, isLayer1Shown);"></a>
         <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer2Shown ? 'layer2 shown' : 'layer2'" 
-            (click)="isLayer2Shown = !isLayer2Shown; engine3DService.showPlane(2, isLayer2Shown);"></a>
+            (click)="isLayer2Shown = !isLayer2Shown; engineService.engine3DService.showPlane(2, isLayer2Shown);"></a>
         <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer3Shown ? 'layer3 shown' : 'layer3'" 
-            (click)="isLayer3Shown = !isLayer3Shown; engine3DService.showPlane(3, isLayer3Shown);"></a>
+            (click)="isLayer3Shown = !isLayer3Shown; engineService.engine3DService.showPlane(3, isLayer3Shown);"></a>
     </div>
  </div>
