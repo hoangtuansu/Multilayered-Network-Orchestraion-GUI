@@ -46,10 +46,10 @@ export class EngineCoordinatorService {
                     crossingPaths: cPs, bandwidth: bWs};
     if(!this.isDetailedDialogShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
-        width: '400px',
+        width: '25%',
         panelClass: 'custom-detail-dialog-container',
         data: dataDlg,
-        position: {left: '20px', top: '20px'},
+        position: {left: '20px', top: '85px'},
         hasBackdrop: false,
         autoFocus: false
       });

@@ -31,6 +31,21 @@ export class AppComponent {
         "switch-3d",
         this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/switch-view-3d.svg")
       );
+
+      this.matIconRegistry.addSvgIcon(
+        "layer0",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/layer0.svg")
+      );
+
+      this.matIconRegistry.addSvgIcon(
+        "layer1",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/layer1.svg")
+      );
+
+      this.matIconRegistry.addSvgIcon(
+        "layer2",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/layer2.svg")
+      );
   }
   
 }

@@ -2,6 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChange, Inpu
 import { Engine2DService } from 'src/app/services/engine2d.service';
 import { trigger, style, state, transition, animate } from '@angular/animations';
 import * as OBJ from '../../../models';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+
+export interface Node {
+  icon: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-topo2d',
@@ -32,7 +40,40 @@ export class Topo2dComponent implements OnInit, OnChanges {
   @ViewChild('renderer2DContainer', { static: false }) renderer2DContainer: ElementRef;
   @Input() isDetailShown: boolean = false;
   
-  constructor(private engine2DService: Engine2DService) {}
+  nodeCtrl = new FormControl();
+  filteredNodes: Observable<Node[]>;
+
+  nodes: Node[] = [
+    {
+      name: 'Arkansas',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
+    },
+    {
+      name: 'California',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
+    },
+    {
+      name: 'Florida',
+      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
+    },
+    {
+      name: 'Texas',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
+    }
+  ];
+
+  constructor(private engine2DService: Engine2DService) {
+    this.filteredNodes = this.nodeCtrl.valueChanges
+      .pipe(startWith(''), map(node => node ? this._filteredNodes(node as string) : this.nodes.slice())
+      );
+  }
+
+  private _filteredNodes(value: string): Node[] {
+    const filterValue = value.toLowerCase();
+
+    return this.nodes.filter(node => node.name.toLowerCase().indexOf(filterValue) === 0);
+  }
 
   ngAfterViewInit() {
     this.engine2DService.createChart(this.renderer2DContainer);

@@ -1,6 +1,6 @@
-export enum LAYER { WORLD, OPTICAL, LAYER1, IP }
+export enum LAYER { OPTICAL, LAYER1, IP }
 export enum DISPLAY_MODE {D2 = 0, D3 = 1, ONGOING = 2, D2WORLD = 3}
-export enum NODE_LEVEL {COUNTRY, STATE, CITY}
+export enum NODE_LEVEL {CITY, STATE, COUNTRY}
 export enum LINK_TYPE {DOMAIN, BOUNDARY}
 export const CONSTANTS = {
     COUNTRY_PAR: ['assets/images/world-data-center.png', 

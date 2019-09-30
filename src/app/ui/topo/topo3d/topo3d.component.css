@@ -24,29 +24,30 @@
     width: 30px;
   }
   
-.layer-show a {
-  width:32px;
-  height: 32px;
-  margin-bottom: 5px;
+.layer-show button{
   text-decoration: none;
   text-transform: uppercase;
   margin-left: 5px;
   float: right;
 }
 
-.layer-show .layer1 {
-  background: #ffffff url("../../../../assets/images/layer1-selected.png") center center no-repeat;
+.layer-show .layer0 {
+  background: #ffffff url("../../../../assets/images/layer0-selected.png") center center no-repeat;
 }
 
-.layer-show .layer1.shown, .layer-show .layer2.shown, .layer-show .layer3.shown {
+.layer-show .layer0.shown, .layer-show .layer1.shown, .layer-show .layer2.shown {
   background-color: #b3b3b3;
   transition: background-color 1s ease-in 0.1 ease-out;
+}
+
+.layer-show .layer1 {
+  background: #ffffff url("../../../../assets/images/layer1-selected.png") center no-repeat;
 }
 
 .layer-show .layer2 {
   background: #ffffff url("../../../../assets/images/layer2-selected.png") center no-repeat;
 }
 
-.layer-show .layer3 {
-  background: #ffffff url("../../../../assets/images/layer3-selected.png") center no-repeat;
+.layer-show .label {
+  background: #ffffff url("../../../../assets/images/layer2-selected.png") center no-repeat;
 }

@@ -103,38 +103,49 @@ export class Engine3DService implements OnDestroy {
   }
 
   showPlane(plane_id, isShown) {
+    this.undoHighlightLink();
+    this.undoHighlightLSP();
+
     for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       if(g.layer == plane_id) {
         g.setVisible(isShown);
       }
     }
 
-    for(let o of this.animatorService.nodeMngmt.getG3DNOs()) {
-      if(o.layer == plane_id) {
-        for(let l of this.animatorService.nodeMngmt.getGLOs()) {
+    for(let o of this.animatorService.nodes) {
+      if(o.level == plane_id) {
+        o.setVisible(isShown);
+        for(let l of this.animatorService.links) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
-            l.mesh.visible = isShown;
+            l.setVisible(isShown);
           }
         }
-        o.mesh.visible = isShown;
       }
+    }
+  }
+
+  showLabel(isLabelShown) {
+    for(let n of this.animatorService.nodes) {
+      n.setLabelVisibility(isLabelShown);
     }
   }
 
   highlightLink(pickedLink: OBJ.GLObject2D) {
     this.undoHighlightLink();
     this.undoHighlightLSP();
-    this.highlightedLink = pickedLink;
-    this.highlightedLink.mesh.visible = false;
-    let hlLink = pickedLink.generateHighlightedMesh();
-    hlLink.name = this.highlightedLinkName;
-    this.scene.add(hlLink);
+    if(pickedLink.node1.getVisible() && pickedLink.node2.getVisible()) {
+      this.highlightedLink = pickedLink;
+      this.highlightedLink.setVisible(false);
+      let hlLink = pickedLink.generateHighlightedMesh();
+      hlLink.name = this.highlightedLinkName;
+      this.scene.add(hlLink);
+    }
   }
 
   private undoHighlightLink() {
     let hlLink = null;
     if(this.highlightedLink != null) { //there is already a highlighted link
-      this.highlightedLink.mesh.visible = true;
+      this.highlightedLink.setVisible(true);
       hlLink = this.scene.getObjectByName(this.highlightedLinkName);
       this.scene.remove(hlLink);
     }
@@ -144,6 +155,10 @@ export class Engine3DService implements OnDestroy {
     this.undoHighlightLink();
     this.undoHighlightLSP();
     this.highlightedLSP = [];
+    for(let _n of pickedLSP) {
+      if(!_n.getVisible())
+        return;
+    }
     for(let n of pickedLSP) {
       let nIdx = pickedLSP.indexOf(n);
       if(nIdx == pickedLSP.length - 1)

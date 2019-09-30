@@ -157,7 +157,7 @@ export class Engine2DService {
 
           this.g.selectAll(".state-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
             .enter().append("line").attr('class', 'state-level-link')
-            .style("stroke", d => {return d.color;}).style("stroke-width", 1)
+            .style("stroke", d => {return d.color;}).style("stroke-width", 3)
             .attr("id", (d) => {return d.name;})
             .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
             .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
@@ -218,7 +218,7 @@ export class Engine2DService {
 
       this.g.selectAll(".country-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
         .enter().append("line").attr('class', 'country-level-link')
-        .style("stroke", "red").style("stroke-width", 3)
+        .style("stroke", "red").style("stroke-width", 5)
         .attr("id", (d) => {return d.name;})
         .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
         .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
@@ -248,43 +248,55 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     this.resetSelectedEntity();
+    if(d instanceof OBJ.GLObject2D)
+      return
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
     this.selectedNodeForDetailNotifier.next(d);
   }
 
-
   private entityMouseOver = (d) => {
     if(!this.isDetailEnabled)
       return;
-    let did = '#' + d.id;
-    if(d3.select(did).attr('selected') == null) {
-      d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
-    }
-    d3.select("#toolTip").transition().duration(200).style("opacity", .9); 
-    let pos = this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]);
-    let offsetX = 20, offsetY = 20;
-    if(d.level === OBJ.NODE_LEVEL.STATE || d.level === OBJ.NODE_LEVEL.CITY) {
-      let tmp = this.projection.translate();
-      pos[0] = (pos[0] - this.lastXYZ[0])*this.lastXYZ[2] +  tmp[0];
-      pos[1] = (pos[1] - this.lastXYZ[1])*this.lastXYZ[2] +  tmp[1];
-      offsetX = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
-      offsetY = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
+    if(d instanceof OBJ.GLObject2D) {
+      d3.select("#link_toolTip").transition().duration(200).style("opacity", .9);
+      d3.select("#link_toolTip").html("<div style='text-align:left'>" + 'Node 1: ' + d.node1.name + '/' + d.node1_if + '<br/>' 
+                                    + 'Node 2: ' + d.node2.name + '/' + d.node2_if + '<br/>'
+                                    + 'Bandwidth: ' + d.bandwidth.toString() + 'Gbps</div>')
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px");
+    } else {
+      let did = '#' + d.id;
+      if(d3.select(did).attr('selected') == null) {
+        d3.select(did).attr("xlink:href", (e) => {return e["icon_hover_url"];});
+      }
+      d3.select("#node_toolTip").transition().duration(200).style("opacity", .9); 
+      let pos = this.projection([d.position_2dtopo[0], d.position_2dtopo[1]]);
+      let offsetX = 20, offsetY = 20;
+      if(d.level === OBJ.NODE_LEVEL.STATE || d.level === OBJ.NODE_LEVEL.CITY) {
+        let tmp = this.projection.translate();
+        pos[0] = (pos[0] - this.lastXYZ[0])*this.lastXYZ[2] +  tmp[0];
+        pos[1] = (pos[1] - this.lastXYZ[1])*this.lastXYZ[2] +  tmp[1];
+        offsetX = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
+        offsetY = d.level === OBJ.NODE_LEVEL.STATE ? this.width/60 : (this.width/30 + 10);
+      }
+      
+      d3.select("#node_toolTip").html(d.full_name)
+        .style("left", (pos[0] + offsetX) + "px")
+        .style("top", (pos[1] + offsetY) + "px");
     }
     
-    d3.select("#toolTip").html(d.full_name)
-      .style("left", (pos[0] + offsetX) + "px")
-      .style("top", (pos[1] + offsetY) + "px");
   }
 
   private entityMouseOut = (d) => {
     if(!this.isDetailEnabled)
       return;
+    d3.select("#link_toolTip").transition().duration(200).style("opacity", 0);
     let did = '#' + d.id;
     if(d3.select(did).attr('selected') == null) {
       d3.select(did).attr("xlink:href", (e) => {return e["icon_url"];});
     }
-    d3.select("#toolTip").transition().duration(200).style("opacity", 0); 
+    d3.select("#node_toolTip").transition().duration(200).style("opacity", 0); 
   }
 
   //#endregion

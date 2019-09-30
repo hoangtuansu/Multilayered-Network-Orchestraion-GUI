@@ -6,14 +6,23 @@
         <button mat-icon-button (click)="zoomOut3DLayout()">
             <mat-icon>zoom_out_map</mat-icon>
         </button>
+
+        
         
     </div>
     <div class="layer-show">
-        <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer1Shown ? 'layer1 shown' : 'layer1'" 
-            (click)="isLayer1Shown = !isLayer1Shown; engineService.engine3DService.showPlane(1, isLayer1Shown);"></a>
-        <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer2Shown ? 'layer2 shown' : 'layer2'" 
-            (click)="isLayer2Shown = !isLayer2Shown; engineService.engine3DService.showPlane(2, isLayer2Shown);"></a>
-        <a matRipple [matRippleColor]="b3b3b3" [ngClass]="isLayer3Shown ? 'layer3 shown' : 'layer3'" 
-            (click)="isLayer3Shown = !isLayer3Shown; engineService.engine3DService.showPlane(3, isLayer3Shown);"></a>
+        
+            <button mat-icon-button (click)="isLayer3Shown = !isLayer3Shown; engineService.engine3DService.showPlane(2, isLayer3Shown);">
+                    <mat-icon svgIcon="layer2"></mat-icon>
+            </button>
+    
+            <button mat-icon-button (click)="isLayer2Shown = !isLayer2Shown; engineService.engine3DService.showPlane(1, isLayer2Shown);">
+                    <mat-icon svgIcon="layer1"></mat-icon>
+            </button>
+    
+            <button mat-icon-button (click)="isLayer1Shown = !isLayer1Shown; engineService.engine3DService.showPlane(0, isLayer1Shown);">
+                    <mat-icon svgIcon="layer0"></mat-icon>
+            </button>
+        
     </div>
  </div>

@@ -32,7 +32,7 @@ pre.prettyprint {
   padding: 9.5px;
 }
 
-#toolTip {   
+#node_toolTip, #link_toolTip, #inf1_toolTip, #inf2_toolTip {   
   position: absolute;           
   text-align: center;
   margin: 10px;
@@ -46,4 +46,25 @@ pre.prettyprint {
   padding:4px;
   color:white;
   opacity:0;
+}
+
+.example-form {
+  min-width: 100px;
+  max-width: 500px;
+  width: 25%;
+  margin-left: 20px;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-option-img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+[dir='rtl'] .example-option-img {
+  margin-right: 0;
+  margin-left: 8px;
 }

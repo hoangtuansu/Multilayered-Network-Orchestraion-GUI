@@ -1,4 +1,22 @@
 <div class="topo2d" #renderer2DContainer>
     
 </div>
-<div id="toolTip"></div>
+<div>
+    <form class="example-form">
+        <mat-form-field class="example-full-width"  appearance="outline">
+            <mat-label>Search network elements</mat-label>
+            <input matInput aria-label="Node" [matAutocomplete]="auto" [formControl]="nodeCtrl" placeholder="Type to search" >
+            <button mat-button *ngIf="nodeCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="nodeCtrl.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+            <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let node of filteredNodes | async" [value]="node.name">
+                <img class="example-option-img" aria-hidden [src]="node.icon" height="25">
+                <span>{{node.name}}</span>
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>
+<div id="node_toolTip"></div>
+<div id="link_toolTip"></div>

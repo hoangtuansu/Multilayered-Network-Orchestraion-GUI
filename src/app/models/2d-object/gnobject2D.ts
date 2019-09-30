@@ -19,7 +19,6 @@ export class GNObject2D implements NObject2D{
   mesh_color: number = 0;
   mesh_emissive: number = 0;
   mesh: THREE.Mesh = null;
-  text_mesh: THREE.Mesh = null;
 
   constructor(_id: any, n: string, fn: string, l: NODE_LEVEL, p2: [number, number], ifs: string[]) {
     this.id = _id;
@@ -38,7 +37,7 @@ export class GNObject2D implements NObject2D{
     this.interfaces = ifs;
 
     new THREE.FontLoader().load( 'assets/fonts/optimer_bold.typeface.json', font => {
-      let textGeom = new THREE.TextGeometry( this.name, { size: 1, height: 0, curveSegments: 3, font: font}),
+      let textGeom = new THREE.TextGeometry( this.name, { size: 0.75, height: 0, curveSegments: 3, font: font}),
               textMaterial = new THREE.MeshBasicMaterial( { color: 0x2194ce} );
       this.mesh_text = new THREE.Mesh(textGeom, textMaterial );
       this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
@@ -65,6 +64,15 @@ export class GNObject2D implements NObject2D{
       this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
   }
 
+  get visibility(): boolean {
+    return this.mesh.visible && this.mesh_text.visible;
+  }
+
+  set visibility(v: boolean) {
+    this.mesh.visible = v;
+    this.mesh_text.visible = v;
+  }
+
   getVisible(): boolean {
     return this.mesh.visible && this.mesh_text.visible;
   }
@@ -74,14 +82,16 @@ export class GNObject2D implements NObject2D{
     this.mesh_text.visible = v;
   }
 
+  setLabelVisibility(v: boolean) {
+    this.mesh_text.visible = v;
+  }
+
   generateMesh(): THREE.Mesh[] {
-    
     let geometry11 = new THREE.SphereBufferGeometry(1, 128, 128);
     let material11 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 0.5, metalness: 0.5});
     this.mesh = new THREE.Mesh(geometry11, material11);
     this.mesh.name = this.name;
     this.mesh.position.set(this.position_3dtopo[0], this.position_3dtopo[1], this.position_3dtopo[2]);
-    this.mesh.visible = false;
     return [this.mesh, this.mesh_text];
   }
 

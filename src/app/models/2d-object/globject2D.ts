@@ -37,6 +37,19 @@ export class GLObject2D implements LObject2D {
       this.mesh_highlightcolor = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[2] : CONSTANTS.LINK_BOUNDARY[2];
     }
 
+    setVisible(v: boolean) {
+      if(this.node1.getVisible() && this.node2.getVisible()) {
+        this.mesh.visible = v;
+      } else {
+        this.mesh.visible = false;
+      }
+    }
+
+    get middlePosition2D(): [number, number] {
+      return [(this.node1.position_2dtopo[0] + this.node2.position_2dtopo[0])/2, 
+              (this.node1.position_2dtopo[1] + this.node2.position_2dtopo[1])/2];
+    }
+
     generateHighlightedMesh(): THREE.Mesh {
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
