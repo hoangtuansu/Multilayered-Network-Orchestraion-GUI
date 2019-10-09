@@ -10,9 +10,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let node of filteredNodes | async" [value]="node.name">
-                <img class="example-option-img" aria-hidden [src]="node.icon" height="25">
-                <span>{{node.name}}</span>
+            <mat-option *ngFor="let node of filteredNodes | async" [value]="node.full_name">
+                <img class="example-option-img" aria-hidden [src]="node.icon_url" height="25">
+                <span>{{node.full_name}}</span>
             </mat-option>
             </mat-autocomplete>
         </mat-form-field>

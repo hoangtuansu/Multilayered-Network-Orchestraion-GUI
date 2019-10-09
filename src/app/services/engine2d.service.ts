@@ -9,16 +9,15 @@ import { MatIconRegistry } from '@angular/material/icon';
   providedIn: 'root'
 })
 export class Engine2DService {
-  
-  is2DFadingOut: boolean = false;
-  is2DFadingIn: boolean = false;
-  is2DFadingOutComplete: boolean = false;
-  is2DFadingInStart: boolean = false;
+
+  is2DFadingOut = false;
+  is2DFadingIn = false;
+  is2DFadingOutComplete = false;
+  is2DFadingInStart = false;
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
 
   provinceColorMapping : any = { };
-  
   g: any = null;
   width: number = 0;
   height: number = 0;

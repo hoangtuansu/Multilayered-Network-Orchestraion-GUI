@@ -95,6 +95,8 @@ export class GNObject2D implements NObject2D{
     return [this.mesh, this.mesh_text];
   }
 
+  
+
 }
 
 export const G2DNOs: GNObject2D[] = [

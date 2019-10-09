@@ -12,14 +12,14 @@ import { Subject } from 'rxjs';
 })
 export class EngineCoordinatorService {
   dialogRef: MatDialogRef<any> = null;
-  isDetailedDialogShown: boolean = false;
-  isShowing3DTopoNotifier:Subject<boolean> = new Subject<boolean>();
-  
+  isDetailedDialogShown = false;
+  isShowing3DTopoNotifier: Subject<boolean> = new Subject<boolean>();
+
   constructor(private _engine2DService: Engine2DService,
-    private _engine3DService: Engine3DService, 
-    private netManagerService: NetworkManagerService,
-    private pathComputationService: PathComputationService,
-    public detailInfoDialog: MatDialog) { 
+              private _engine3DService: Engine3DService, 
+              private netManagerService: NetworkManagerService,
+              private pathComputationService: PathComputationService,
+              public detailInfoDialog: MatDialog) {
     
     _engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
       this.openDialog(value);
@@ -41,8 +41,8 @@ export class EngineCoordinatorService {
         cNEs = this.netManagerService.getNeighborNetworkElements(entity.id),
         cPs = this.pathComputationService.getCrossingPath(entity.id),
         bWs = this.pathComputationService.getBandwidth(cPs);
-    let dataDlg = { selectedEntity: entity, domainLinks: dLs, 
-                    boundaryLinks: bLs, connectedNetEles: cNEs, 
+    const dataDlg = { selectedEntity: entity, domainLinks: dLs,
+                    boundaryLinks: bLs, connectedNetEles: cNEs,
                     crossingPaths: cPs, bandwidth: bWs};
     if(!this.isDetailedDialogShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
