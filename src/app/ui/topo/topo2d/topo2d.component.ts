@@ -36,7 +36,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
   @Input() isDetailShown: boolean = false;
   
   nodeCtrl = new FormControl();
-  filteredNodes: Observable<Node[]>;
+  filteredNodes: Observable<OBJ.GNObject2D[]>;
 
   constructor(private engine2DService: Engine2DService) {
     this.filteredNodes = this.nodeCtrl.valueChanges
@@ -45,7 +45,7 @@ export class Topo2dComponent implements OnInit, OnChanges {
     
   }
 
-  private _filteredNodes(value: string): Node[] {
+  private _filteredNodes(value: string): OBJ.GNObject2D[] {
     const filterValue = value.toLowerCase();
     return OBJ.G2DNOs.filter(node => node.name.toLowerCase().indexOf(filterValue) >= 0 || node.full_name.toLowerCase().indexOf(filterValue) >= 0)
   }
@@ -61,5 +61,11 @@ export class Topo2dComponent implements OnInit, OnChanges {
     }
   }
 
-  
+  updateDialogDetailContent(evt, selectedNode) {
+    if (evt.source.selected) {
+      this.engine2DService.selectedNodeForDetailNotifier.next(selectedNode)
+    }
+    
+  }
+
 }
