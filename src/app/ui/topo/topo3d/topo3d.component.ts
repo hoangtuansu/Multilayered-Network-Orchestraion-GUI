@@ -23,8 +23,8 @@ import { EngineCoordinatorService } from 'src/app/services/engine-coordinator.se
       transition('3d-hide <=> 3d-show', animate('500ms'))]),
       trigger('zoom3DDiv', [
         state('3d-zoomout', style({
-          width: '75%',
-          height: '75vh'
+          width: '65%',
+          height: '65vh'
         })),
         state('3d-zoomin', style({
           width: '45%',
@@ -99,8 +99,8 @@ export class Topo3dComponent implements OnInit, OnChanges {
 
   zoomOut3DLayout() {
     this.isZoomedOut = !this.isZoomedOut;
-    this.engineService.engine3DService.setRendererDimension(this.renderer3DContainer.nativeElement.offsetWidth, 
-      this.renderer3DContainer.nativeElement.offsetHeight);
+    let ratio = this.isZoomedOut ? 0.65 : 0.45
+    this.engineService.engine3DService.setRendererDimension(window.innerWidth*ratio, window.innerHeight*ratio)
   }
 
   attach3DLayout(a: boolean) {
