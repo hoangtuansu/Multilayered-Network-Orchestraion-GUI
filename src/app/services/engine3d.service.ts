@@ -74,14 +74,17 @@ export class Engine3DService implements OnDestroy {
   }
 
   refreshScene(pickedNodeID: string) {
+    console.log("list of removed links:")
     for(let g of this.animatorService.nodes) {
       this.scene.remove(this.scene.getObjectById(g.mesh.id));
       this.scene.remove(this.scene.getObjectById(g.mesh_text.id));
+      
     }
 
     for(let l of this.animatorService.links) {
       let ol = this.scene.getObjectById(l.mesh.id);
       this.scene.remove(ol);
+      console.log(l.name)
     }
 
     this.highlightedLink = null;
@@ -92,12 +95,14 @@ export class Engine3DService implements OnDestroy {
     this.entityLocatorService.locatingNetworkElements(nodes);
     this.animatorService.nodes = nodes;
     this.animatorService.links = links;
+    console.log("list of new links:")
     for(let g of nodes) {
       for(let _n of g.generateMesh())
         this.scene.add(_n);
     }
 
     for(let g of links) {
+      console.log(g.name)
       this.scene.add(g.generateMesh())
     }
   }

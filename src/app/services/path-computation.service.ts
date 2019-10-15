@@ -17,15 +17,15 @@ export class PathComputationService {
     [ OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]]
   ]; */
   listOfPaths = [
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[2], OBJ.G2DNOs[3], OBJ.G2DNOs[1]], 
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[1]], 
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[7], OBJ.G2DNOs[6], OBJ.G2DNOs[1]],
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[5], OBJ.G2DNOs[6], OBJ.G2DNOs[1]],
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[2], OBJ.G2DNOs[3], OBJ.G2DNOs[1]], //qfx1 -> qfx3 -> qfx4 -> qfx2 
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[1]], //qfx1 -> poc1 -> poc3 -> qfx2
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[7], OBJ.G2DNOs[6], OBJ.G2DNOs[1]], //qfx1 -> fws1 -> fws4 -> fws3 -> qfx2
+    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[5], OBJ.G2DNOs[6], OBJ.G2DNOs[1]], //qfx1 -> fws1 -> fws2 -> fws3 -> qfx2
     [OBJ.G2DNOs[4], OBJ.G2DNOs[7], OBJ.G2DNOs[6]],
     [OBJ.G2DNOs[4], OBJ.G2DNOs[5], OBJ.G2DNOs[6]],
     [OBJ.G2DNOs[5], OBJ.G2DNOs[7]],
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[6]],
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[17], OBJ.G2DNOs[6]]
+    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[6]], //fws1 -> poc1 -> poc3 -> fws3
+    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[17], OBJ.G2DNOs[6]] //fws1 -> poc1 -> poc2 -> poc3 -> fws3
   ];
 
   constructor(private netMngtService: NetworkManagerService) {}
@@ -75,7 +75,9 @@ export class PathComputationService {
            }
            
            if(inp < p.length - 1) {
+            
             let l = this.netMngtService.getLink(np, p[inp+1])
+            console.log("src: " + np.name + " dst: " + p[inp+1].name + " link: " + l.name)
             if(links.indexOf(l) < 0)
               links.push(l)
            }
