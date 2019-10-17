@@ -38,9 +38,10 @@ export class GNObject2D implements NObject2D{
 
     new THREE.FontLoader().load( 'assets/fonts/optimer_bold.typeface.json', font => {
       let textGeom = new THREE.TextGeometry( this.name, { size: 0.75, height: 0, curveSegments: 3, font: font}),
-              textMaterial = new THREE.MeshBasicMaterial( { color: 0x2194ce} );
+              textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff} );
       this.mesh_text = new THREE.Mesh(textGeom, textMaterial );
-      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
+      this.mesh_text.rotation.set(this.level == NODE_LEVEL.CITY ? -Math.PI/4 : -Math.PI/2, 0, 0);
+      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2] + 0.25);
     } );
 
   }
@@ -61,7 +62,12 @@ export class GNObject2D implements NObject2D{
 
       
     if(this.mesh_text != null)
-      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.5, this.position_3dtopo[2]);
+      if(this.level == NODE_LEVEL.CITY) {
+        this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.75, this.position_3dtopo[2] + 1.25);
+      } else {
+        this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2] + 0.25);
+      }
+      
   }
 
   get visibility(): boolean {
@@ -87,7 +93,21 @@ export class GNObject2D implements NObject2D{
   }
 
   generateMesh(): THREE.Mesh[] {
-    let geometry11 = new THREE.SphereBufferGeometry(1, 128, 128);
+    //let geometry11 = new THREE.SphereBufferGeometry(1, 128, 128);
+    let geometry11 = null;
+    switch(this.level) {
+      case NODE_LEVEL.COUNTRY:
+        geometry11 = new THREE.CylinderBufferGeometry(1.5, 1.5, 1, 32);
+        break;
+      case NODE_LEVEL.STATE:
+        geometry11 = new THREE.BoxBufferGeometry(3, 1, 3);
+        break;
+      case NODE_LEVEL.CITY:
+        geometry11 = new THREE.OctahedronGeometry( 2 );
+        break;
+    }
+
+    //let geometry11 = new THREE.CylinderBufferGeometry( 1, 1, 5, 1 );
     let material11 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 0.5, metalness: 0.5});
     this.mesh = new THREE.Mesh(geometry11, material11);
     this.mesh.name = this.name;

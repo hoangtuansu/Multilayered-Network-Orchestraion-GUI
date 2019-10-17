@@ -20,7 +20,7 @@ export class GLObject2D implements LObject2D {
     mesh_emissive: number = 0;
     mesh_highlightcolor: number = 0;
     mesh: THREE.Mesh = null;
-  
+
     constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, tp: LINK_TYPE) {
       this.id = _id;
       this.name = n;
@@ -50,7 +50,7 @@ export class GLObject2D implements LObject2D {
               (this.node1.position_2dtopo[1] + this.node2.position_2dtopo[1])/2];
     }
 
-    generateHighlightedMesh(): THREE.Mesh {
+    generateHighlightedMesh(src: THREE.Vector3, dst: THREE.Vector3): THREE.Group {
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
       let vec = B.clone(); vec.sub(A);
@@ -64,7 +64,17 @@ export class GLObject2D implements LObject2D {
       let mesh = new THREE.Mesh(geometry, material14);
       mesh.applyQuaternion(quaternion);
       mesh.position.set(A.x, A.y, A.z);
-      return mesh;
+
+      let arrow_geo = new THREE.ConeBufferGeometry(1, 3, 4);
+      arrow_geo.translate(0, h/3, 0);
+      let arrow_mesh = new THREE.Mesh(arrow_geo, material14);
+      arrow_mesh.applyQuaternion(quaternion);
+      arrow_mesh.position.set(A.x, A.y, A.z);
+
+      let g = new THREE.Group();
+      g.add(mesh);
+      g.add(arrow_mesh);
+      return g;
     }
 
     generateMesh(): THREE.Mesh {
