@@ -261,7 +261,7 @@ export class Engine2DService {
       d3.select("#link_toolTip").transition().duration(200).style("opacity", .9);
       d3.select("#link_toolTip").html("<div style='text-align:left'>" + 'Node 1: ' + d.node1.name + '/' + d.node1_if + '<br/>' 
                                     + 'Node 2: ' + d.node2.name + '/' + d.node2_if + '<br/>'
-                                    + 'Bandwidth: ' + d.bandwidth.toString() + 'Gbps</div>')
+                                    + 'Bandwidth: ' + d.bandwidth.toString() + '</div>')
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px");
     } else {

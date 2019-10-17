@@ -69,7 +69,8 @@ export class GLObject2D implements LObject2D {
 
     generateMesh(): THREE.Mesh {
       if(this.mesh != null) {
-        return this.mesh;
+        this.mesh.geometry.dispose();
+        (this.mesh.material as THREE.MeshStandardMaterial).dispose();
       }
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);

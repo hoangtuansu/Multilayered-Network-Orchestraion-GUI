@@ -12,7 +12,7 @@
           <mat-panel-title>
             <div style="height: 32px;"> 
               <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/node.png"></div>
-              <span>Routers</span>
+              <span>Connected NEs</span>
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -111,7 +111,7 @@
                     <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                       {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === p[0].full_name ? p[p.length-1].full_name : p[0].full_name}}
                     </div>
-                    <div style="float: right;">{{data['bandwidth'][i]}}Gbps</div>
+                    <div style="float: right;">{{data['bandwidth'][i]}}</div>
                   </div>
                   <div class='link-symbol'>
                     <div class='mark1'></div>
