@@ -26,7 +26,7 @@ export class DialogDetailsComponent implements OnInit {
 
   display3DTopo(pickedNode) {
     this.engineService.engine3DService.refreshScene(pickedNode.id);
-    
+    this.engineService.setdetailedEntity(pickedNode);
     if(!this.is3DBeingShown) {
       this.engineService.engine3DService.is3DFadingOutComplete = false;
       this.engineService.engine3DService.is3DFadingInStart = true;

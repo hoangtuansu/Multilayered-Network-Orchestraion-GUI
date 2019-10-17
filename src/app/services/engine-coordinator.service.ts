@@ -65,4 +65,8 @@ export class EngineCoordinatorService {
   get2DService() {
     return this.engine2DService;
   }
+
+  setdetailedEntity(entity: any) {
+    this.openDialog(entity);
+  }
 }
