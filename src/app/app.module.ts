@@ -12,6 +12,8 @@ import {DemoMaterialModule} from './material-module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LinkVisualComponent } from './ui/panel-details/link-visual/link-visual.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
+import { LspServicesComponent } from './ui/panel-details/lsp-services/lsp-services.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     Topo2dComponent,
     TopoManagerComponent,
     DialogDetailsComponent,
-    LinkVisualComponent
+    LinkVisualComponent,
+    LspServicesComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     DemoMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ChartsModule
   ],
   entryComponents: [DialogDetailsComponent],
   providers: [],

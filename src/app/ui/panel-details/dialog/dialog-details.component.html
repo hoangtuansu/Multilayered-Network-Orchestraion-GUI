@@ -1,145 +1,154 @@
-<mat-tab-group  mat-stretch-tabs #mtg class="header-less-tabs">
-  <mat-tab label="Tab 1">
-      <div class="detail-dialog-header">
-          <h1 mat-dialog-title>{{data['selectedEntity'].full_name}}</h1>
-          <button mat-icon-button>
-              <mat-icon svgIcon="switch-3d" (click)="display3DTopo(data['selectedEntity']);"></mat-icon>
-          </button>
-      </div>
-      <div mat-dialog-content>
-        <div [@.disabled]="disableAnimation">
-          <mat-accordion class="example-headers-align">
-            <mat-expansion-panel [expanded]="false">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <div style="height: 32px;"> 
-                    <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/node.png"></div>
-                    <span>Connected NEs</span>
-                  </div>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-          
-              <mat-action-list dense *ngFor="let n of data['connectedNetEles']; let i = index;">
-                <button mat-list-item>
-                  <mat-icon matListIcon svgIcon="{{n.level == 0 ? 'world-dc' : (n.level == 1 ? 'country-sw' : 'city-router')}}"></mat-icon>
-                  <h3 mat-line> {{n.full_name}} </h3>
-                  <p mat-line>
-                    <span> {{n.name}}-{{n.getInterfaces()}} </span>
-                  </p>
-                  <mat-icon (click)="display3DTopo(n);">input</mat-icon>
-                </button>
-              </mat-action-list>
-            
-            </mat-expansion-panel>
-          
-            <mat-expansion-panel [expanded]="false" >
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div style="height: 32px;"> 
-                      <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/link.png"></div>
-                      <span>Links</span>
-                    </div>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-          
-              <mat-tab-group dynamicHeight>
-                  <mat-tab label="Domain"> 
-                    <mat-list class="link-list">
-                        <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;" (click)="highlight3DLink(l)">
-                            <div style="width:100%; height: 80px; padding-top: 5px;">
-                              <div class='link-title'>
-                                <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                                    {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
-                                </div>
-                                <div style="float: right;">{{l.bandwidth}}</div>
-                              </div>
-                              <div class='link-symbol'>
-                                <div class='mark1'></div>
-                                <div class='bar'></div>
-                                <div class='mark2'></div>
-                              </div>
-                              <div class='link-nodes'>
-                                  <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                                  <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
-                              </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                        </mat-list-item>
-                        
-                      </mat-list>
-                    
-                  </mat-tab>
-                  <mat-tab label="Boundary"> 
-                    <mat-list class="link-list">
-                      <mat-list-item matRipple *ngFor="let l of data['boundaryLinks']; let i = index;" (click)="highlight3DLink(l)">
-                          <div style="width:100%; height: 80px; padding-top: 5px;">
-                            <div class='link-title'>
-                              <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                                  {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
-                              </div>
-                              <div style="float: right;">{{l.bandwidth}}</div>
-                            </div>
-                            <div class='link-symbol'>
-                              <div class='mark1'></div>
-                              <div class='bar'></div>
-                              <div class='mark2'></div>
-                            </div>
-                            <div class='link-nodes'>
-                                <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                                <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
-                            </div>
-                          </div>
-                          <mat-divider></mat-divider>
-                      </mat-list-item>
-                      
-                    </mat-list>
-                  </mat-tab>
-              </mat-tab-group>
-            </mat-expansion-panel>
-          
-            <mat-expansion-panel [expanded]="false">
-              <mat-expansion-panel-header>
-                  <div style="height: 32px;"> 
-                    <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/path.png"></div>
-                    <span>LSPs</span>
-                  </div>
-              </mat-expansion-panel-header>
-          
-              <mat-accordion>
-                <mat-expansion-panel *ngFor="let p of data['crossingPaths']; let i = index;" (click)="highlight3DLSP(p)" [expanded]="false" [hideToggle]="'true'">
-                    <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
-                      <div style="width:100%; height: 80px; font-size: 13px;">
-                        <div class='link-title'>
-                          <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
-                            {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === p[0].full_name ? p[p.length-1].full_name : p[0].full_name}}
-                          </div>
-                          <div style="float: right;">{{data['bandwidth'][i]}}</div>
+<div class="detail-dialog-header">
+  <h1 mat-dialog-title>{{data['selectedEntity'].full_name}}</h1>
+  <button mat-icon-button>
+      <mat-icon svgIcon="switch-3d" (click)="display3DTopo(data['selectedEntity']);"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+<div [@.disabled]="disableAnimation">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div style="height: 32px;"> 
+            <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/node.png"></div>
+            <span>Connected NEs</span>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <mat-action-list dense *ngFor="let n of data['connectedNetEles']; let i = index;">
+        <button mat-list-item>
+          <mat-icon matListIcon svgIcon="{{n.level == 0 ? 'world-dc' : (n.level == 1 ? 'country-sw' : 'city-router')}}"></mat-icon>
+          <h3 mat-line> {{n.full_name}} </h3>
+          <p mat-line>
+            <span> {{n.name}}-{{n.getInterfaces()}} </span>
+          </p>
+          <mat-icon (click)="display3DTopo(n);">input</mat-icon>
+        </button>
+      </mat-action-list>
+    
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="false" >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            <div style="height: 32px;"> 
+              <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/link.png"></div>
+              <span>Links</span>
+            </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <mat-tab-group dynamicHeight>
+          <mat-tab label="Domain"> 
+            <mat-list class="link-list">
+                <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;" (click)="highlight3DLink(l)">
+                    <div style="width:100%; height: 80px; padding-top: 5px;">
+                      <div class='link-title'>
+                        <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
+                            {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
                         </div>
-                        <div class='link-symbol'>
-                          <div class='mark1'></div>
-                          <div class='bar'></div>
-                          <div class='mark2'></div>
-                        </div>
-                        <div class='link-nodes'>
-                            <div class='src-name'>{{data['selectedEntity'].name === p[0].name ? p[0].name : p[p.length-1].name}}</div>
-                            <div class='dst-name'>{{data['selectedEntity'].name === p[0].name ? p[p.length-1].name : p[0].name}}</div>
-                        </div>
+                        <div style="float: right;">{{l.bandwidth}}</div>
                       </div>
-                    </mat-expansion-panel-header>
-                    <app-link-visual [selectedLinkID] = "i" [obtainedPath]= "p"></app-link-visual>
-                </mat-expansion-panel>
-              </mat-accordion>
+                      <div class='link-symbol'>
+                        <div class='mark1'></div>
+                        <div class='bar'></div>
+                        <div class='mark2'></div>
+                      </div>
+                      <div class='link-nodes'>
+                          <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
+                          <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                      </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+                
+              </mat-list>
             
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
-        
-        <!-- Copyright 2019 Google Inc. All Rights Reserved.
-            Use of this source code is governed by an MIT-style license that
-            can be found in the LICENSE file at http://angular.io/license -->
-        
-      </div> 
-  </mat-tab>
-  <mat-tab label="Tab 2">Content 2</mat-tab>
-</mat-tab-group>
+          </mat-tab>
+          <mat-tab label="Boundary"> 
+            <mat-list class="link-list">
+              <mat-list-item matRipple *ngFor="let l of data['boundaryLinks']; let i = index;" (click)="highlight3DLink(l)">
+                  <div style="width:100%; height: 80px; padding-top: 5px;">
+                    <div class='link-title'>
+                      <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
+                          {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
+                      </div>
+                      <div style="float: right;">{{l.bandwidth}}</div>
+                    </div>
+                    <div class='link-symbol'>
+                      <div class='mark1'></div>
+                      <div class='bar'></div>
+                      <div class='mark2'></div>
+                    </div>
+                    <div class='link-nodes'>
+                        <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
+                        <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+              </mat-list-item>
+              
+            </mat-list>
+          </mat-tab>
+      </mat-tab-group>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+          <div style="height: 32px;"> 
+            <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/path.png"></div>
+            <span>LSPs</span>
+          </div>
+      </mat-expansion-panel-header>
+  
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let p of data['crossingPaths']; let i = index;" (click)="highlight3DLSP(p)" [expanded]="false" [hideToggle]="'true'">
+            <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+              <div style="width:100%; height: 90px; font-size: 13px;">
+                <div class='link-title'>
+                  <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500; padding-top: 10px">
+                    {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === p[0].full_name ? p[p.length-1].full_name : p[0].full_name}}
+                  </div>
+                  <div style="float: right;">
+                    <button mat-icon-button color="warn" (click)="$event.stopPropagation(); mtg.selectedIndex = (mtg.selectedIndex == 0) ? 1 : 0;">
+                        <mat-icon>favorite</mat-icon>
+                    </button>
+                    {{data['bandwidth'][i]}}
+                  </div>
+                </div>
+                <div class='link-symbol'>
+                  <div class='mark1'></div>
+                  <div class='bar'></div>
+                  <div class='mark2'></div>
+                </div>
+                <div class='link-nodes'>
+                    <div class='src-name'>{{data['selectedEntity'].name === p[0].name ? p[0].name : p[p.length-1].name}}</div>
+                    <div class='dst-name'>{{data['selectedEntity'].name === p[0].name ? p[p.length-1].name : p[0].name}}</div>
+                </div>
+              </div>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-stretch-tabs dynamicHeight #mtg class="header-less-tabs">
+                <mat-tab>
+                    <app-link-visual [selectedLinkID] = "i" [obtainedPath]= "p"></app-link-visual>
+                </mat-tab>
+                <mat-tab>
+                    <app-lsp-services></app-lsp-services>
+                </mat-tab>
+            </mat-tab-group>
 
+            
+            
+        </mat-expansion-panel>
+      </mat-accordion>
+    
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
+
+</div> 

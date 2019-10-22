@@ -8,11 +8,12 @@ import { NODE_LEVEL } from '../models/constants';
   providedIn: 'root'
 })
 export class LinkVisualizerService {
-  selectedLinkID: string = "";
+  selectedLinkID: string = "";  //this is to identify the tooltip, not the ID of the GLObject2D link
   obtainedPath: GNObject2D[] = null;
   constructor() { }
 
   setSelectedLinkID(lid: string, op: GNObject2D[]) {
+    console.log(lid);
     this.selectedLinkID = lid;
     this.obtainedPath = op;
   }

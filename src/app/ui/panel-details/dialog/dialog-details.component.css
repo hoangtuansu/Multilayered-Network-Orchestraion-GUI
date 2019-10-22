@@ -1,12 +1,12 @@
 .detail-dialog-header {
+  width: 100%;
   position: relative;
-  padding-left: 24px;
 }
 
 .detail-dialog-header > button {
   position: absolute;
-  top: -5px;
-  right: 20px;
+  top: -20px;
+  right: -20px;
 }
 
 .link-list .mat-list-item {
@@ -40,7 +40,7 @@ mat-form-field {
   top: 2px;
   position: relative;
   width: auto;
-  height: 30px;
+  height: 45px;
 }
 
 .link-symbol {
@@ -117,12 +117,4 @@ mat-form-field {
 
 .router-name a {
   float: right;
-}
-
-.header-less-tabs {
-  width: 100%;
-}
-
-.header-less-tabs.mat-tab-group .mat-tab-header {
-  display: none;
 }
