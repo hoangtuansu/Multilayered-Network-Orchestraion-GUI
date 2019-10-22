@@ -9,8 +9,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .custom-detail-dialog-container .mat-dialog-container {
-    padding-left: 12px;
-    padding-bottom: 0px;
+    padding: 0px;
  }
 
  .custom-detail-dialog-container .mat-dialog-content {

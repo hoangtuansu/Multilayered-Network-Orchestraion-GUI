@@ -37,8 +37,8 @@ export class GLObject2D implements LObject2D {
       this.mesh_highlightcolor = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[2] : CONSTANTS.LINK_BOUNDARY[2];
     }
 
-    setVisible(v: boolean) {
-      if(this.node1.getVisible() && this.node2.getVisible()) {
+    set visibility(v: boolean) {
+      if(this.node1.visibility && this.node2.visibility) {
         this.mesh.visible = v;
       } else {
         this.mesh.visible = false;
@@ -89,7 +89,7 @@ export class GLObject2D implements LObject2D {
       vec.normalize();
       let quaternion = new THREE.Quaternion();
       quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vec);
-      var geometry = new THREE.CylinderBufferGeometry(0.25, 0.25, h, 32);
+      var geometry = new THREE.CylinderBufferGeometry(0.15, 0.15, h, 32);
       geometry.translate(0, h / 2, 0);
       let material14 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
       this.mesh = new THREE.Mesh(geometry, material14);

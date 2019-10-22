@@ -74,17 +74,13 @@ export class Engine3DService implements OnDestroy {
   }
 
   refreshScene(pickedNodeID: string) {
-    console.log("list of removed links:")
     for(let g of this.animatorService.nodes) {
-      this.scene.remove(this.scene.getObjectById(g.mesh.id));
-      this.scene.remove(this.scene.getObjectById(g.mesh_text.id));
-      
+      this.scene.remove(this.scene.getObjectByName(g.name));
     }
 
     for(let l of this.animatorService.links) {
       let ol = this.scene.getObjectById(l.mesh.id);
       this.scene.remove(ol);
-      console.log(l.name)
     }
 
     this.highlightedLink = null;
@@ -95,16 +91,17 @@ export class Engine3DService implements OnDestroy {
     this.entityLocatorService.locatingNetworkElements(nodes);
     this.animatorService.nodes = nodes;
     this.animatorService.links = links;
-    console.log("list of new links:")
     for(let g of nodes) {
-      for(let _n of g.generateMesh())
-        this.scene.add(_n);
+      this.scene.add(g.generateMesh());
     }
 
     for(let g of links) {
-      console.log(g.name)
       this.scene.add(g.generateMesh())
     }
+
+    this.showPlane(0, true);
+    this.showPlane(1, true);
+    this.showPlane(2, true);
   }
 
   showPlane(plane_id, isShown) {
@@ -113,34 +110,28 @@ export class Engine3DService implements OnDestroy {
 
     for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       if(g.layer == plane_id) {
-        g.setVisible(isShown);
+        g.visibility = isShown;
       }
     }
 
     for(let o of this.animatorService.nodes) {
       if(o.level == plane_id) {
-        o.setVisible(isShown);
+        o.visibility = isShown;
         for(let l of this.animatorService.links) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
-            l.setVisible(isShown);
+            l.visibility = isShown;
           }
         }
       }
     }
   }
 
-  showLabel(isLabelShown) {
-    for(let n of this.animatorService.nodes) {
-      n.setLabelVisibility(isLabelShown);
-    }
-  }
-
   highlightLink(pickedLink: OBJ.GLObject2D) {
     this.undoHighlightLink();
     this.undoHighlightLSP();
-    if(pickedLink.node1.getVisible() && pickedLink.node2.getVisible()) {
+    if(pickedLink.node1.visibility && pickedLink.node2.visibility) {
       this.highlightedLink = pickedLink;
-      this.highlightedLink.setVisible(false);
+      this.highlightedLink.visibility = false;
       let hlLink: THREE.Group = pickedLink.generateHighlightedMesh();
       hlLink.name = this.highlightedLinkName;
       this.scene.add(hlLink);
@@ -150,7 +141,7 @@ export class Engine3DService implements OnDestroy {
   private undoHighlightLink() {
     let hlLink = null;
     if(this.highlightedLink != null) { //there is already a highlighted link
-      this.highlightedLink.setVisible(true);
+      this.highlightedLink.visibility = true;
       hlLink = this.scene.getObjectByName(this.highlightedLinkName);
       this.scene.remove(hlLink);
     }
@@ -161,7 +152,7 @@ export class Engine3DService implements OnDestroy {
     this.undoHighlightLSP();
     this.highlightedLSP = [];
     for(let _n of pickedLSP) {
-      if(!_n.getVisible())
+      if(!_n.visibility)
         return;
     }
     for(let n of pickedLSP) {

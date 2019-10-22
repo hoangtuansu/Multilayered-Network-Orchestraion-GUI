@@ -24,7 +24,7 @@ export class GPOjbect implements NObject {
       this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
     }
 
-    setVisible(v: boolean) {
+    set visibility(v: boolean) {
       this.mesh.visible = v;
     }
   

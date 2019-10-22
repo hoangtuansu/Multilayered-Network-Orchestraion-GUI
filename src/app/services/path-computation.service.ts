@@ -2,20 +2,12 @@ import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
 import { GNObject2D } from '../models/2d-object/gnobject2D';
 import { NetworkManagerService } from './network-manager.service';
+import { GLObject2D } from '../models/2d-object/globject2D';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PathComputationService {
-  /* listOfPaths = [
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[1], OBJ.G2DNOs[2]], 
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]], 
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[3], OBJ.G2DNOs[13], OBJ.G2DNOs[6], OBJ.G2DNOs[9], OBJ.G2DNOs[2]],
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[1]],
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[7], OBJ.G2DNOs[1]],
-    [OBJ.G2DNOs[1], OBJ.G2DNOs[2]],
-    [ OBJ.G2DNOs[1], OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[9], OBJ.G2DNOs[10], OBJ.G2DNOs[2]]
-  ]; */
   listOfPaths = [
     [OBJ.G2DNOs[0], OBJ.G2DNOs[2], OBJ.G2DNOs[3], OBJ.G2DNOs[1]], //qfx1 -> qfx3 -> qfx4 -> qfx2 
     [OBJ.G2DNOs[0], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[1]], //qfx1 -> poc1 -> poc3 -> qfx2
@@ -63,7 +55,7 @@ export class PathComputationService {
     
   }
 
-  getReachedNetworkElements(nid: string): [OBJ.GNObject2D[], OBJ.GLObject2D[]] {
+  getReachedNetworkElements(nid: string): [GNObject2D[], GLObject2D[]] {
     let target = this.netMngtService.getNode2DObject(nid);
     let nodes = [], links = [];
     for(let p of this.listOfPaths) {
@@ -77,7 +69,6 @@ export class PathComputationService {
            if(inp < p.length - 1) {
             
             let l = this.netMngtService.getLink(np, p[inp+1])
-            console.log("src: " + np.name + " dst: " + p[inp+1].name + " link: " + l.name)
             if(links.indexOf(l) < 0)
               links.push(l)
            }

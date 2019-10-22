@@ -175,9 +175,9 @@ export class AnimatorService {
     this.isProjectSpheresPhase = (count == this.nodes.length);
     if(this.isProjectSpheresPhase) {
       for(let g of this.nodes)
-        g.setVisible(false);
+        g.visibility = false;
       for(let g of this.nodeMngmt.getGNPrOs())
-        g.setVisible(true);
+        g.visibility = true;
     }
     
   }
@@ -188,7 +188,7 @@ export class AnimatorService {
     
     let count = true;
     for(let p of this.nodeMngmt.getGPOs()) {
-      p.setVisible(true);
+      p.visibility = true;
       if(p.layer == OBJ.LAYER.WORLD)
         continue;
       let upperbound = 5;
@@ -216,7 +216,7 @@ export class AnimatorService {
       return;
     let count = true;
     for(let o of this.nodes) {
-      o.setVisible(true);
+      o.visibility = true;
       let upperbound = 5;
       switch(o.layer) {
         case OBJ.LAYER.LAYER1:

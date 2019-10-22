@@ -38,7 +38,7 @@ export class GNObject2D implements NObject2D{
 
     new THREE.FontLoader().load( 'assets/fonts/optimer_bold.typeface.json', font => {
       let textGeom = new THREE.TextGeometry( this.name, { size: 0.75, height: 0, curveSegments: 3, font: font}),
-              textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff} );
+          textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff} );
       this.mesh_text = new THREE.Mesh(textGeom, textMaterial );
       this.mesh_text.rotation.set(this.level == NODE_LEVEL.CITY ? -Math.PI/4 : -Math.PI/2, 0, 0);
       this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2] + 0.25);
@@ -59,7 +59,6 @@ export class GNObject2D implements NObject2D{
     if(this.mesh != null) {
       this.mesh.position.set(this.position_3dtopo[0], this.position_3dtopo[1], this.position_3dtopo[2]);
     }
-
       
     if(this.mesh_text != null)
       if(this.level == NODE_LEVEL.CITY) {
@@ -79,22 +78,9 @@ export class GNObject2D implements NObject2D{
     this.mesh_text.visible = v;
   }
 
-  getVisible(): boolean {
-    return this.mesh.visible && this.mesh_text.visible;
-  }
-
-  setVisible(v: boolean) {
-    this.mesh.visible = v;
-    this.mesh_text.visible = v;
-  }
-
-  setLabelVisibility(v: boolean) {
-    this.mesh_text.visible = v;
-  }
-
-  generateMesh(): THREE.Mesh[] {
-    //let geometry11 = new THREE.SphereBufferGeometry(1, 128, 128);
+  generateMesh(): THREE.Group {
     let geometry11 = null;
+    let g: THREE.Group = new THREE.Group();
     switch(this.level) {
       case NODE_LEVEL.COUNTRY:
         geometry11 = new THREE.CylinderBufferGeometry(1.5, 1.5, 1, 32);
@@ -107,12 +93,14 @@ export class GNObject2D implements NObject2D{
         break;
     }
 
-    //let geometry11 = new THREE.CylinderBufferGeometry( 1, 1, 5, 1 );
     let material11 = new THREE.MeshStandardMaterial({color: this.mesh_color, emissive: this.mesh_emissive, roughness: 0.5, metalness: 0.5});
     this.mesh = new THREE.Mesh(geometry11, material11);
     this.mesh.name = this.name;
     this.mesh.position.set(this.position_3dtopo[0], this.position_3dtopo[1], this.position_3dtopo[2]);
-    return [this.mesh, this.mesh_text];
+    g.add(this.mesh);
+    g.add(this.mesh_text);
+    g.name = this.name;
+    return g;
   }
 
   
