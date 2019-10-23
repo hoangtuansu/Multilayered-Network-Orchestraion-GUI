@@ -132,7 +132,7 @@ export class Engine3DService implements OnDestroy {
     if(pickedLink.node1.visibility && pickedLink.node2.visibility) {
       this.highlightedLink = pickedLink;
       this.highlightedLink.visibility = false;
-      let hlLink: THREE.Group = pickedLink.generateHighlightedMesh();
+      let hlLink: THREE.Group = pickedLink.generateHighlightedMesh(pickedLink.node1, pickedLink.node2);
       hlLink.name = this.highlightedLinkName;
       this.scene.add(hlLink);
     }
@@ -162,7 +162,7 @@ export class Engine3DService implements OnDestroy {
       let l: OBJ.GLObject2D = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
       l.mesh.visible = false;
       this.highlightedLSP.push(l);
-      let hlLink: THREE.Group = l.generateHighlightedMesh();
+      let hlLink: THREE.Group = l.generateHighlightedMesh(n, pickedLSP[nIdx+1]);
       hlLink.name = this.highlightedLSPName;
       this.scene.add(hlLink);
 

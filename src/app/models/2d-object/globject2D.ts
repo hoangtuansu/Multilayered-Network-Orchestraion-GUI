@@ -50,22 +50,22 @@ export class GLObject2D implements LObject2D {
               (this.node1.position_2dtopo[1] + this.node2.position_2dtopo[1])/2];
     }
 
-    generateHighlightedMesh(src: THREE.Vector3, dst: THREE.Vector3): THREE.Group {
-      let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
-      let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
+    generateHighlightedMesh(src: GNObject2D, dst: GNObject2D): THREE.Group {
+      let A = new THREE.Vector3(src.position_3dtopo[0], src.position_3dtopo[1], src.position_3dtopo[2]);
+      let B = new THREE.Vector3(dst.position_3dtopo[0], dst.position_3dtopo[1], dst.position_3dtopo[2]);
       let vec = B.clone(); vec.sub(A);
       var h = vec.length();
       vec.normalize();
       let quaternion = new THREE.Quaternion();
       quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vec);
-      var geometry = new THREE.CylinderBufferGeometry(0.45, 0.45, h, 32);
+      var geometry = new THREE.CylinderBufferGeometry(0.25, 0.25, h, 32);
       geometry.translate(0, h / 2, 0);
       let material14 = new THREE.MeshStandardMaterial({color: this.mesh_highlightcolor, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
       let mesh = new THREE.Mesh(geometry, material14);
       mesh.applyQuaternion(quaternion);
       mesh.position.set(A.x, A.y, A.z);
 
-      let arrow_geo = new THREE.ConeBufferGeometry(1, 3, 4);
+      let arrow_geo = new THREE.ConeBufferGeometry(1.5, 2.5, 10);
       arrow_geo.translate(0, h/3, 0);
       let arrow_mesh = new THREE.Mesh(arrow_geo, material14);
       arrow_mesh.applyQuaternion(quaternion);

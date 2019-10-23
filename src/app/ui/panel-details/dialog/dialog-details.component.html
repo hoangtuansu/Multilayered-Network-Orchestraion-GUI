@@ -44,7 +44,7 @@
           <mat-tab label="Domain"> 
             <mat-list class="link-list">
                 <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;" (click)="highlight3DLink(l)">
-                    <div style="width:100%; height: 80px; padding-top: 5px;">
+                    <div style="width:100%; height: 85px; padding-top: 5px;">
                       <div class='link-title'>
                         <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                             {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
@@ -70,7 +70,7 @@
           <mat-tab label="Boundary"> 
             <mat-list class="link-list">
               <mat-list-item matRipple *ngFor="let l of data['boundaryLinks']; let i = index;" (click)="highlight3DLink(l)">
-                  <div style="width:100%; height: 80px; padding-top: 5px;">
+                  <div style="width:100%; height: 85px; padding-top: 5px;">
                     <div class='link-title'>
                       <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                           {{data['selectedEntity'].full_name}} &#8596; {{data['selectedEntity'].full_name === l.node1.full_name ? l.node2.full_name : l.node1.full_name}}
@@ -113,7 +113,7 @@
                   </div>
                   <div style="float: right;">
                     <button mat-icon-button color="warn" (click)="$event.stopPropagation(); mtg.selectedIndex = (mtg.selectedIndex == 0) ? 1 : 0;">
-                        <mat-icon>favorite</mat-icon>
+                        <mat-icon>{{mtg.selectedIndex == 0 ? 'view_quilt' : 'label_important'}}</mat-icon>
                     </button>
                     {{data['bandwidth'][i]}}
                   </div>
