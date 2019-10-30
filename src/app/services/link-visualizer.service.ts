@@ -71,8 +71,8 @@ export class LinkVisualizerService {
 
   createLinkVisualization(mapRenderer: ElementRef): void {
     let element = mapRenderer.nativeElement;
-    let width = mapRenderer.nativeElement.offsetWidth;
-    //let width = 304;
+    //let width = mapRenderer.nativeElement.offsetWidth;
+    let width = (window.innerWidth/4) - (window.innerWidth/20);
     let height = this.calculateHeight(100, 70);
     d3.select(element).append("div").attr("id", "tooltip" + this.selectedLinkID).attr("class", "nodeInfo");
     let svg = d3.select(element).append("svg")

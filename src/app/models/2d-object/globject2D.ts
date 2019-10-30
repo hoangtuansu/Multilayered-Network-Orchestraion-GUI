@@ -13,6 +13,8 @@ export class GLObject2D implements LObject2D {
     node2: GNObject2D = null;
     node2_if: string = "";
     bandwidth: string;
+    traffic_components: string[];
+    bw_utilization_components: number[];
     type: LINK_TYPE = LINK_TYPE.DOMAIN;
 
     position_3dtopo: [number, number, number] = [0, 0, 0];
@@ -21,7 +23,7 @@ export class GLObject2D implements LObject2D {
     mesh_highlightcolor: number = 0;
     mesh: THREE.Mesh = null;
 
-    constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, tp: LINK_TYPE) {
+    constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, tp: LINK_TYPE, buc: number[], tc: string[]) {
       this.id = _id;
       this.name = n;
       this.color = c;
@@ -35,6 +37,8 @@ export class GLObject2D implements LObject2D {
       this.mesh_color = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[0] : CONSTANTS.LINK_BOUNDARY[0];
       this.mesh_emissive = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[1] : CONSTANTS.LINK_BOUNDARY[1];
       this.mesh_highlightcolor = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[2] : CONSTANTS.LINK_BOUNDARY[2];
+      this.traffic_components = tc;
+      this.bw_utilization_components = buc;
     }
 
     set visibility(v: boolean) {
@@ -65,7 +69,7 @@ export class GLObject2D implements LObject2D {
       mesh.applyQuaternion(quaternion);
       mesh.position.set(A.x, A.y, A.z);
 
-      let arrow_geo = new THREE.ConeBufferGeometry(1.5, 2.5, 10);
+      let arrow_geo = new THREE.ConeBufferGeometry(1, 2.5, 10);
       arrow_geo.translate(0, h/3, 0);
       let arrow_mesh = new THREE.Mesh(arrow_geo, material14);
       arrow_mesh.applyQuaternion(quaternion);
@@ -100,25 +104,25 @@ export class GLObject2D implements LObject2D {
   }
   
   export const G2DLOs: GLObject2D[] = [
-    new GLObject2D ('globject2d1', 'qfx01-03', 'red', 3, G2DNOs[0], '48', G2DNOs[2], '49', '100Gbe', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d2', 'qfx02-04', 'red', 3, G2DNOs[1], '48', G2DNOs[3], '49', '100Gbe', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d3', 'qfx03-04', 'red', 3, G2DNOs[2], '48', G2DNOs[3], '48',  '40Gbe', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d4', 'qfx03-04', 'red', 3, G2DNOs[2], '50', G2DNOs[3], '50',  '100Gbe', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d5', 'site1-2', 'red', 3, G2DNOs[4], '1-5-1', G2DNOs[5], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d6', 'site1-4', 'red', 3, G2DNOs[4], '1-6-2', G2DNOs[7], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d7', 'site2-4', 'red', 3, G2DNOs[5], '1-6-1', G2DNOs[7], '1-6-1', 'OTU4', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d8', 'site2-3', 'red', 3, G2DNOs[5], '1-6-2', G2DNOs[6], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d9', 'site3-4', 'red', 3, G2DNOs[6], '1-5-1', G2DNOs[7], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d10', 'poc01-02', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[16], 'N/A', 'OCH', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d11', 'poc01-03', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN),
-    new GLObject2D ('globject2d12', 'poc02-03', 'red', 0.5, G2DNOs[16], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN),
+    new GLObject2D ('globject2d1', 'QFX1-3', 'red', 3, G2DNOs[0], '48', G2DNOs[2], '49', '100Gbe', LINK_TYPE.DOMAIN, [60, 40], ["IP", "Unused"]),
+    new GLObject2D ('globject2d2', 'QFX2-4', 'red', 3, G2DNOs[1], '48', G2DNOs[3], '49', '100Gbe', LINK_TYPE.DOMAIN,[30, 70], ["IP", "Unused"]),
+    new GLObject2D ('globject2d3', 'QFX3-4', 'red', 3, G2DNOs[2], '48', G2DNOs[3], '48',  '40Gbe', LINK_TYPE.DOMAIN, [20, 80], ["IP", "Unused"]),
+    new GLObject2D ('globject2d4', 'QFX3-4', 'red', 3, G2DNOs[2], '50', G2DNOs[3], '50',  '100Gbe', LINK_TYPE.DOMAIN, [90, 10], ["IP", "Unused"]),
+    new GLObject2D ('globject2d5', 'SITE1-2', 'red', 3, G2DNOs[4], '1-5-1', G2DNOs[5], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d6', 'SITE1-4', 'red', 3, G2DNOs[4], '1-6-2', G2DNOs[7], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d7', 'SITE2-4', 'red', 3, G2DNOs[5], '1-6-1', G2DNOs[7], '1-6-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d8', 'SITE2-3', 'red', 3, G2DNOs[5], '1-6-2', G2DNOs[6], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d9', 'SITE3-4', 'red', 3, G2DNOs[6], '1-5-1', G2DNOs[7], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d10', 'POC1-2', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[16], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d11', 'POC1-3', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLObject2D ('globject2d12', 'POC2-3', 'red', 0.5, G2DNOs[16], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
 
-    new GLObject2D ('globject2d13', 'qfx01-site1', 'red', 3, G2DNOs[0], '47', G2DNOs[4], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d14', 'qfx01-poc01', 'red', 3, G2DNOs[0], '50', G2DNOs[15], '1-14-2', '100GbF', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d15', 'qfx02-site3', 'red', 3, G2DNOs[1], '47', G2DNOs[6], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d16', 'qfx02-poc03', 'red', 3, G2DNOs[1], '50', G2DNOs[17], '1-14-2', '100GbE', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d17', 'site1-poc01', 'red', 3, G2DNOs[4], '1-6-1', G2DNOs[15], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY),
-    new GLObject2D ('globject2d18', 'site3-poc03', 'red', 3, G2DNOs[6], '1-6-1', G2DNOs[17], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY),
+    new GLObject2D ('globject2d13', 'QFX1-SITE1', 'red', 3, G2DNOs[0], '47', G2DNOs[4], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY, [], []),
+    new GLObject2D ('globject2d14', 'QFX1-POC1', 'red', 3, G2DNOs[0], '50', G2DNOs[15], '1-14-2', '100GbF', LINK_TYPE.BOUNDARY, [], []),
+    new GLObject2D ('globject2d15', 'QFX2-SITE3', 'red', 3, G2DNOs[1], '47', G2DNOs[6], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY, [], []),
+    new GLObject2D ('globject2d16', 'QFX2-POC3', 'red', 3, G2DNOs[1], '50', G2DNOs[17], '1-14-2', '100GbE', LINK_TYPE.BOUNDARY, [], []),
+    new GLObject2D ('globject2d17', 'SITE1-POC1', 'red', 3, G2DNOs[4], '1-6-1', G2DNOs[15], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY, [], []),
+    new GLObject2D ('globject2d18', 'SITE3-POC3', 'red', 3, G2DNOs[6], '1-6-1', G2DNOs[17], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY, [], []),
 
-    new GLObject2D ('globject2d19', 'site1-3', 'red', 3, G2DNOs[4], '1-1-2', G2DNOs[6], '1-1-2', '10GbE', LINK_TYPE.DOMAIN)
+    new GLObject2D ('globject2d19', 'SITE1-3', 'red', 3, G2DNOs[4], '1-1-2', G2DNOs[6], '1-1-2', '10GbE', LINK_TYPE.DOMAIN, [], [])
   ];

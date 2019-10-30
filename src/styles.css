@@ -17,6 +17,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     max-height: 70vh;
  }
 
- .header-less-tabs.mat-tab-group .mat-tab-header {
+ .header-less-tabs.mat-tab-group > .mat-tab-header {
     display: none;
   }

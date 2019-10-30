@@ -43,7 +43,8 @@ export class EngineCoordinatorService {
         bWs = this.pathComputationService.getBandwidth(cPs);
     const dataDlg = { selectedEntity: entity, domainLinks: dLs,
                     boundaryLinks: bLs, connectedNetEles: cNEs,
-                    crossingPaths: cPs, bandwidth: bWs};
+                    crossingPaths: cPs, bandwidth: bWs,
+                    NEorLinkSelected: true};
     if(!this.isDetailedDialogShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
         width: '25%',

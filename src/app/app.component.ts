@@ -46,6 +46,13 @@ export class AppComponent {
         "layer2",
         this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/layer2.svg")
       );
+
+      this.matIconRegistry.addSvgIcon(
+        "go-back",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/arrow_back-24px.svg")
+      );
+
+      
   }
   
 }

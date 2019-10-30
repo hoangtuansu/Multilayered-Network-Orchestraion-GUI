@@ -25,6 +25,8 @@ export class DialogDetailsComponent implements OnInit {
   }
 
   display3DTopo(pickedNode) {
+    if(!this.data['NEorLinkSelected'])  //link is being shown, so do nothing with this function
+      return;
     this.engineService.engine3DService.refreshScene(pickedNode.id);
     this.engineService.setdetailedEntity(pickedNode);
     if(!this.is3DBeingShown) {
@@ -38,6 +40,8 @@ export class DialogDetailsComponent implements OnInit {
     if(this.is3DBeingShown) {
       this.engineService.engine3DService.highlightLink(pickedLink);
     }
+    this.data['NEorLinkSelected'] = false;
+    this.data['selectedLink'] = pickedLink;
   }
 
   highlight3DLSP(pickedLSP: any) {
