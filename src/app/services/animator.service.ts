@@ -16,7 +16,7 @@ export class AnimatorService {
   isredoProjectSpheresPhase: boolean = false;
   isRedoLinksFadeOutPhase: boolean = false;
   private _nodes: OBJ.GNObject2D[] = [];
-  private _links: OBJ.GLObject2D[] = [];
+  private _links: OBJ.GLinkOBJ[] = [];
   constructor(public nodeMngmt: NetworkManagerService) { }
 
   resetAllSettings() {
@@ -37,10 +37,10 @@ export class AnimatorService {
     this._nodes = n;
   }
 
-  get links(): OBJ.GLObject2D[] {
+  get links(): OBJ.GLinkOBJ[] {
     return this._links;
   }
-  set links(l: OBJ.GLObject2D[]) {
+  set links(l: OBJ.GLinkOBJ[]) {
     this._links = l;
   }
 

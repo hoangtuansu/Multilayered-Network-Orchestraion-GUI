@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
 import { GNObject2D } from '../models/2d-object/gnobject2D';
 import { NetworkManagerService } from './network-manager.service';
-import { GLObject2D } from '../models/2d-object/globject2D';
+import { GLinkOBJ } from '../models/2d-object/glinkobj';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class PathComputationService {
     
   }
 
-  getReachedNetworkElements(nid: string): [GNObject2D[], GLObject2D[]] {
+  getReachedNetworkElements(nid: string): [GNObject2D[], GLinkOBJ[]] {
     let target = this.netMngtService.getNode2DObject(nid);
     let nodes = [], links = [];
     for(let p of this.listOfPaths) {

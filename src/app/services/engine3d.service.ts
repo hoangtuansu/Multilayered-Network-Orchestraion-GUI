@@ -33,9 +33,8 @@ export class Engine3DService implements OnDestroy {
   fadingOutCompleteNotifier: Subject<boolean> = new Subject<boolean>();
   fadingInStartNotifier: Subject<boolean> = new Subject<boolean>();
   isDetailEnabled: boolean = false;
-  highlightedLink: OBJ.GLObject2D = null;
-  highlightedLSP: OBJ.GLObject2D[] = [];
-  highlightedLinkName: string = "hlL";
+  highlightedLink: OBJ.GLinkOBJ = null;
+  highlightedLSP: OBJ.GLinkOBJ[] = [];
   highlightedLSPName: string = "hlLSP";
   width: number = 0;
   height: number = 0;
@@ -84,7 +83,7 @@ export class Engine3DService implements OnDestroy {
     }
 
     this.highlightedLink = null;
-    let hlLink = this.scene.getObjectByName(this.highlightedLinkName);
+    let hlLink = this.scene.getObjectByName(OBJ.CONSTANTS.HIGHLIGHTED_LINK_PREFIX);
     this.scene.remove(hlLink);
 
     let [nodes, links] = this.pathComputationService.getReachedNetworkElements(pickedNodeID);
@@ -126,23 +125,22 @@ export class Engine3DService implements OnDestroy {
     }
   }
 
-  highlightLink(pickedLink: OBJ.GLObject2D) {
+  highlightLink(pickedLink: OBJ.GLinkOBJ) {
     this.undoHighlightLink();
     this.undoHighlightLSP();
     if(pickedLink.node1.visibility && pickedLink.node2.visibility) {
-      this.highlightedLink = pickedLink;
+      this.highlightedLink = new OBJ.GHighlightedLinkOBJ(pickedLink);
+      let hlLink: THREE.Group = this.highlightedLink.generateMesh();
       this.highlightedLink.visibility = false;
-      let hlLink: THREE.Group = pickedLink.generateHighlightedMesh(pickedLink.node1, pickedLink.node2);
-      hlLink.name = this.highlightedLinkName;
       this.scene.add(hlLink);
     }
   }
 
   private undoHighlightLink() {
     let hlLink = null;
-    if(this.highlightedLink != null) { //there is already a highlighted link
+    if(this.highlightedLink !== null) { //there is already a highlighted link
       this.highlightedLink.visibility = true;
-      hlLink = this.scene.getObjectByName(this.highlightedLinkName);
+      hlLink = this.scene.getObjectByName(OBJ.CONSTANTS.HIGHLIGHTED_LINK_PREFIX);
       this.scene.remove(hlLink);
     }
   }
@@ -159,7 +157,7 @@ export class Engine3DService implements OnDestroy {
       let nIdx = pickedLSP.indexOf(n);
       if(nIdx == pickedLSP.length - 1)
         break;
-      let l: OBJ.GLObject2D = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
+      let l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
       l.mesh.visible = false;
       this.highlightedLSP.push(l);
       let hlLink: THREE.Group = l.generateHighlightedMesh(n, pickedLSP[nIdx+1]);

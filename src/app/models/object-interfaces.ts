@@ -12,12 +12,12 @@ export interface Object {
   export interface NObject extends Object{
     full_name: string;
     layer: LAYER;
-    generateMesh(): THREE.Mesh;
+    generateMesh(): THREE.Group;
   }
   export interface LObject extends Object{
     node1: NObject;
     node2: NObject;
-    generateMesh(): THREE.Mesh;
+    generateMesh(): THREE.Group;
   }
 
   export interface NObject2D extends Object {

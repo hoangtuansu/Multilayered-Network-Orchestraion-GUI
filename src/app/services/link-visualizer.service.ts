@@ -8,12 +8,11 @@ import { NODE_LEVEL } from '../models/constants';
   providedIn: 'root'
 })
 export class LinkVisualizerService {
-  selectedLinkID: string = "";  //this is to identify the tooltip, not the ID of the GLObject2D link
+  selectedLinkID: string = "";  //this is to identify the tooltip, not the ID of the GLinkOBJ link
   obtainedPath: GNObject2D[] = null;
   constructor() { }
 
   setSelectedLinkID(lid: string, op: GNObject2D[]) {
-    console.log(lid);
     this.selectedLinkID = lid;
     this.obtainedPath = op;
   }
@@ -170,10 +169,11 @@ export class LinkVisualizerService {
         .attr("marker-mid", "url(#" + arrowID + ")");
         return;
     }
-    svg.append("path").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
+    svg.append("path").datum("abc").attr("d", "M" + posX1 + "," + posY1 + "L" + (posX1 + posX2)/2 + "," + (posY1+posY2)/2 + "L" + posX2 + "," + posY2)
         .attr("stroke-width", 6)
         .attr("stroke", "black")
-        .attr("marker-mid", "url(#" + arrowID + ")");
+        .attr("marker-mid", "url(#" + arrowID + ")")
+        .on("click", this.linkSelecting);
   }
 
   
@@ -187,6 +187,10 @@ export class LinkVisualizerService {
     d3.select("#" + "tooltip" + selectedNode[3]).html(selectedNode[2].full_name)
       .style("left", posX + "px")
       .style("top", posY + "px");
+  }
+
+  private linkSelecting = selectedLink => {
+    console.log(selectedLink);
   }
 
   private entityOut = selectedNode => {

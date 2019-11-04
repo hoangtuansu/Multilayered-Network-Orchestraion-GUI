@@ -28,7 +28,7 @@ export class GPOjbect implements NObject {
       this.mesh.visible = v;
     }
   
-    generateMesh(): THREE.Mesh {
+    generateMesh(): THREE.Group {
       let geometry = new THREE.BoxBufferGeometry(CONSTANTS.PLANE_SIZE[1], CONSTANTS.PLANE_SIZE[0], 0.1);
       let material = null;
       let isVisible: boolean = false;
@@ -48,7 +48,10 @@ export class GPOjbect implements NObject {
       this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
       this.mesh.rotation.set(Math.PI/2, 0, Math.PI/2);
       this.mesh.visible = isVisible;
-      return this.mesh;
+
+      let g: THREE.Group = new THREE.Group();
+      g.add(this.mesh);
+      return g;
     }
   }
 

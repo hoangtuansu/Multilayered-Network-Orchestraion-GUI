@@ -247,7 +247,7 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     this.resetSelectedEntity();
-    if(d instanceof OBJ.GLObject2D)
+    if(d instanceof OBJ.GLinkOBJ)
       return
     d3.select('#' + d.id).attr('selected', true)
     .attr('xlink:href', (e) => {return e["icon_selected_url"];});
@@ -257,7 +257,7 @@ export class Engine2DService {
   private entityMouseOver = (d) => {
     if(!this.isDetailEnabled)
       return;
-    if(d instanceof OBJ.GLObject2D) {
+    if(d instanceof OBJ.GLinkOBJ) {
       d3.select("#link_toolTip").transition().duration(200).style("opacity", .9);
       d3.select("#link_toolTip").html("<div style='text-align:left'>" + 'Node 1: ' + d.node1.name + '/' + d.node1_if + '<br/>' 
                                     + 'Node 2: ' + d.node2.name + '/' + d.node2_if + '<br/>'

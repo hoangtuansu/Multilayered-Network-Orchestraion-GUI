@@ -25,7 +25,7 @@ export class NetworkManagerService {
     return OBJ.GLOs;
   }
 
-  getG2DLOs(): OBJ.GLObject2D[] {
+  getG2DLOs(): OBJ.GLinkOBJ[] {
     return OBJ.G2DLOs;
   }
 
@@ -41,15 +41,15 @@ export class NetworkManagerService {
     }
   }
 
-  get2DDomainLinksOfNode(nid: string): OBJ.GLObject2D[] {
+  get2DDomainLinksOfNode(nid: string): OBJ.GLinkOBJ[] {
     return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.DOMAIN;});
   }
 
-  get2DBoundaryLinksOfNode(nid: string): OBJ.GLObject2D[] {
+  get2DBoundaryLinksOfNode(nid: string): OBJ.GLinkOBJ[] {
     return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
 
-  getLink(src: OBJ.GNObject2D, dst: OBJ.GNObject2D): OBJ.GLObject2D {
+  getLink(src: OBJ.GNObject2D, dst: OBJ.GNObject2D): OBJ.GLinkOBJ {
     for(let l of this.getG2DLOs()) {
       if((l.node1.id === src.id && l.node2.id === dst.id) || ((l.node2.id === src.id && l.node1.id === dst.id)))
         return l;

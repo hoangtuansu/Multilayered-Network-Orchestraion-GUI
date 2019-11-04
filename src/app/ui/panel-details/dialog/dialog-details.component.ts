@@ -41,13 +41,15 @@ export class DialogDetailsComponent implements OnInit {
       this.engineService.engine3DService.highlightLink(pickedLink);
     }
     this.data['NEorLinkSelected'] = false;
-    this.data['selectedLink'] = pickedLink;
+    this.data['selectedLinkorPath'] = pickedLink;
   }
 
   highlight3DLSP(pickedLSP: any) {
     if(this.is3DBeingShown) {
       this.engineService.engine3DService.highlightLSP(pickedLSP);
     }
+    this.data['selectedLinkorPath'] = pickedLSP;
+    this.data['selectedLinkorPath'].name = pickedLSP[0].name + " \u2194 " + pickedLSP[pickedLSP.length-1].name
   }
 
   disableAnimation = true;
