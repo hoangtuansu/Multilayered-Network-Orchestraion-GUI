@@ -5,13 +5,12 @@ import { DialogDetailsComponent } from '../ui/panel-details/dialog/dialog-detail
 import { NetworkManagerService } from './network-manager.service';
 import { PathComputationService } from './path-computation.service';
 import { Engine3DService } from './engine3d.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
-  dialogRef: MatDialogRef<any> = null;
   isDetailedDialogShown = false;
   isShowing3DTopoNotifier: Subject<boolean> = new Subject<boolean>();
 
@@ -22,9 +21,15 @@ export class EngineCoordinatorService {
               public detailInfoDialog: MatDialog) {
     
     _engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
-      this.openDialog(value);
+      this.openDialog(value, new Observable(this.myObservable));
     });
+  }
 
+  myObservable(observer) {
+    setTimeout(() => {
+      observer.next("done waiting for 5 sec");
+      observer.complete();
+    }, 5000);
   }
 
   get engine3DService(): Engine3DService {
@@ -35,7 +40,7 @@ export class EngineCoordinatorService {
     return this._engine2DService;
   }
 
-  private openDialog(entity: any): void {
+  private openDialog(entity: any, observable: Observable<Object>): void {
     let dLs = this.netManagerService.get2DDomainLinksOfNode(entity.id),
         bLs = this.netManagerService.get2DBoundaryLinksOfNode(entity.id),
         cNEs = this.netManagerService.getNeighborNetworkElements(entity.id),
@@ -45,8 +50,9 @@ export class EngineCoordinatorService {
                     boundaryLinks: bLs, connectedNetEles: cNEs,
                     crossingPaths: cPs, bandwidth: bWs,
                     NEorLinkSelected: true};
+    let dialogRef: MatDialogRef<DialogDetailsComponent> = null;
     if(!this.isDetailedDialogShown) {
-      this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
+      dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
         width: '25%',
         panelClass: 'custom-detail-dialog-container',
         data: dataDlg,
@@ -55,12 +61,24 @@ export class EngineCoordinatorService {
         autoFocus: false
       });
       this.isDetailedDialogShown = true;
-      this.dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(result => {
         this.isDetailedDialogShown = false;
       });
+      let subscription = observable.subscribe(
+        (response: any) => {
+          subscription.unsubscribe();
+          //handle response
+          console.log(response);
+        },
+        (error) => {
+          subscription.unsubscribe();
+          //handle error
+          console.log(error);
+        }
+      );
       return;
     }
-    this.dialogRef.componentInstance.data = dataDlg;
+    dialogRef.componentInstance.data = dataDlg;
   }
 
   get2DService() {
@@ -68,6 +86,6 @@ export class EngineCoordinatorService {
   }
 
   setdetailedEntity(entity: any) {
-    this.openDialog(entity);
+    this.openDialog(entity, new Observable(this.myObservable));
   }
 }

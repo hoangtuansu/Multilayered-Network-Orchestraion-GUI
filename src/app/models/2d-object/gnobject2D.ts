@@ -1,4 +1,4 @@
-import { NObject2D} from '../object-interfaces';
+import { NObject2D, NPrObject} from '../object-interfaces';
 import { CONSTANTS, NODE_LEVEL } from '../constants';
 import * as THREE from 'three';
 
@@ -102,9 +102,6 @@ export class GNObject2D implements NObject2D{
     g.name = this.name;
     return g;
   }
-
-  
-
 }
 
 export const G2DNOs: GNObject2D[] = [
@@ -125,7 +122,5 @@ export const G2DNOs: GNObject2D[] = [
   new GNObject2D ('gnobject2d15', 'FCO', 'Fort CO', NODE_LEVEL.STATE, [-115, 64], ['1', '2', '3']),
   new GNObject2D ('gnobject2d16', 'POC1', 'EDTNLABPOC-01', NODE_LEVEL.CITY, [-113, 55], ['1', '2', '3']),
   new GNObject2D ('gnobject2d17', 'POC2', 'EDTNLABPOC-02', NODE_LEVEL.CITY, [-117, 53], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d18', 'POC3', 'EDTNLABPOC-03', NODE_LEVEL.CITY, [-115, 59], ['1', '2', '3']),
-
-  
+  new GNObject2D ('gnobject2d18', 'POC3', 'EDTNLABPOC-03', NODE_LEVEL.CITY, [-115, 59], ['1', '2', '3'])
 ];

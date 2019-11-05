@@ -1,15 +1,21 @@
-import { LObject2D} from '../object-interfaces';
-import { GNObject2D} from './gnobject2D';
-import { LINK_TYPE, CONSTANTS } from '../constants';
+import { GLinkOBJ} from './glinkobj';
 import * as THREE from 'three';
 
 export class GPathOBJ {
     id: any = 0;
     name: string;
-    nodeIDs: string[];
+    linkIDs: string[];
   
-    constructor(nodes: GNObject2D[]) {
-      
+    constructor(lids: string[]) {
+        this.linkIDs = lids;
     }
   
+    generateMesh(): THREE.Group {
+        let g = new THREE.Group();
+        for(let lid of this.linkIDs) {
+            
+        }
+        //g.add(this.mesh);
+        return g;
+    }
   }

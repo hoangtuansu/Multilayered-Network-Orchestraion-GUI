@@ -144,8 +144,6 @@ export class AnimatorService {
         }
       }
     }
-    this.mergeSpheresPhase();
-    
     this.isPlanesFadeOutPhaseDone = nbr_plane_need_to_invisible == 3;
   }
 

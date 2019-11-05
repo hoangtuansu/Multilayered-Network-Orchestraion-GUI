@@ -93,9 +93,9 @@ export class GLinkOBJ implements LObject2D {
     new GLinkOBJ ('GLinkOBJ7', 'SITE2-4', 'red', 3, G2DNOs[5], '1-6-1', G2DNOs[7], '1-6-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
     new GLinkOBJ ('GLinkOBJ8', 'SITE2-3', 'red', 3, G2DNOs[5], '1-6-2', G2DNOs[6], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN, [], []),
     new GLinkOBJ ('GLinkOBJ9', 'SITE3-4', 'red', 3, G2DNOs[6], '1-5-1', G2DNOs[7], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[16], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', 'red', 0.5, G2DNOs[15], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', 'red', 0.5, G2DNOs[16], 'N/A', G2DNOs[17], 'N/A', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', 'red', 0.5, G2DNOs[15], '1-1', G2DNOs[16], '1-1', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', 'red', 0.5, G2DNOs[15], '1-5', G2DNOs[17], '1-1', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', 'red', 0.5, G2DNOs[16], '1-5', G2DNOs[17], '1-5', 'OCH', LINK_TYPE.DOMAIN, [], []),
 
     new GLinkOBJ ('GLinkOBJ13', 'QFX1-SITE1', 'red', 3, G2DNOs[0], '47', G2DNOs[4], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY, [], []),
     new GLinkOBJ ('GLinkOBJ14', 'QFX1-POC1', 'red', 3, G2DNOs[0], '50', G2DNOs[15], '1-14-2', '100GbF', LINK_TYPE.BOUNDARY, [], []),
@@ -109,15 +109,20 @@ export class GLinkOBJ implements LObject2D {
 
   export class GHighlightedLinkOBJ extends GLinkOBJ {
     arrow_mesh: THREE.Mesh = null;
-
-    constructor(l: GLinkOBJ) {
+    dir: boolean = true;  //to control the direction of arrow_mesh, true: node1 -> node2, false: node2 -> node1
+    constructor(l: GLinkOBJ, d?: boolean) {
       super(l.id, l.name, l.color, l.width, l.node1, l.node1_if, l.node2, l.node2_if, l.bandwidth, l.type, l.bw_utilization_components, l.traffic_components);
+      this.dir = d;
     }
 
     generateMesh(): THREE.Group {
       let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
       let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
-      let vec = B.clone(); vec.sub(A);
+      if(!this.dir) {
+        B = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
+        A = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
+      }
+      let vec = A.clone(); vec.sub(B);
       var h = vec.length();
       vec.normalize();
       let quaternion = new THREE.Quaternion();
@@ -127,13 +132,13 @@ export class GLinkOBJ implements LObject2D {
       let material14 = new THREE.MeshStandardMaterial({color: this.mesh_highlightcolor, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
       this.mesh = new THREE.Mesh(geometry, material14);
       this.mesh.applyQuaternion(quaternion);
-      this.mesh.position.set(A.x, A.y, A.z);
+      this.mesh.position.set(B.x, B.y, B.z);
 
       let arrow_geo = new THREE.ConeBufferGeometry(1, 2.5, 10);
       arrow_geo.translate(0, h/3, 0);
       this.arrow_mesh = new THREE.Mesh(arrow_geo, material14);
       this.arrow_mesh.applyQuaternion(quaternion);
-      this.arrow_mesh.position.set(A.x, A.y, A.z);
+      this.arrow_mesh.position.set(B.x, B.y, B.z);
 
       let g = new THREE.Group();
       g.name = CONSTANTS.HIGHLIGHTED_LINK_PREFIX;
