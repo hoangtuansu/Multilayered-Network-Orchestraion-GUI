@@ -51,3 +51,6 @@
 .layer-show .label {
   background: #ffffff url("../../../../assets/images/layer2-selected.png") center no-repeat;
 }
+
+.material-icons.color_blue { color: #0080ff; }
+.material-icons.color_black { color: #000000; }

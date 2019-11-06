@@ -103,24 +103,3 @@ export class GNObject2D implements NObject2D{
     return g;
   }
 }
-
-export const G2DNOs: GNObject2D[] = [
-  new GNObject2D ('gnobject2d1', 'QFX1', 'EDTNLABQFX-01', NODE_LEVEL.COUNTRY, [-135, 65], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d2', 'QFX2', 'EDTNLABQFX-02', NODE_LEVEL.COUNTRY, [-78, 60], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d3', 'QFX3', 'EDTNLABQFX-03', NODE_LEVEL.COUNTRY, [-118, 56], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d4', 'QFX4', 'EDTNLABQFX-04', NODE_LEVEL.COUNTRY, [-98, 55], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d5', 'FWS1', 'FW9500-SITE1', NODE_LEVEL.STATE, [-140, 65], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d6', 'FWS2', 'FW9500-SITE2', NODE_LEVEL.STATE, [-128, 58], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d7', 'FWS3', 'FW9500-SITE3', NODE_LEVEL.STATE, [-109, 56], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d8', 'FWS4', 'FW9500-SITE4', NODE_LEVEL.STATE, [-100, 59], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d9', 'FWS5', 'FW9500-SITE5', NODE_LEVEL.STATE, [-118, 54], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d10', 'FWS6', 'FW9500-SITE6', NODE_LEVEL.STATE, [-130, 69], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d11', 'TCO', 'ThunderBay CO', NODE_LEVEL.STATE, [-90, 52], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d12', 'MCO', 'Montreal CO', NODE_LEVEL.STATE, [-78, 50], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d13', 'LCO', 'Laval CO', NODE_LEVEL.STATE, [-75, 57], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d14', 'RCO', 'Rankin CO', NODE_LEVEL.STATE, [-100, 65], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d15', 'FCO', 'Fort CO', NODE_LEVEL.STATE, [-115, 64], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d16', 'POC1', 'EDTNLABPOC-01', NODE_LEVEL.CITY, [-113, 55], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d17', 'POC2', 'EDTNLABPOC-02', NODE_LEVEL.CITY, [-117, 53], ['1', '2', '3']),
-  new GNObject2D ('gnobject2d18', 'POC3', 'EDTNLABPOC-03', NODE_LEVEL.CITY, [-115, 59], ['1', '2', '3'])
-];

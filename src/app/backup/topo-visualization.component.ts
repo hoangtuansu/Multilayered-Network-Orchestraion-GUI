@@ -19,7 +19,7 @@ export class TopoVisualizationComponent {
   isHide3DDiv: boolean = false;
 
   constructor() {
-    this.visualizer = new Visualizer(OBJ.G3DNOs, OBJ.GLOs, OBJ.GPOs, OBJ.G2DNOs);
+    this.visualizer = new Visualizer(OBJ.G3DNOs, OBJ.GLOs, OBJ.GPOs, OBJ.GNOs);
     this.visualizer.setTopoComponent(this);
   }
 
@@ -38,7 +38,7 @@ export class TopoVisualizationComponent {
       .attr("viewBox", "0 0 " + width + " " + height)
       .append("g").attr("transform", translateStr + " " + scaleStr + " " + "rotate(90)");
     
-    for(let o of OBJ.G2DNOs) {
+    for(let o of OBJ.GNOs) {
       svgContainer.append("circle").attr("cx", o.position[0]).attr("cy", o.position[2])
         .attr("r", 1).style("fill", o.color2d)
         .on("click", function(){});

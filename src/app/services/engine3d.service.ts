@@ -6,8 +6,9 @@ import { AnimatorService } from './animator.service';
 import { Subject } from 'rxjs';
 import { NetworkManagerService } from './network-manager.service';
 import { EntityLocatorService } from './entity-locator.service';
-import { PathComputationService } from './path-computation.service';
+import { PathManagerService } from './path-manager.service';
 import * as OBJ from '../models';
+import { GHighlightedLinkOBJ } from '../models/2d-object/glinkobj';
 
 @Injectable({
   providedIn: 'root'
@@ -35,13 +36,12 @@ export class Engine3DService implements OnDestroy {
   isDetailEnabled: boolean = false;
   highlightedLink: OBJ.GLinkOBJ = null;
   highlightedLSP: OBJ.GLinkOBJ[] = [];
-  highlightedLSPName: string = "hlLSP";
   width: number = 0;
   height: number = 0;
   constructor(private animatorService: AnimatorService,
               private nodeMngmt: NetworkManagerService,
               private entityLocatorService: EntityLocatorService,
-              private pathComputationService: PathComputationService) {
+              private pathComputationService: PathManagerService) {
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
     this.renderer = new THREE.WebGLRenderer({antialias: false});
@@ -78,7 +78,7 @@ export class Engine3DService implements OnDestroy {
     }
 
     for(let l of this.animatorService.links) {
-      let ol = this.scene.getObjectById(l.mesh.id);
+      let ol = this.scene.getObjectByName(l.name);
       this.scene.remove(ol);
     }
 
@@ -98,27 +98,27 @@ export class Engine3DService implements OnDestroy {
       this.scene.add(g.generateMesh())
     }
 
-    this.showPlane(0, true);
-    this.showPlane(1, true);
-    this.showPlane(2, true);
+    this.showPlane(0, true, true);
+    this.showPlane(1, true, true);
+    this.showPlane(2, true, true);
   }
 
-  showPlane(plane_id, isShown) {
+  showPlane(plane_id, isPlaneShown, isNodeandLinkShown) {
     this.undoHighlightLink();
     this.undoHighlightLSP();
 
     for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       if(g.layer == plane_id) {
-        g.visibility = isShown;
+        g.visibility = isPlaneShown;
       }
     }
 
     for(let o of this.animatorService.nodes) {
       if(o.level == plane_id) {
-        o.visibility = isShown;
+        o.visibility = isPlaneShown ? true : isNodeandLinkShown;
         for(let l of this.animatorService.links) {
           if(l.node1.id == o.id || l.node2.id == o.id) {
-            l.visibility = isShown;
+            l.visibility = isPlaneShown ? true : isNodeandLinkShown;
           }
         }
       }
@@ -157,21 +157,22 @@ export class Engine3DService implements OnDestroy {
       let nIdx = pickedLSP.indexOf(n);
       if(nIdx == pickedLSP.length - 1)
         break;
-      let l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
-      l.mesh.visible = false;
+      let _l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
+      let l: OBJ.GLinkOBJ = new GHighlightedLinkOBJ(_l, n !== _l.node1);
+      let hlLink: THREE.Group = l.generateMesh(n, pickedLSP[nIdx+1]);
+      l.visibility = false;
       this.highlightedLSP.push(l);
-      let hlLink: THREE.Group = l.generateHighlightedMesh(n, pickedLSP[nIdx+1]);
-      hlLink.name = this.highlightedLSPName;
+      hlLink.name = OBJ.CONSTANTS.HIGHLIGHTED_PATH_PREFIX;
       this.scene.add(hlLink);
 
     }
   }
 
   private undoHighlightLSP() {
-    let l = this.scene.getObjectByName(this.highlightedLSPName);
+    let l = this.scene.getObjectByName(OBJ.CONSTANTS.HIGHLIGHTED_PATH_PREFIX);
     while(l != undefined) {
       this.scene.remove(l);
-      l = this.scene.getObjectByName(this.highlightedLSPName);
+      l = this.scene.getObjectByName(OBJ.CONSTANTS.HIGHLIGHTED_PATH_PREFIX);
     }
     if(this.highlightedLSP.length > 0) {
       for(let l of this.highlightedLSP)

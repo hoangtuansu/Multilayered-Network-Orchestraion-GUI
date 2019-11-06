@@ -7,17 +7,17 @@ import { GLinkOBJ } from '../models/2d-object/glinkobj';
 @Injectable({
   providedIn: 'root'
 })
-export class PathComputationService {
+export class PathManagerService {
   listOfPaths = [
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[2], OBJ.G2DNOs[3], OBJ.G2DNOs[1]], //qfx1 -> qfx3 -> qfx4 -> qfx2 
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[1]], //qfx1 -> poc1 -> poc3 -> qfx2
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[7], OBJ.G2DNOs[6], OBJ.G2DNOs[1]], //qfx1 -> fws1 -> fws4 -> fws3 -> qfx2
-    [OBJ.G2DNOs[0], OBJ.G2DNOs[4], OBJ.G2DNOs[5], OBJ.G2DNOs[6], OBJ.G2DNOs[1]], //qfx1 -> fws1 -> fws2 -> fws3 -> qfx2
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[7], OBJ.G2DNOs[6]],
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[5], OBJ.G2DNOs[6]],
-    [OBJ.G2DNOs[5], OBJ.G2DNOs[7]],
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[17], OBJ.G2DNOs[6]], //fws1 -> poc1 -> poc3 -> fws3
-    [OBJ.G2DNOs[4], OBJ.G2DNOs[15], OBJ.G2DNOs[16], OBJ.G2DNOs[17], OBJ.G2DNOs[6]] //fws1 -> poc1 -> poc2 -> poc3 -> fws3
+    [OBJ.GNOs[0], OBJ.GNOs[2], OBJ.GNOs[3], OBJ.GNOs[1]], //qfx1 -> qfx3 -> qfx4 -> qfx2 
+    [OBJ.GNOs[0], OBJ.GNOs[15], OBJ.GNOs[17], OBJ.GNOs[1]], //qfx1 -> poc1 -> poc3 -> qfx2
+    [OBJ.GNOs[0], OBJ.GNOs[4], OBJ.GNOs[7], OBJ.GNOs[6], OBJ.GNOs[1]], //qfx1 -> fws1 -> fws4 -> fws3 -> qfx2
+    [OBJ.GNOs[0], OBJ.GNOs[4], OBJ.GNOs[5], OBJ.GNOs[6], OBJ.GNOs[1]], //qfx1 -> fws1 -> fws2 -> fws3 -> qfx2
+    [OBJ.GNOs[4], OBJ.GNOs[7], OBJ.GNOs[6]],
+    [OBJ.GNOs[4], OBJ.GNOs[5], OBJ.GNOs[6]],
+    [OBJ.GNOs[5], OBJ.GNOs[7]],
+    [OBJ.GNOs[4], OBJ.GNOs[15], OBJ.GNOs[17], OBJ.GNOs[6]], //fws1 -> poc1 -> poc3 -> fws3
+    [OBJ.GNOs[4], OBJ.GNOs[15], OBJ.GNOs[16], OBJ.GNOs[17], OBJ.GNOs[6]] //fws1 -> poc1 -> poc2 -> poc3 -> fws3
   ];
 
   constructor(private netMngtService: NetworkManagerService) {}
@@ -29,7 +29,7 @@ export class PathComputationService {
         let idx = path.indexOf(n);
         if(idx == path.length -1)
           break;
-        for(let l of this.netMngtService.getG2DLOs()) {
+        for(let l of this.netMngtService.getGLOs()) {
           if((l.node1 === n && l.node2 === path[idx+1]) 
           || (l.node2 === n && l.node1 === path[idx+1])) {
             if(l.bandwidth < bw[listOfPaths.indexOf(path)])
@@ -56,7 +56,7 @@ export class PathComputationService {
   }
 
   getReachedNetworkElements(nid: string): [GNObject2D[], GLinkOBJ[]] {
-    let target = this.netMngtService.getNode2DObject(nid);
+    let target = this.netMngtService.getNodeObjByID(nid);
     let nodes = [], links = [];
     for(let p of this.listOfPaths) {
        if(p.indexOf(target) >= 0) {

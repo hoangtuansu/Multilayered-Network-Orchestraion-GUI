@@ -3,7 +3,7 @@ import { Engine2DService } from './engine2d.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogDetailsComponent } from '../ui/panel-details/dialog/dialog-details.component';
 import { NetworkManagerService } from './network-manager.service';
-import { PathComputationService } from './path-computation.service';
+import { PathManagerService } from './path-manager.service';
 import { Engine3DService } from './engine3d.service';
 import { Subject, Observable } from 'rxjs';
 
@@ -11,13 +11,14 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EngineCoordinatorService {
+  dialogRef: MatDialogRef<DialogDetailsComponent> = null;
   isDetailedDialogShown = false;
   isShowing3DTopoNotifier: Subject<boolean> = new Subject<boolean>();
 
   constructor(private _engine2DService: Engine2DService,
               private _engine3DService: Engine3DService, 
               private netManagerService: NetworkManagerService,
-              private pathComputationService: PathComputationService,
+              private pathComputationService: PathManagerService,
               public detailInfoDialog: MatDialog) {
     
     _engine2DService.selectedNodeForDetailNotifier.subscribe((value)=> {
@@ -50,9 +51,8 @@ export class EngineCoordinatorService {
                     boundaryLinks: bLs, connectedNetEles: cNEs,
                     crossingPaths: cPs, bandwidth: bWs,
                     NEorLinkSelected: true};
-    let dialogRef: MatDialogRef<DialogDetailsComponent> = null;
     if(!this.isDetailedDialogShown) {
-      dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
+      this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
         width: '25%',
         panelClass: 'custom-detail-dialog-container',
         data: dataDlg,
@@ -61,7 +61,7 @@ export class EngineCoordinatorService {
         autoFocus: false
       });
       this.isDetailedDialogShown = true;
-      dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef.afterClosed().subscribe(result => {
         this.isDetailedDialogShown = false;
       });
       let subscription = observable.subscribe(
@@ -78,7 +78,7 @@ export class EngineCoordinatorService {
       );
       return;
     }
-    dialogRef.componentInstance.data = dataDlg;
+    this.dialogRef.componentInstance.data = dataDlg;
   }
 
   get2DService() {

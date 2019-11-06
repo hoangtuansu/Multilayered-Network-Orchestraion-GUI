@@ -98,7 +98,7 @@ export class Engine2DService {
       this.updateShownMode(false, false, true)
       this.zoom(xyz);
 
-      this.g.selectAll(".city-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.CITY && d.node2.level == OBJ.NODE_LEVEL.CITY;}))
+      this.g.selectAll(".city-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.CITY && d.node2.level == OBJ.NODE_LEVEL.CITY;}))
         .enter().append("line").attr('class', 'city-level-link')
         .style("stroke", (d) => {return d.color;}).style("stroke-width", (d) => {return d.width;})
         .attr("id", (d) => {return d.name;})
@@ -111,7 +111,7 @@ export class Engine2DService {
         .on("mouseout", this.entityMouseOut);
 
       this.g.selectAll(".city-level-mark")
-        .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
+        .data(OBJ.GNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.CITY; }))
         .enter().append("image")
         .attr('id', d => {return d.id;})
         .attr('class', 'city-level-mark')
@@ -154,7 +154,7 @@ export class Engine2DService {
 
           this.g.selectAll("#" + d["id"]).style('display', 'none');
 
-          this.g.selectAll(".state-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
+          this.g.selectAll(".state-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
             .enter().append("line").attr('class', 'state-level-link')
             .style("stroke", d => {return d.color;}).style("stroke-width", 3)
             .attr("id", (d) => {return d.name;})
@@ -167,7 +167,7 @@ export class Engine2DService {
             .on("mouseout", this.entityMouseOut);
 
           this.g.selectAll(".state-level-mark")
-            .data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.STATE; }))
+            .data(OBJ.GNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.STATE; }))
             .enter().append("image")
             .attr('id', d => {return d.id;})
             .attr('class', 'state-level-mark')
@@ -215,7 +215,7 @@ export class Engine2DService {
         .attr("id", function(d) { return d["id"]; })
         .attr("d", this.path).on("click", this.countryClicked);
 
-      this.g.selectAll(".country-level-link").data(OBJ.G2DLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
+      this.g.selectAll(".country-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
         .enter().append("line").attr('class', 'country-level-link')
         .style("stroke", "red").style("stroke-width", 5)
         .attr("id", (d) => {return d.name;})
@@ -227,7 +227,7 @@ export class Engine2DService {
         .on("mouseover", this.entityMouseOver)
         .on("mouseout", this.entityMouseOut);
 
-      this.g.selectAll(".country-level-mark").data(OBJ.G2DNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
+      this.g.selectAll(".country-level-mark").data(OBJ.GNOs.filter(function(d) { return d.level == OBJ.NODE_LEVEL.COUNTRY; }))
         .enter().append("image").attr('class', 'country-level-mark')
         .attr('id', d => {return d.id;})
         .attr('width', d => {return d.icon_size[0];}).attr('height', d => {return d.icon_size[1];})

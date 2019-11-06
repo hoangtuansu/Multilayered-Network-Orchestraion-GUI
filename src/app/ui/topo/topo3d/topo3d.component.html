@@ -12,15 +12,18 @@
     </div>
     <div class="layer-show">
         
-            <button mat-icon-button (click)="isLayer3Shown = !isLayer3Shown; engineService.engine3DService.showPlane(2, isLayer3Shown);">
+        <button mat-icon-button (click)="isNodeAlwaysShown = !isNodeAlwaysShown; engineService.engine3DService.showPlane(2, isLayer3Shown, isNodeAlwaysShown); engineService.engine3DService.showPlane(1, isLayer2Shown, isNodeAlwaysShown); engineService.engine3DService.showPlane(0, isLayer1Shown, isNodeAlwaysShown);">
+                <mat-icon [className]="isNodeAlwaysShown ? 'material-icons color_blue' : 'material-icons color_black'" class="">scatter_plot</mat-icon>
+        </button>
+            <button mat-icon-button (click)="isLayer3Shown = !isLayer3Shown; engineService.engine3DService.showPlane(2, isLayer3Shown, isNodeAlwaysShown);">
                     <mat-icon svgIcon="layer2"></mat-icon>
             </button>
     
-            <button mat-icon-button (click)="isLayer2Shown = !isLayer2Shown; engineService.engine3DService.showPlane(1, isLayer2Shown);">
+            <button mat-icon-button (click)="isLayer2Shown = !isLayer2Shown; engineService.engine3DService.showPlane(1, isLayer2Shown, isNodeAlwaysShown);">
                     <mat-icon svgIcon="layer1"></mat-icon>
             </button>
     
-            <button mat-icon-button (click)="isLayer1Shown = !isLayer1Shown; engineService.engine3DService.showPlane(0, isLayer1Shown);">
+            <button mat-icon-button (click)="isLayer1Shown = !isLayer1Shown; engineService.engine3DService.showPlane(0, isLayer1Shown, isNodeAlwaysShown);">
                     <mat-icon svgIcon="layer0"></mat-icon>
             </button>
         

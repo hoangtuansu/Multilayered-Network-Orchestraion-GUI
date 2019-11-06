@@ -17,40 +17,36 @@ export class NetworkManagerService {
     return OBJ.G3DNOs;
   }
 
-  getG2DNOs(): OBJ.GNObject2D[] {
-    return OBJ.G2DNOs;
+  getGNOs(): OBJ.GNObject2D[] {
+    return OBJ.GNOs;
   }
 
-  getGLOs(): OBJ.GLObject[] {
+  getGLOs(): OBJ.GLinkOBJ[] {
     return OBJ.GLOs;
-  }
-
-  getG2DLOs(): OBJ.GLinkOBJ[] {
-    return OBJ.G2DLOs;
   }
 
   getGNPrOs(): OBJ.GNPrObject[] {
     return OBJ.GNPrOs;
   }
 
-  getNode2DObject(id: string): OBJ.Object {
-    for(let n of this.getG2DNOs()) {
-      if(n.id === id) {
-        return n;
-      }
-    }
+  getLinkObjByID(lid: string): OBJ.Object {
+    return this.getGLOs().filter(d => d.id === lid)[0];
+  }
+
+  getNodeObjByID(nid: string): OBJ.Object {
+    return this.getGNOs().filter(d => d.id === nid)[0];
   }
 
   get2DDomainLinksOfNode(nid: string): OBJ.GLinkOBJ[] {
-    return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.DOMAIN;});
+    return this.getGLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.DOMAIN;});
   }
 
   get2DBoundaryLinksOfNode(nid: string): OBJ.GLinkOBJ[] {
-    return this.getG2DLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
+    return this.getGLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
 
   getLink(src: OBJ.GNObject2D, dst: OBJ.GNObject2D): OBJ.GLinkOBJ {
-    for(let l of this.getG2DLOs()) {
+    for(let l of this.getGLOs()) {
       if((l.node1.id === src.id && l.node2.id === dst.id) || ((l.node2.id === src.id && l.node1.id === dst.id)))
         return l;
     }
@@ -58,16 +54,16 @@ export class NetworkManagerService {
   }
 
   get2DContainedNetworkElement(nid: string): OBJ.GNObject2D[] {
-    let nlevel = this.getNode2DObject(nid).level;
+    let nlevel = this.getNodeObjByID(nid).level;
     if(nlevel === OBJ.NODE_LEVEL.CITY) 
       return [];
     
-    return this.getG2DNOs().filter(d => { 
+    return this.getGNOs().filter(d => { 
       if(nlevel === OBJ.NODE_LEVEL.COUNTRY && d.level !== OBJ.NODE_LEVEL.STATE)
         return false;
       if(nlevel === OBJ.NODE_LEVEL.STATE && d.level !== OBJ.NODE_LEVEL.CITY)
         return false;
-      for(let l of this.getG2DLOs()) {
+      for(let l of this.getGLOs()) {
         if((l.node1.id == nid && d.id == l.node2.id) || (l.node2.id == nid && d.id == l.node1.id)) {
           return true;
         }
@@ -77,8 +73,8 @@ export class NetworkManagerService {
   }
 
   getNeighborNetworkElements(nid: string): OBJ.GNObject2D[] {
-    return this.getG2DNOs().filter(d => { 
-      for(let l of this.getG2DLOs()) {
+    return this.getGNOs().filter(d => { 
+      for(let l of this.getGLOs()) {
         if((l.node1.id == nid && d.id == l.node2.id) || (l.node2.id == nid && d.id == l.node1.id)) {
           return true;
         }

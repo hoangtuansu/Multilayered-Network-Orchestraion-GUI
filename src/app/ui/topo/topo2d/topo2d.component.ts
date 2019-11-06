@@ -40,14 +40,14 @@ export class Topo2dComponent implements OnInit, OnChanges {
 
   constructor(private engine2DService: Engine2DService) {
     this.filteredNodes = this.nodeCtrl.valueChanges
-      .pipe(startWith(''), map(node => node ? this._filteredNodes(node as string) : OBJ.G2DNOs.slice(0,Math.floor(Math.random() * OBJ.G2DNOs.length)))
+      .pipe(startWith(''), map(node => node ? this._filteredNodes(node as string) : OBJ.GNOs.slice(0,Math.floor(Math.random() * OBJ.GNOs.length)))
       );
     
   }
 
   private _filteredNodes(value: string): OBJ.GNObject2D[] {
     const filterValue = value.toLowerCase();
-    return OBJ.G2DNOs.filter(node => node.name.toLowerCase().indexOf(filterValue) >= 0 || node.full_name.toLowerCase().indexOf(filterValue) >= 0)
+    return OBJ.GNOs.filter(node => node.name.toLowerCase().indexOf(filterValue) >= 0 || node.full_name.toLowerCase().indexOf(filterValue) >= 0)
   }
 
   ngAfterViewInit() {
