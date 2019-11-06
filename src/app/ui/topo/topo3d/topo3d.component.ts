@@ -44,7 +44,7 @@ export class Topo3dComponent implements OnInit, OnChanges {
   isLayer1Shown: boolean = true;
   isLayer2Shown: boolean = true;
   isLayer3Shown: boolean = true;
-  isNodeAlwaysShown: boolean = false;
+  isNodeAlwaysShown: boolean = true;
   
   constructor(private engineService: EngineCoordinatorService) { 
     engineService.engine3DService.fadingOutCompleteNotifier.subscribe((value) => {

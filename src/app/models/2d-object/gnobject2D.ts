@@ -103,3 +103,9 @@ export class GNObject2D implements NObject2D{
     return g;
   }
 }
+
+export interface PathStruct {
+  name: string;
+  nodes: GNObject2D[];
+  capacity: string;
+}

@@ -1,11 +1,27 @@
-<div style="display: block; min-height: 200px;">
-        <canvas baseChart 
-          [data]="pieChartData" 
-          [labels]="pieChartLabels" 
-          [chartType]="pieChartType"
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]="pieChartLegend">
-        </canvas>
+<div style="display: block; height: auto; padding-bottom: 0px;">
+
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div style="height: 32px;"> 
+            <div style="width: 35px; display: inline-block;"><i class="material-icons vertical-align-middle">dashboard</i></div>
+            <span>{{linkComponentTitle}}</span>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <canvas baseChart 
+            [data]="pieChartData" 
+            [labels]="pieChartLabels" 
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [plugins]="pieChartPlugins"
+            [legend]="pieChartLegend">
+          </canvas>
+    
+    </mat-expansion-panel>
+  
+
+        
       </div>
       

@@ -1,5 +1,5 @@
 import { GLinkOBJ } from './2d-object/glinkobj';
-import { GNObject2D } from './2d-object/gnobject2D';
+import { GNObject2D, PathStruct } from './2d-object/gnobject2D';
 import { GPOjbect } from './2d-object/gpobject';
 
 export enum LAYER { OPTICAL, LAYER1, IP }
@@ -28,57 +28,58 @@ export const CONSTANTS = {
 }
 
 export const GNOs: GNObject2D[] = [
-    new GNObject2D ('gnobject2d1', 'QFX1', 'EDTNLABQFX-01', NODE_LEVEL.COUNTRY, [-135, 65], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d2', 'QFX2', 'EDTNLABQFX-02', NODE_LEVEL.COUNTRY, [-78, 60], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d3', 'QFX3', 'EDTNLABQFX-03', NODE_LEVEL.COUNTRY, [-118, 56], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d4', 'QFX4', 'EDTNLABQFX-04', NODE_LEVEL.COUNTRY, [-98, 55], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d5', 'FWS1', 'FW9500-SITE1', NODE_LEVEL.STATE, [-140, 65], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d6', 'FWS2', 'FW9500-SITE2', NODE_LEVEL.STATE, [-128, 58], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d7', 'FWS3', 'FW9500-SITE3', NODE_LEVEL.STATE, [-109, 56], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d8', 'FWS4', 'FW9500-SITE4', NODE_LEVEL.STATE, [-100, 59], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d9', 'FWS5', 'FW9500-SITE5', NODE_LEVEL.STATE, [-118, 54], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d10', 'FWS6', 'FW9500-SITE6', NODE_LEVEL.STATE, [-130, 69], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d1', 'qfx1', 'EDTNLABQFX-01', NODE_LEVEL.COUNTRY, [-135, 65], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d2', 'qfx2', 'EDTNLABQFX-02', NODE_LEVEL.COUNTRY, [-78, 60], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d3', 'qfx3', 'EDTNLABQFX-03', NODE_LEVEL.COUNTRY, [-118, 56], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d4', 'qfx4', 'EDTNLABQFX-04', NODE_LEVEL.COUNTRY, [-98, 55], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d5', 'fws1', 'FW9500-SITE1', NODE_LEVEL.STATE, [-140, 65], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d6', 'fws2', 'FW9500-SITE2', NODE_LEVEL.STATE, [-128, 58], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d7', 'fws3', 'FW9500-SITE3', NODE_LEVEL.STATE, [-109, 56], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d8', 'fws4', 'FW9500-SITE4', NODE_LEVEL.STATE, [-100, 59], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d9', 'fws5', 'FW9500-SITE5', NODE_LEVEL.STATE, [-118, 54], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d10', 'fws6', 'FW9500-SITE6', NODE_LEVEL.STATE, [-130, 69], ['1', '2', '3']),
     new GNObject2D ('gnobject2d11', 'TCO', 'ThunderBay CO', NODE_LEVEL.STATE, [-90, 52], ['1', '2', '3']),
     new GNObject2D ('gnobject2d12', 'MCO', 'Montreal CO', NODE_LEVEL.STATE, [-78, 50], ['1', '2', '3']),
     new GNObject2D ('gnobject2d13', 'LCO', 'Laval CO', NODE_LEVEL.STATE, [-75, 57], ['1', '2', '3']),
     new GNObject2D ('gnobject2d14', 'RCO', 'Rankin CO', NODE_LEVEL.STATE, [-100, 65], ['1', '2', '3']),
     new GNObject2D ('gnobject2d15', 'FCO', 'Fort CO', NODE_LEVEL.STATE, [-115, 64], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d16', 'POC1', 'EDTNLABPOC-01', NODE_LEVEL.CITY, [-113, 55], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d17', 'POC2', 'EDTNLABPOC-02', NODE_LEVEL.CITY, [-117, 53], ['1', '2', '3']),
-    new GNObject2D ('gnobject2d18', 'POC3', 'EDTNLABPOC-03', NODE_LEVEL.CITY, [-115, 59], ['1', '2', '3'])
+    new GNObject2D ('gnobject2d16', 'poc1', 'EDTNLABPOC-01', NODE_LEVEL.CITY, [-113, 55], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d17', 'poc2', 'EDTNLABPOC-02', NODE_LEVEL.CITY, [-117, 53], ['1', '2', '3']),
+    new GNObject2D ('gnobject2d18', 'poc3', 'EDTNLABPOC-03', NODE_LEVEL.CITY, [-115, 59], ['1', '2', '3'])
   ];
 
 export const GLOs: GLinkOBJ[] = [
-    new GLinkOBJ ('GLinkOBJ1', 'QFX1-3', 'red', 3, GNOs[0], '48', GNOs[2], '49', '100Gbe', LINK_TYPE.DOMAIN, [60, 40], ["IP", "Unused"]),
-    new GLinkOBJ ('GLinkOBJ2', 'QFX2-4', 'red', 3, GNOs[1], '48', GNOs[3], '49', '100Gbe', LINK_TYPE.DOMAIN,[30, 70], ["IP", "Unused"]),
-    new GLinkOBJ ('GLinkOBJ3', 'QFX3-4', 'red', 3, GNOs[2], '48', GNOs[3], '48',  '40Gbe', LINK_TYPE.DOMAIN, [20, 80], ["IP", "Unused"]),
-    new GLinkOBJ ('GLinkOBJ4', 'QFX3-4', 'red', 3, GNOs[2], '50', GNOs[3], '50',  '100Gbe', LINK_TYPE.DOMAIN, [90, 10], ["IP", "Unused"]),
-    new GLinkOBJ ('GLinkOBJ5', 'SITE1-2', 'red', 3, GNOs[4], '1-5-1', GNOs[5], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ6', 'SITE1-4', 'red', 3, GNOs[4], '1-6-2', GNOs[7], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ7', 'SITE2-4', 'red', 3, GNOs[5], '1-6-1', GNOs[7], '1-6-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ8', 'SITE2-3', 'red', 3, GNOs[5], '1-6-2', GNOs[6], '1-6-2', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ9', 'SITE3-4', 'red', 3, GNOs[6], '1-5-1', GNOs[7], '1-5-1', 'OTU4', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', 'red', 0.5, GNOs[15], '1-1', GNOs[16], '1-1', 'OCH', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', 'red', 0.5, GNOs[15], '1-5', GNOs[17], '1-1', 'OCH', LINK_TYPE.DOMAIN, [], []),
-    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', 'red', 0.5, GNOs[16], '1-5', GNOs[17], '1-5', 'OCH', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ1', 'QFX1-3', '#c0392b', 3, GNOs[0], '48', GNOs[2], '49', '100Gbe', '0.1ms', LINK_TYPE.DOMAIN, [60, 40], ["IP", "Unused"]),
+    new GLinkOBJ ('GLinkOBJ2', 'QFX2-4', '#c0392b', 3, GNOs[1], '48', GNOs[3], '49', '100Gbe', '0.5ms', LINK_TYPE.DOMAIN,[30, 70], ["IP", "Unused"]),
+    new GLinkOBJ ('GLinkOBJ3', 'QFX3-4', '#c0392b', 3, GNOs[2], '48', GNOs[3], '48',  '40Gbe', '0.3ms', LINK_TYPE.DOMAIN, [20, 80], ["IP", "Unused"]),
+    new GLinkOBJ ('GLinkOBJ4', 'QFX3-4', '#c0392b', 3, GNOs[2], '50', GNOs[3], '50',  '100Gbe', '1.0ms', LINK_TYPE.DOMAIN, [90, 10], ["IP", "Unused"]),
+    new GLinkOBJ ('GLinkOBJ5', 'SITE1-2', '#e74c3c', 3, GNOs[4], '1-5-1', GNOs[5], '1-5-1', 'OTU4', '0.01ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"]),
+    new GLinkOBJ ('GLinkOBJ6', 'SITE1-4', '#e74c3c', 3, GNOs[4], '1-6-2', GNOs[7], '1-6-2', 'OTU4', '0.1ms', LINK_TYPE.DOMAIN, [20, 80], ["Service 1", "Service 2"]),
+    new GLinkOBJ ('GLinkOBJ7', 'SITE2-4', '#e74c3c', 3, GNOs[5], '1-6-1', GNOs[7], '1-6-1', 'OTU4', '0.3ms', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ8', 'SITE2-3', '#e74c3c', 3, GNOs[5], '1-6-2', GNOs[6], '1-6-2', 'OTU4', '0.5ms', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ9', 'SITE3-4', '#e74c3c', 3, GNOs[6], '1-5-1', GNOs[7], '1-5-1', 'OTU4', '0.7ms', LINK_TYPE.DOMAIN, [], []),
+    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', '#e67e22', 0.5, GNOs[15], '1-1', GNOs[16], '1-1', 'OCH', '0.9ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"]),
+    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', '#e67e22', 0.5, GNOs[15], '1-5', GNOs[17], '1-1', 'OCH', '1.1ms', LINK_TYPE.DOMAIN, [10, 20, 30, 40], ["Service 1", "Service 2", "Service 3", "Service 4"]),
+    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', '#e67e22', 0.5, GNOs[16], '1-5', GNOs[17], '1-5', 'OCH', '2.1ms', LINK_TYPE.DOMAIN, [30, 70], ["Service 1", "Service 2"]),
 
-    new GLinkOBJ ('GLinkOBJ13', 'QFX1-SITE1', 'red', 3, GNOs[0], '47', GNOs[4], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY, [], []),
-    new GLinkOBJ ('GLinkOBJ14', 'QFX1-POC1', 'red', 3, GNOs[0], '50', GNOs[15], '1-14-2', '100GbF', LINK_TYPE.BOUNDARY, [], []),
-    new GLinkOBJ ('GLinkOBJ15', 'QFX2-SITE3', 'red', 3, GNOs[1], '47', GNOs[6], '1-1-1', '10GbE', LINK_TYPE.BOUNDARY, [], []),
-    new GLinkOBJ ('GLinkOBJ16', 'QFX2-POC3', 'red', 3, GNOs[1], '50', GNOs[17], '1-14-2', '100GbE', LINK_TYPE.BOUNDARY, [], []),
-    new GLinkOBJ ('GLinkOBJ17', 'SITE1-POC1', 'red', 3, GNOs[4], '1-6-1', GNOs[15], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY, [], []),
-    new GLinkOBJ ('GLinkOBJ18', 'SITE3-POC3', 'red', 3, GNOs[6], '1-6-1', GNOs[17], '1-12-1', 'OTU4', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ13', 'QFX1-SITE1', 'red', 3, GNOs[0], '47', GNOs[4], '1-1-1', '10GbE', '1.3ms', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ14', 'QFX1-POC1', 'red', 3, GNOs[0], '50', GNOs[15], '1-14-2', '100GbE', '0.1ms', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ15', 'QFX2-SITE3', 'red', 3, GNOs[1], '47', GNOs[6], '1-1-1', '10GbE', '0.8ms', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ16', 'QFX2-POC3', 'red', 3, GNOs[1], '50', GNOs[17], '1-14-2', '100GbE', '1.5ms', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ17', 'SITE1-POC1', 'red', 3, GNOs[4], '1-6-1', GNOs[15], '1-12-1', 'OTU4', '1.3ms', LINK_TYPE.BOUNDARY, [], []),
+    new GLinkOBJ ('GLinkOBJ18', 'SITE3-POC3', 'red', 3, GNOs[6], '1-6-1', GNOs[17], '1-12-1', 'OTU4', '3.1ms', LINK_TYPE.BOUNDARY, [], []),
 
-    new GLinkOBJ ('GLinkOBJ19', 'SITE1-3', 'red', 3, GNOs[4], '1-1-2', GNOs[6], '1-1-2', '10GbE', LINK_TYPE.DOMAIN, [], [])
+    new GLinkOBJ ('GLinkOBJ19', 'SITE1-3', '#e74c3c', 3, GNOs[4], '1-1-2', GNOs[6], '1-1-2', '10GbE', '1.1ms', LINK_TYPE.DOMAIN, [], [])
 ];
 
-export const Paths = [[GNOs[0], GNOs[2], GNOs[3], GNOs[1]], //qfx1 -> qfx3 -> qfx4 -> qfx2 
-    [GNOs[0], GNOs[15], GNOs[17], GNOs[1]], //qfx1 -> poc1 -> poc3 -> qfx2
-    [GNOs[0], GNOs[4], GNOs[7], GNOs[6], GNOs[1]], //qfx1 -> fws1 -> fws4 -> fws3 -> qfx2
-    [GNOs[0], GNOs[4], GNOs[5], GNOs[6], GNOs[1]], //qfx1 -> fws1 -> fws2 -> fws3 -> qfx2
-    [GNOs[4], GNOs[7], GNOs[6]],
-    [GNOs[4], GNOs[5], GNOs[6]],
-    [GNOs[5], GNOs[7]],
-    [GNOs[4], GNOs[15], GNOs[17], GNOs[6]], //fws1 -> poc1 -> poc3 -> fws3
-    [GNOs[4], GNOs[15], GNOs[16], GNOs[17], GNOs[6]] //fws1 -> poc1 -> poc2 -> poc3 -> fws3]
+export const Paths: PathStruct[] = [
+    {name: 'SYNCHRO-QFX12-l2', nodes: [GNOs[0], GNOs[2], GNOs[3], GNOs[1]], capacity: '10Gbps'}, //qfx1 -> qfx3 -> qfx4 -> qfx2 
+    {name: 'SYNCHRO-QFX12-l20', nodes: [GNOs[0], GNOs[15], GNOs[17], GNOs[1]], capacity: '10Gbps'}, //qfx1 -> poc1 -> poc3 -> qfx2
+    {name: 'SYNCHRO-QFX12-l21', nodes: [GNOs[0], GNOs[4], GNOs[7], GNOs[6], GNOs[1]], capacity: '10Gbps'}, //qfx1 -> fws1 -> fws4 -> fws3 -> qfx2
+    {name: 'SYNCHRO-QFX12-l21-alter', nodes: [GNOs[0], GNOs[4], GNOs[5], GNOs[6], GNOs[1]], capacity: '10Gbps'}, //qfx1 -> fws1 -> fws2 -> fws3 -> qfx2
+    {name: 'SYNCHRO-SITE13-l1', nodes: [GNOs[4], GNOs[7], GNOs[6]], capacity: '10Gbps'},
+    {name: 'SYNCHRO-SITE13-l1-alter', nodes: [GNOs[4], GNOs[5], GNOs[6]], capacity: '10Gbps'},
+    {name: 'SYNCHRO-SITE24-l1', nodes: [GNOs[5], GNOs[7]], capacity: '10Gbps'},
+    {name: 'SYNCHRO-SITE13-l10', nodes: [GNOs[4], GNOs[15], GNOs[17], GNOs[6]], capacity: '10Gbps'},
+    {name: 'SYNCHRO-SITE13-l10-alter', nodes: [GNOs[4], GNOs[15], GNOs[16], GNOs[17], GNOs[6]], capacity: '10Gbps'}
 ];

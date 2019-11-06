@@ -1,18 +1,17 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
-import {  } from '../models/object-interfaces';
-import { GNObject2D } from '../models/2d-object/gnobject2D';
 import { NODE_LEVEL } from '../models/constants';
+import { PathStruct } from '../models/2d-object/gnobject2D';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinkVisualizerService {
   selectedLinkID: string = "";  //this is to identify the tooltip, not the ID of the GLinkOBJ link
-  obtainedPath: GNObject2D[] = null;
+  obtainedPath: PathStruct = null;
   constructor() { }
 
-  setSelectedLinkID(lid: string, op: GNObject2D[]) {
+  setSelectedLinkID(lid: string, op: PathStruct) {
     this.selectedLinkID = lid;
     this.obtainedPath = op;
   }
@@ -20,7 +19,7 @@ export class LinkVisualizerService {
   private calculateHeight(offsetHeight1: number, offsetHeight2: number): number {
     let h = 0;
     let prevNode = null;
-    for(let curNode of this.obtainedPath) {
+    for(let curNode of this.obtainedPath.nodes) {
       if(prevNode != null) {
         h += (prevNode.level == curNode.level) ? offsetHeight1 : offsetHeight2;
       }
@@ -32,7 +31,7 @@ export class LinkVisualizerService {
   private getNodePosition(svg, arrowID, width, numLayers, nbrCountryNode, nbrCityNode) {
     let prevNode = null, prevPosY = 0, prevPosX = 0;
     let nodePositionArr = [];
-    for(let node of this.obtainedPath) {
+    for(let node of this.obtainedPath.nodes) {
       let posX = 0, posY = 0;
       
       switch(node.level) {
@@ -68,7 +67,7 @@ export class LinkVisualizerService {
     return nodePositionArr;
   }
 
-  createLinkVisualization(mapRenderer: ElementRef): void {
+  createPathVisualization(mapRenderer: ElementRef): void {
     let element = mapRenderer.nativeElement;
     //let width = mapRenderer.nativeElement.offsetWidth;
     let width = (window.innerWidth/4) - (window.innerWidth/20);
@@ -79,9 +78,9 @@ export class LinkVisualizerService {
                 .attr("viewBox", "0 0 " + width + " " + height)
                 .attr("width", width).attr("height", height);
 
-    let nbrCountryNode = this.obtainedPath.some(n => {return n.level === NODE_LEVEL.COUNTRY;}) ? 1 : 0;
-    let nbrStateNode = this.obtainedPath.some(n => {return n.level === NODE_LEVEL.STATE;}) ? 1 : 0;
-    let nbrCityNode = this.obtainedPath.some(n => {return n.level === NODE_LEVEL.CITY;}) ? 1 : 0;
+    let nbrCountryNode = this.obtainedPath.nodes.some(n => {return n.level === NODE_LEVEL.COUNTRY;}) ? 1 : 0;
+    let nbrStateNode = this.obtainedPath.nodes.some(n => {return n.level === NODE_LEVEL.STATE;}) ? 1 : 0;
+    let nbrCityNode = this.obtainedPath.nodes.some(n => {return n.level === NODE_LEVEL.CITY;}) ? 1 : 0;
     let numLayers = nbrCountryNode + nbrStateNode + nbrCityNode;
     svg.append("svg:defs").append("svg:marker")
       .attr("id", "triangle" + this.selectedLinkID)
@@ -101,8 +100,8 @@ export class LinkVisualizerService {
 
   private displayLogicalLink(svg, arrowID, nodePositionArr) {
     let prevCountryNodeID = null, prevStateNodeID = null;
-    for(let curNode of this.obtainedPath) {
-      let i = this.obtainedPath.indexOf(curNode);
+    for(let curNode of this.obtainedPath.nodes) {
+      let i = this.obtainedPath.nodes.indexOf(curNode);
       let prevPos = null;
       let prevOffset = 10;
       let curOffset = 10; 
@@ -125,7 +124,7 @@ export class LinkVisualizerService {
         }
         if(i > (prevStateNodeID + 1)){
           prevPos = nodePositionArr[prevStateNodeID];
-          if(this.obtainedPath[i-1].level == NODE_LEVEL.CITY)
+          if(this.obtainedPath.nodes[i-1].level == NODE_LEVEL.CITY)
             this.drawLinkBetweenNodes(svg, arrowID,  prevPos[0] + prevOffset, prevPos[1] + prevOffset, 
             nodePositionArr[i][0] + curOffset, nodePositionArr[i][1] + curOffset, true);
           prevStateNodeID = i;

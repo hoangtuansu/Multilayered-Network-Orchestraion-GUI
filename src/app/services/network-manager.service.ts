@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
 import { EntityLocatorService } from './entity-locator.service';
+import { PathStruct } from '../models/2d-object/gnobject2D';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class NetworkManagerService {
 
   getGNPrOs(): OBJ.GNPrObject[] {
     return OBJ.GNPrOs;
+  }
+
+  getPaths(): PathStruct[] {
+    return OBJ.Paths;
   }
 
   getLinkObjByID(lid: string): OBJ.Object {

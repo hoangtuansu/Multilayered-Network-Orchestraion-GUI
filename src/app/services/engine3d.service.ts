@@ -145,21 +145,21 @@ export class Engine3DService implements OnDestroy {
     }
   }
 
-  highlightLSP(pickedLSP: OBJ.GNObject2D[]) {
+  highlightPath(nodesOfPickedPath: OBJ.GNObject2D[]) {
     this.undoHighlightLink();
     this.undoHighlightLSP();
     this.highlightedLSP = [];
-    for(let _n of pickedLSP) {
+    for(let _n of nodesOfPickedPath) {
       if(!_n.visibility)
         return;
     }
-    for(let n of pickedLSP) {
-      let nIdx = pickedLSP.indexOf(n);
-      if(nIdx == pickedLSP.length - 1)
+    for(let n of nodesOfPickedPath) {
+      let nIdx = nodesOfPickedPath.indexOf(n);
+      if(nIdx == nodesOfPickedPath.length - 1)
         break;
-      let _l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, pickedLSP[nIdx+1]);
+      let _l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, nodesOfPickedPath[nIdx+1]);
       let l: OBJ.GLinkOBJ = new GHighlightedLinkOBJ(_l, n !== _l.node1);
-      let hlLink: THREE.Group = l.generateMesh(n, pickedLSP[nIdx+1]);
+      let hlLink: THREE.Group = l.generateMesh(n, nodesOfPickedPath[nIdx+1]);
       l.visibility = false;
       this.highlightedLSP.push(l);
       hlLink.name = OBJ.CONSTANTS.HIGHLIGHTED_PATH_PREFIX;

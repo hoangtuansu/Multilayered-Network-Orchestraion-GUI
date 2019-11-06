@@ -46,13 +46,14 @@
           <mat-tab-group mat-stretch-tabs dynamicHeight>
               <mat-tab label="Domain"> 
                 <mat-list class="link-list">
-                    <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;" (click)="highlight3DLink(l);  mtg.selectedIndex = (mtg.selectedIndex == 0) ? 1 : 0;">
+                    <mat-list-item matRipple *ngFor="let l of data['domainLinks']; let i = index;" (click)="highlight3DLink(l);  mtg.selectedIndex = 1;">
                         <div style="width:100%; height: 80px; padding-top: 5px;">
                           <div class='link-title'>
                             <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                               {{l.name}}                               
                             </div>
-                            <div style="float: right;">{{l.bandwidth}}</div>
+                            <div style="float:right; padding-left: 15px;"><i class="material-icons vertical-align-middle">opacity</i>{{l.bandwidth}}</div>
+                            <div style="float: right;"><i class="material-icons vertical-align-middle"> access_time </i> {{l.latency}}</div>
                           </div>
                           <div class='link-symbol'>
                             <div class='mark1'></div>
@@ -78,7 +79,12 @@
                           <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500;">
                             {{l.name}}
                           </div>
-                          <div style="float: right;">{{l.bandwidth}}</div>
+                          <div style="float:right; padding-left: 15px;">
+                            <i class="material-icons vertical-align-middle">opacity</i> {{l.bandwidth}}
+                          </div>
+                          <div style="float: right;">
+                            <i class="material-icons vertical-align-middle">access_time</i>{{l.latency}}
+                          </div>
                         </div>
                         <div class='link-symbol'>
                           <div class='mark1'></div>
@@ -102,23 +108,23 @@
           <mat-expansion-panel-header>
               <div style="height: 32px;"> 
                 <div style="width: 35px; display: inline-block;"><img style="vertical-align:middle" src="assets/images/path.png"></div>
-                <span>LSPs</span>
+                <span>Paths</span>
               </div>
           </mat-expansion-panel-header>
       
           <mat-accordion>
-            <mat-expansion-panel *ngFor="let p of data['crossingPaths']; let i = index;" (click)="highlight3DLSP(p)" [expanded]="false" [hideToggle]="'true'">
+            <mat-expansion-panel *ngFor="let p of data['crossingPaths']; let i = index;" (click)="highlight3DPath(p)" [expanded]="false" [hideToggle]="'true'">
                 <mat-expansion-panel-header class="link-header" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                   <div style="width:100%; height: 80px; font-size: 13px;">
                     <div class='link-title' style="height: 40px;">
                       <div style="float: left; color:rgba(0,0,0,0.9); font-weight:500; padding-top: 5px; padding-bottom: 5px;">
-                        {{p[0].name}} &#8596; {{p[p.length-1].name}}
+                        {{p.name}}
                       </div>
                       <div style="float: right;">
-                          <button mat-icon-button color="warn" (click)="$event.stopPropagation(); data['selectedLinkorPath'] = p; highlight3DLSP(p); data['NEorLinkSelected'] = false; mtg.selectedIndex = 1;">
+                          <button mat-icon-button color="warn" (click)="$event.stopPropagation(); data['NEorLinkSelected'] = false; highlight3DPath(p); mtg.selectedIndex = 2;">
                               <mat-icon>view_quilt</mat-icon>
                           </button>
-                        {{data['bandwidth'][i]}}
+                        {{p.capacity}}
                       </div>
                     </div>
                     <div class='link-symbol'>
@@ -127,12 +133,12 @@
                       <div class='mark2'></div>
                     </div>
                     <div class='link-nodes'>
-                        <div class='src-name'>{{data['selectedEntity'].name === p[0].name ? p[0].name : p[p.length-1].name}}</div>
-                        <div class='dst-name'>{{data['selectedEntity'].name === p[0].name ? p[p.length-1].name : p[0].name}}</div>
+                        <div class='src-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[0].name : p.nodes[p.nodes.length-1].name}}</div>
+                        <div class='dst-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[p.nodes.length-1].name : p.nodes[0].name}}</div>
                     </div>
                   </div>
                 </mat-expansion-panel-header>
-                <app-link-visual [selectedLinkID] = "i" [obtainedPath]= "p"></app-link-visual>
+                <app-link-visual [selectedPathID] = "i" [obtainedPath]= "p"></app-link-visual>
                 
             </mat-expansion-panel>
           </mat-accordion>
@@ -141,7 +147,10 @@
       </mat-accordion>
     </mat-tab>
     <mat-tab>
-        <app-lsp-services [selectedLinkorPath]="data['selectedLinkorPath']"></app-lsp-services>
+        <app-lsp-services [selectedLink]="data['selectedLinkorPath']"></app-lsp-services>
+    </mat-tab>
+    <mat-tab>
+        <app-link-traffic-details ></app-link-traffic-details>
     </mat-tab>
   </mat-tab-group>
 </div>

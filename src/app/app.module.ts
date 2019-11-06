@@ -14,6 +14,7 @@ import { LinkVisualComponent } from './ui/panel-details/link-visual/link-visual.
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { LspServicesComponent } from './ui/panel-details/lsp-services/lsp-services.component';
+import { LinkTrafficDetailsComponent } from './ui/panel-details/link-traffic-details/link-traffic-details.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LspServicesComponent } from './ui/panel-details/lsp-services/lsp-servic
     TopoManagerComponent,
     DialogDetailsComponent,
     LinkVisualComponent,
-    LspServicesComponent
+    LspServicesComponent,
+    LinkTrafficDetailsComponent
   ],
   imports: [
     BrowserModule,

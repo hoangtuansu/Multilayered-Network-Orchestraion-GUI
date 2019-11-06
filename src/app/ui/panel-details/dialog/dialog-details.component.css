@@ -118,3 +118,7 @@ mat-form-field {
 .router-name a {
   float: right;
 }
+
+.vertical-align-middle { 
+  vertical-align: middle; 
+}

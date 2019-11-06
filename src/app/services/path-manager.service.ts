@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as OBJ from '../models';
-import { GNObject2D } from '../models/2d-object/gnobject2D';
+import { GNObject2D, PathStruct } from '../models/2d-object/gnobject2D';
 import { NetworkManagerService } from './network-manager.service';
 import { GLinkOBJ } from '../models/2d-object/glinkobj';
 
@@ -22,12 +22,12 @@ export class PathManagerService {
 
   constructor(private netMngtService: NetworkManagerService) {}
 
-  getBandwidth(listOfPaths: GNObject2D[][]): number[] {
+  getBandwidth(listOfPaths: PathStruct[]): number[] {
     let bw: number[] = new Array(listOfPaths.length).fill(1000);
     for(let path of listOfPaths) {
-      for(let n of path) {
-        let idx = path.indexOf(n);
-        if(idx == path.length -1)
+      for(let n of path.nodes) {
+        let idx = path.nodes.indexOf(n);
+        if(idx == path.nodes.length -1)
           break;
         for(let l of this.netMngtService.getGLOs()) {
           if((l.node1 === n && l.node2 === path[idx+1]) 
@@ -41,10 +41,10 @@ export class PathManagerService {
     return bw;
   }
 
-  getCrossingPath(nodeID: string): any {
-    let arr = [];
-    for(let p of this.listOfPaths) {
-      for(let n of p) {
+  getCrossingPath(nodeID: string): PathStruct[] {
+    let arr: PathStruct[] = [];
+    for(let p of this.netMngtService.getPaths()) {
+      for(let n of p.nodes) {
         if(n.id == nodeID) {
           arr.push(p);
           break;

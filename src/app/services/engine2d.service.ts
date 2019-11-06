@@ -156,7 +156,7 @@ export class Engine2DService {
 
           this.g.selectAll(".state-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.STATE && d.node2.level == OBJ.NODE_LEVEL.STATE;}))
             .enter().append("line").attr('class', 'state-level-link')
-            .style("stroke", d => {return d.color;}).style("stroke-width", 3)
+            .style("stroke", d => {return d.color;}).style("stroke-width", 2)
             .attr("id", (d) => {return d.name;})
             .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
             .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
@@ -217,7 +217,7 @@ export class Engine2DService {
 
       this.g.selectAll(".country-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
         .enter().append("line").attr('class', 'country-level-link')
-        .style("stroke", "red").style("stroke-width", 5)
+        .style("stroke", d => d.color).style("stroke-width", 5)
         .attr("id", (d) => {return d.name;})
         .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
         .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
@@ -258,10 +258,18 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     if(d instanceof OBJ.GLinkOBJ) {
+      let label = 'Bandwidth: ';
+      if(d.type == OBJ.LINK_TYPE.DOMAIN) {
+        if(d.node1.level == OBJ.NODE_LEVEL.STATE) {
+          label = 'Data rate: ';
+        } else if(d.node1.level == OBJ.NODE_LEVEL.CITY) {
+          label = 'Channel: ';
+        }
+      }
       d3.select("#link_toolTip").transition().duration(200).style("opacity", .9);
       d3.select("#link_toolTip").html("<div style='text-align:left'>" + 'Node 1: ' + d.node1.name + '/' + d.node1_if + '<br/>' 
                                     + 'Node 2: ' + d.node2.name + '/' + d.node2_if + '<br/>'
-                                    + 'Bandwidth: ' + d.bandwidth.toString() + '</div>')
+                                    + label + d.bandwidth.toString() + '</div>')
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px");
     } else {

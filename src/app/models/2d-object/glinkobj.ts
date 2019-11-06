@@ -13,6 +13,7 @@ export class GLinkOBJ implements LObject2D {
   node2: GNObject2D = null;
   node2_if: string = "";
   bandwidth: string;
+  latency: string;
   traffic_components: string[];
   bw_utilization_components: number[];
   type: LINK_TYPE = LINK_TYPE.DOMAIN;
@@ -22,8 +23,9 @@ export class GLinkOBJ implements LObject2D {
   mesh_emissive: number = 0;
   mesh_highlightcolor: number = 0;
   mesh: THREE.Mesh = null;
+  group_meshes: THREE.Group = null;
 
-  constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, tp: LINK_TYPE, buc: number[], tc: string[]) {
+  constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, latency: string, tp: LINK_TYPE, buc: number[], tc: string[]) {
     this.id = _id;
     this.name = n;
     this.color = c;
@@ -33,12 +35,14 @@ export class GLinkOBJ implements LObject2D {
     this.node2 = n2;
     this.node2_if = if2;
     this.bandwidth = bw;
+    this.latency = latency;
     this.type = tp;
     this.mesh_color = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[0] : CONSTANTS.LINK_BOUNDARY[0];
     this.mesh_emissive = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[1] : CONSTANTS.LINK_BOUNDARY[1];
     this.mesh_highlightcolor = (tp === LINK_TYPE.DOMAIN) ? CONSTANTS.LINK_DOMAIN[2] : CONSTANTS.LINK_BOUNDARY[2];
     this.traffic_components = tc;
     this.bw_utilization_components = buc;
+    this.group_meshes = new THREE.Group();
   }
 
   get visibility() {
@@ -47,9 +51,9 @@ export class GLinkOBJ implements LObject2D {
 
   set visibility(v: boolean) {
     if(this.node1.visibility && this.node2.visibility) {
-      this.mesh.visible = v;
+      this.group_meshes.visible = v;
     } else {
-      this.mesh.visible = false;
+      this.group_meshes.visible = false;
     }
   }
 
@@ -59,9 +63,12 @@ export class GLinkOBJ implements LObject2D {
   }
 
   generateMesh(): THREE.Group {
-    if(this.mesh != null) {
-      this.mesh.geometry.dispose();
-      (this.mesh.material as THREE.MeshStandardMaterial).dispose();
+    if(this.group_meshes.children.length > 0) {
+      for(let i = this.group_meshes.children.length - 1; i >= 0; i--) {
+        let m = (this.group_meshes.children[i] as THREE.Mesh);
+        m.geometry.dispose();
+        (m.material as THREE.MeshStandardMaterial).dispose();
+      }
     }
     let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
     let B = new THREE.Vector3(this.node2.position_3dtopo[0], this.node2.position_3dtopo[1], this.node2.position_3dtopo[2]);
@@ -77,10 +84,9 @@ export class GLinkOBJ implements LObject2D {
     this.mesh.applyQuaternion(quaternion);
     this.mesh.position.set(A.x, A.y, A.z);
 
-    let g = new THREE.Group();
-    g.name = this.name;
-    g.add(this.mesh);
-    return g;
+    this.group_meshes.name = this.name;
+    this.group_meshes.add(this.mesh);
+    return this.group_meshes;
   }
 }
 
@@ -88,7 +94,7 @@ export class GHighlightedLinkOBJ extends GLinkOBJ {
   arrow_mesh: THREE.Mesh = null;
   dir: boolean = true;  //to control the direction of arrow_mesh, true: node1 -> node2, false: node2 -> node1
   constructor(l: GLinkOBJ, d?: boolean) {
-    super(l.id, l.name, l.color, l.width, l.node1, l.node1_if, l.node2, l.node2_if, l.bandwidth, l.type, l.bw_utilization_components, l.traffic_components);
+    super(l.id, l.name, l.color, l.width, l.node1, l.node1_if, l.node2, l.node2_if, l.bandwidth, l.latency, l.type, l.bw_utilization_components, l.traffic_components);
     this.dir = d;
   }
 
@@ -112,8 +118,9 @@ export class GHighlightedLinkOBJ extends GLinkOBJ {
     this.mesh.position.set(B.x, B.y, B.z);
 
     let arrow_geo = new THREE.ConeBufferGeometry(1, 2.5, 10);
+    let material15 = new THREE.MeshStandardMaterial({color: 0xffff00, emissive: 0xffff00, roughness: 1, metalness: 1});
     arrow_geo.translate(0, h/3, 0);
-    this.arrow_mesh = new THREE.Mesh(arrow_geo, material14);
+    this.arrow_mesh = new THREE.Mesh(arrow_geo, material15);
     this.arrow_mesh.applyQuaternion(quaternion);
     this.arrow_mesh.position.set(B.x, B.y, B.z);
 
