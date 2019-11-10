@@ -58,6 +58,7 @@ export class Topo3dComponent implements OnInit, OnChanges {
         this.isLayer1Shown = true;
         this.isLayer2Shown = true;
         this.isLayer3Shown = true;
+        this.isNodeAlwaysShown = true;
         this.attach3DLayout(true);
       }
     });
