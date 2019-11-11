@@ -147,10 +147,10 @@
       </mat-accordion>
     </mat-tab>
     <mat-tab>
-        <app-lsp-services [selectedLink]="data['selectedLinkorPath']"></app-lsp-services>
+        <app-lsp-services></app-lsp-services>
     </mat-tab>
     <mat-tab>
-        <app-link-traffic-details ></app-link-traffic-details>
+        <app-link-traffic-details [selectedLink]="data['selectedLinkorPath']"></app-link-traffic-details>
     </mat-tab>
   </mat-tab-group>
 </div>

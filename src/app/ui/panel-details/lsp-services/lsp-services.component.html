@@ -1,27 +1,50 @@
 <div style="display: block; height: auto; padding-bottom: 0px;">
-
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div style="height: 32px;"> 
-            <div style="width: 35px; display: inline-block;"><i class="material-icons vertical-align-middle">dashboard</i></div>
-            <span>{{linkComponentTitle}}</span>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-  
-      <canvas baseChart 
-            [data]="pieChartData" 
-            [labels]="pieChartLabels" 
-            [chartType]="pieChartType"
-            [options]="pieChartOptions"
-            [plugins]="pieChartPlugins"
-            [legend]="pieChartLegend">
-          </canvas>
-    
-    </mat-expansion-panel>
-  
-
-        
-      </div>
+  <mat-accordion class="example-headers-align">
+      <mat-expansion-panel [expanded]="false">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+              <div style="height: 32px;"> 
+                  <div style="width: 35px; display: inline-block;"><i class="material-icons vertical-align-middle">dashboard</i></div>
+                  <span>Traffic Components</span>
+              </div>
+              </mat-panel-title>
+          </mat-expansion-panel-header>
       
+          <canvas baseChart 
+                  [data]="pieChartData" 
+                  [labels]="pieChartLabels" 
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend">
+              </canvas>
+      
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="false">
+              <mat-expansion-panel-header>
+                  <mat-panel-title>
+                  <div style="height: 32px;"> 
+                      <div style="width: 35px; display: inline-block;"><i class="material-icons vertical-align-middle">dashboard</i></div>
+                      <span>Services</span>
+                  </div>
+                  </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <canvas baseChart 
+                  [data]="pieChartData1" 
+                  [labels]="pieChartLabels1" 
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend">
+              </canvas>
+          
+      
+          
+          </mat-expansion-panel>
+
+  </mat-accordion>
+      
+</div>
+    

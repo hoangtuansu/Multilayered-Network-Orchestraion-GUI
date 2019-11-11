@@ -17,6 +17,7 @@ export class GLinkOBJ implements LObject2D {
   traffic_components: string[];
   bw_utilization_components: number[];
   type: LINK_TYPE = LINK_TYPE.DOMAIN;
+  link_dash_or_solid: boolean = true; //true: solid, false: dash 
 
   position_3dtopo: [number, number, number] = [0, 0, 0];
   mesh_color: number = 0;
@@ -25,7 +26,7 @@ export class GLinkOBJ implements LObject2D {
   mesh: THREE.Mesh = null;
   group_meshes: THREE.Group = null;
 
-  constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, latency: string, tp: LINK_TYPE, buc: number[], tc: string[]) {
+  constructor(_id: any, n: string, c: string, w: number, n1: GNObject2D, if1: string, n2: GNObject2D, if2: string, bw: string, latency: string, tp: LINK_TYPE, buc: number[], tc: string[], ldos: boolean) {
     this.id = _id;
     this.name = n;
     this.color = c;
@@ -43,6 +44,7 @@ export class GLinkOBJ implements LObject2D {
     this.traffic_components = tc;
     this.bw_utilization_components = buc;
     this.group_meshes = new THREE.Group();
+    this.link_dash_or_solid = ldos;
   }
 
   get visibility() {
@@ -94,7 +96,7 @@ export class GHighlightedLinkOBJ extends GLinkOBJ {
   arrow_mesh: THREE.Mesh = null;
   dir: boolean = true;  //to control the direction of arrow_mesh, true: node1 -> node2, false: node2 -> node1
   constructor(l: GLinkOBJ, d?: boolean) {
-    super(l.id, l.name, l.color, l.width, l.node1, l.node1_if, l.node2, l.node2_if, l.bandwidth, l.latency, l.type, l.bw_utilization_components, l.traffic_components);
+    super(l.id, l.name, l.color, l.width, l.node1, l.node1_if, l.node2, l.node2_if, l.bandwidth, l.latency, l.type, l.bw_utilization_components, l.traffic_components, l.link_dash_or_solid);
     this.dir = d;
   }
 

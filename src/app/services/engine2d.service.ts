@@ -213,11 +213,12 @@ export class Engine2DService {
         .data(t.feature(us, us["objects"]["countries"])["features"])
         .enter().append("path")
         .attr("id", function(d) { return d["id"]; })
+        .style("fill", "#dfe6e9")
         .attr("d", this.path).on("click", this.countryClicked);
 
       this.g.selectAll(".country-level-link").data(OBJ.GLOs.filter((d) => { return d.node1.level == OBJ.NODE_LEVEL.COUNTRY && d.node2.level == OBJ.NODE_LEVEL.COUNTRY;}))
-        .enter().append("line").attr('class', 'country-level-link')
-        .style("stroke", d => d.color).style("stroke-width", 5)
+        .enter().append("line").attr('class', d => {return "country-level-link";})
+        .style("stroke", d => d.color).style("stroke-width", 5).style("stroke-dasharray", d => { if(d.link_dash_or_solid) return '0,0'; else return '3,3';})
         .attr("id", (d) => {return d.name;})
         .attr("x1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[0] + d.node1.icon_size[0]/2;})
         .attr("y1", (d) => {return this.projection([d.node1.position_2dtopo[0], d.node1.position_2dtopo[1]])[1] + d.node1.icon_size[1]/2;})
