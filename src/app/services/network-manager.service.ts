@@ -50,12 +50,13 @@ export class NetworkManagerService {
     return this.getGLOs().filter(d => {return (d.node1.id === nid || d.node2.id === nid) && d.type == OBJ.LINK_TYPE.BOUNDARY;});
   }
 
-  getLink(src: OBJ.GNObject2D, dst: OBJ.GNObject2D): OBJ.GLinkOBJ {
-    for(let l of this.getGLOs()) {
+  getLink(src: OBJ.GNObject2D, dst: OBJ.GNObject2D): OBJ.GLinkOBJ[] {
+    return this.getGLOs().filter(l => {return (l.node1.id === src.id && l.node2.id === dst.id) || ((l.node2.id === src.id && l.node1.id === dst.id));});
+    /* for(let l of this.getGLOs()) {
       if((l.node1.id === src.id && l.node2.id === dst.id) || ((l.node2.id === src.id && l.node1.id === dst.id)))
         return l;
     }
-    return null;
+    return null; */
   }
 
   get2DContainedNetworkElement(nid: string): OBJ.GNObject2D[] {

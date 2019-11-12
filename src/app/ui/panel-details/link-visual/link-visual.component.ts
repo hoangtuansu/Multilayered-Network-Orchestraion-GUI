@@ -9,7 +9,7 @@ import { LinkVisualizerService } from 'src/app/services/link-visualizer.service'
 })
 export class LinkVisualComponent implements OnInit {
   @ViewChild('linkVisualization', { static: false }) linkVisualizer: ElementRef;
-  @Input() selectedPathID: any = null;
+  @Input() selectedPathIndex: any = null;
   @Input() obtainedPath: any = null;
   constructor(private linkVisualizerService: LinkVisualizerService) {
   }
@@ -19,7 +19,7 @@ export class LinkVisualComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.linkVisualizerService.setSelectedLinkID(this.selectedPathID, this.obtainedPath);
+    this.linkVisualizerService.setSelectedPath(this.selectedPathIndex, this.obtainedPath);
     this.linkVisualizerService.createPathVisualization(this.linkVisualizer); 
   }
   

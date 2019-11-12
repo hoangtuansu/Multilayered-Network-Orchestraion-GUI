@@ -259,18 +259,10 @@ export class Engine2DService {
     if(!this.isDetailEnabled)
       return;
     if(d instanceof OBJ.GLinkOBJ) {
-      let label = 'Bandwidth: ';
-      if(d.type == OBJ.LINK_TYPE.DOMAIN) {
-        if(d.node1.level == OBJ.NODE_LEVEL.STATE) {
-          label = 'Data rate: ';
-        } else if(d.node1.level == OBJ.NODE_LEVEL.CITY) {
-          label = 'Channel: ';
-        }
-      }
       d3.select("#link_toolTip").transition().duration(200).style("opacity", .9);
-      d3.select("#link_toolTip").html("<div style='text-align:left'>" + 'Node 1: ' + d.node1.name + '/' + d.node1_if + '<br/>' 
-                                    + 'Node 2: ' + d.node2.name + '/' + d.node2_if + '<br/>'
-                                    + label + d.bandwidth.toString() + '</div>')
+      d3.select("#link_toolTip").html("<div style='text-align:left'>" + d.node1.full_name + ' ' + d.node1_if + '<br/>' 
+                                    + d.node2.full_name + ' ' + d.node2_if + '<br/>'
+                                    + 'Capacity: ' + d.bandwidth.toString() + '</div>')
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px");
     } else {

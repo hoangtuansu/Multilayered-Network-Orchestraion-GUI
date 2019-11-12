@@ -97,15 +97,15 @@ export class Engine3DService implements OnDestroy {
     for(let g of links) {
       this.scene.add(g.generateMesh())
     }
-
     this.showPlane(0, true, true);
+
     this.showPlane(1, true, true);
     this.showPlane(2, true, true);
   }
 
   showPlane(plane_id, isPlaneShown, isNodeandLinkShown) {
-    this.undoHighlightLink();
-    this.undoHighlightLSP();
+    /* this.undoHighlightLink();
+    this.undoHighlightLSP(); */
 
     for(let g of this.animatorService.nodeMngmt.getGPOs()) {
       if(g.layer == plane_id) {
@@ -157,11 +157,11 @@ export class Engine3DService implements OnDestroy {
       let nIdx = nodesOfPickedPath.indexOf(n);
       if(nIdx == nodesOfPickedPath.length - 1)
         break;
-      let _l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, nodesOfPickedPath[nIdx+1]);
+      let _l: OBJ.GLinkOBJ = this.nodeMngmt.getLink(n, nodesOfPickedPath[nIdx+1])[0];
       let l: OBJ.GLinkOBJ = new GHighlightedLinkOBJ(_l, n !== _l.node1);
       let hlLink: THREE.Group = l.generateMesh(n, nodesOfPickedPath[nIdx+1]);
-      l.visibility = false;
-      this.highlightedLSP.push(l);
+      _l.visibility = false;
+      this.highlightedLSP.push(_l);
       hlLink.name = OBJ.CONSTANTS.HIGHLIGHTED_PATH_PREFIX;
       this.scene.add(hlLink);
 
@@ -176,7 +176,7 @@ export class Engine3DService implements OnDestroy {
     }
     if(this.highlightedLSP.length > 0) {
       for(let l of this.highlightedLSP)
-        l.mesh.visible = true;
+        l.visibility = true;
     }
     
   }

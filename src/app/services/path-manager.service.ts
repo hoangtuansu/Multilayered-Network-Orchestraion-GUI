@@ -68,7 +68,7 @@ export class PathManagerService {
            
            if(inp < p.length - 1) {
             
-            let l = this.netMngtService.getLink(np, p[inp+1])
+            let l = this.netMngtService.getLink(np, p[inp+1])[0]
             if(links.indexOf(l) < 0)
               links.push(l)
            }

@@ -61,8 +61,8 @@
                             <div class='mark2'></div>
                           </div>
                           <div class='link-nodes'>
-                              <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                              <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                              <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.full_name + '/' + l.node1_if) : (l.node2.full_name + '/' + l.node2_if)}}</div>
+                              <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.full_name + '/' + l.node2_if) : (l.node1.full_name + '/' + l.node1_if)}}</div>
                           </div>
                         </div>
                         <mat-divider></mat-divider>
@@ -92,8 +92,8 @@
                           <div class='mark2'></div>
                         </div>
                         <div class='link-nodes'>
-                            <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.name + '/' + l.node1_if) : (l.node2.name + '/' + l.node2_if)}}</div>
-                            <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.name + '/' + l.node2_if) : (l.node1.name + '/' + l.node1_if)}}</div>
+                            <div class='src-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node1.full_name + '/' + l.node1_if) : (l.node2.full_name + '/' + l.node2_if)}}</div>
+                            <div class='dst-name'>{{data['selectedEntity'].name === l.node1.name ? (l.node2.full_name + '/' + l.node2_if) : (l.node1.full_name + '/' + l.node1_if)}}</div>
                         </div>
                       </div>
                       <mat-divider></mat-divider>
@@ -133,12 +133,12 @@
                       <div class='mark2'></div>
                     </div>
                     <div class='link-nodes'>
-                        <div class='src-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[0].name : p.nodes[p.nodes.length-1].name}}</div>
-                        <div class='dst-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[p.nodes.length-1].name : p.nodes[0].name}}</div>
+                        <div class='src-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[0].full_name : p.nodes[p.nodes.length-1].full_name}}</div>
+                        <div class='dst-name'>{{data['selectedEntity'].name === p.nodes[0].name ? p.nodes[p.nodes.length-1].full_name : p.nodes[0].full_name}}</div>
                     </div>
                   </div>
                 </mat-expansion-panel-header>
-                <app-link-visual [selectedPathID] = "i" [obtainedPath]= "p"></app-link-visual>
+                <app-link-visual [selectedPathIndex] = "i" [obtainedPath]= "p"></app-link-visual>
                 
             </mat-expansion-panel>
           </mat-accordion>
@@ -147,10 +147,11 @@
       </mat-accordion>
     </mat-tab>
     <mat-tab>
-        <app-lsp-services></app-lsp-services>
+        <app-link-traffic-details [selectedLink]="data['selectedLinkorPath']"></app-link-traffic-details>
     </mat-tab>
     <mat-tab>
-        <app-link-traffic-details [selectedLink]="data['selectedLinkorPath']"></app-link-traffic-details>
+        <app-lsp-services></app-lsp-services>
+        
     </mat-tab>
   </mat-tab-group>
 </div>

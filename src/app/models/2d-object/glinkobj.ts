@@ -48,7 +48,7 @@ export class GLinkOBJ implements LObject2D {
   }
 
   get visibility() {
-    return this.node1.visibility && this.node2.visibility;
+    return this.group_meshes.visible;
   }
 
   set visibility(v: boolean) {
@@ -70,6 +70,7 @@ export class GLinkOBJ implements LObject2D {
         let m = (this.group_meshes.children[i] as THREE.Mesh);
         m.geometry.dispose();
         (m.material as THREE.MeshStandardMaterial).dispose();
+        this.group_meshes.children.splice(i);
       }
     }
     let A = new THREE.Vector3(this.node1.position_3dtopo[0], this.node1.position_3dtopo[1], this.node1.position_3dtopo[2]);
@@ -85,6 +86,7 @@ export class GLinkOBJ implements LObject2D {
     this.mesh = new THREE.Mesh(geometry, material14);
     this.mesh.applyQuaternion(quaternion);
     this.mesh.position.set(A.x, A.y, A.z);
+    this.mesh.name = this.name;
 
     this.group_meshes.name = this.name;
     this.group_meshes.add(this.mesh);
@@ -114,13 +116,13 @@ export class GHighlightedLinkOBJ extends GLinkOBJ {
     quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vec);
     var geometry = new THREE.CylinderBufferGeometry(0.25, 0.25, h, 32);
     geometry.translate(0, h / 2, 0);
-    let material14 = new THREE.MeshStandardMaterial({color: this.mesh_highlightcolor, emissive: this.mesh_emissive, roughness: 1, metalness: 1});
+    let material14 = new THREE.MeshStandardMaterial({color: 0xf1c40f, emissive: 0xf39c12, roughness: 1, metalness: 1});
     this.mesh = new THREE.Mesh(geometry, material14);
     this.mesh.applyQuaternion(quaternion);
     this.mesh.position.set(B.x, B.y, B.z);
 
     let arrow_geo = new THREE.ConeBufferGeometry(1, 2.5, 10);
-    let material15 = new THREE.MeshStandardMaterial({color: 0xffff00, emissive: 0xffff00, roughness: 1, metalness: 1});
+    let material15 = new THREE.MeshStandardMaterial({color: 0xf1c40f, emissive: 0xf39c12, roughness: 1, metalness: 1});
     arrow_geo.translate(0, h/3, 0);
     this.arrow_mesh = new THREE.Mesh(arrow_geo, material15);
     this.arrow_mesh.applyQuaternion(quaternion);

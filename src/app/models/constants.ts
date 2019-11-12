@@ -53,24 +53,24 @@ export const GLOs: GLinkOBJ[] = [
     new GLinkOBJ ('GLinkOBJ2', 'QFX2-4', '#009432', 3, GNOs[1], '48', GNOs[3], '49', '100Gbe', '0.5ms', LINK_TYPE.DOMAIN,[30, 70], ["IP", "Unused"], true),
     new GLinkOBJ ('GLinkOBJ3', 'QFX3-4', '#009432', 3, GNOs[2], '48', GNOs[3], '48',  '40Gbe', '0.3ms', LINK_TYPE.DOMAIN, [20, 80], ["IP", "Unused"], true),
     new GLinkOBJ ('GLinkOBJ4', 'QFX3-4', '#009432', 3, GNOs[2], '50', GNOs[3], '50',  '100Gbe', '1.0ms', LINK_TYPE.DOMAIN, [90, 10], ["IP", "Unused"], true),
-    new GLinkOBJ ('GLinkOBJ5', 'SITE1-2', '#e74c3c', 3, GNOs[4], '1-5-1', GNOs[5], '1-5-1', 'OTU4', '0.01ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"], true),
-    new GLinkOBJ ('GLinkOBJ6', 'SITE1-4', '#e74c3c', 3, GNOs[4], '1-6-2', GNOs[7], '1-6-2', 'OTU4', '0.1ms', LINK_TYPE.DOMAIN, [20, 80], ["Service 1", "Service 2"], true),
-    new GLinkOBJ ('GLinkOBJ7', 'SITE2-4', '#e74c3c', 3, GNOs[5], '1-6-1', GNOs[7], '1-6-1', 'OTU4', '0.3ms', LINK_TYPE.DOMAIN, [], [], true),
-    new GLinkOBJ ('GLinkOBJ8', 'SITE2-3', '#e74c3c', 3, GNOs[5], '1-6-2', GNOs[6], '1-6-2', 'OTU4', '0.5ms', LINK_TYPE.DOMAIN, [], [], true),
-    new GLinkOBJ ('GLinkOBJ9', 'SITE3-4', '#e74c3c', 3, GNOs[6], '1-5-1', GNOs[7], '1-5-1', 'OTU4', '0.7ms', LINK_TYPE.DOMAIN, [], [], true),
-    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', '#e67e22', 0.5, GNOs[15], '1-1', GNOs[16], '1-1', 'OCH', '0.9ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"], true),
-    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', '#e67e22', 0.5, GNOs[15], '1-5', GNOs[17], '1-1', 'OCH', '1.1ms', LINK_TYPE.DOMAIN, [10, 20, 30, 40], ["Service 1", "Service 2", "Service 3", "Service 4"], true),
-    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', '#e67e22', 0.5, GNOs[16], '1-5', GNOs[17], '1-5', 'OCH', '2.1ms', LINK_TYPE.DOMAIN, [30, 70], ["Service 1", "Service 2"], true),
+    new GLinkOBJ ('GLinkOBJ5', 'SITE1-2', '#009432', 3, GNOs[4], '1-5-1', GNOs[5], '1-5-1', 'OTU4', '0.01ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"], true),
+    new GLinkOBJ ('GLinkOBJ6', 'SITE1-4', '#009432', 3, GNOs[4], '1-6-2', GNOs[7], '1-6-2', 'OTU4', '0.1ms', LINK_TYPE.DOMAIN, [20, 80], ["Service 1", "Service 2"], true),
+    new GLinkOBJ ('GLinkOBJ7', 'SITE2-4', '#009432', 3, GNOs[5], '1-6-1', GNOs[7], '1-6-1', 'OTU4', '0.3ms', LINK_TYPE.DOMAIN, [], [], true),
+    new GLinkOBJ ('GLinkOBJ8', 'SITE2-3', '#009432', 3, GNOs[5], '1-6-2', GNOs[6], '1-6-2', 'OTU4', '0.5ms', LINK_TYPE.DOMAIN, [], [], true),
+    new GLinkOBJ ('GLinkOBJ9', 'SITE3-4', '#009432', 3, GNOs[6], '1-5-1', GNOs[7], '1-5-1', 'OTU4', '0.7ms', LINK_TYPE.DOMAIN, [], [], true),
+    new GLinkOBJ ('GLinkOBJ10', 'POC1-2', '#009432', 0.5, GNOs[15], '1-1-1', GNOs[16], '1-1-2', 'OCH', '0.9ms', LINK_TYPE.DOMAIN, [20, 30, 50], ["Service 1", "Service 2", "Service 3"], true),
+    new GLinkOBJ ('GLinkOBJ11', 'POC1-3', '#009432', 0.5, GNOs[15], '1-5-2', GNOs[17], '1-1-1', 'OCH', '1.1ms', LINK_TYPE.DOMAIN, [10, 20, 30, 40], ["Service 1", "Service 2", "Service 3", "Service 4"], true),
+    new GLinkOBJ ('GLinkOBJ12', 'POC2-3', '#009432', 0.5, GNOs[16], '1-5-1', GNOs[17], '1-5-1', 'OCH', '2.1ms', LINK_TYPE.DOMAIN, [30, 70], ["Service 1", "Service 2"], true),
 
-    new GLinkOBJ ('GLinkOBJ13', 'QFX1-SITE1', 'red', 3, GNOs[0], '47', GNOs[4], '1-1-1', '10GbE', '1.3ms', LINK_TYPE.BOUNDARY, [], [], true),
-    new GLinkOBJ ('GLinkOBJ14', 'QFX1-POC1', 'red', 3, GNOs[0], '50', GNOs[15], '1-14-2', '100GbE', '0.1ms', LINK_TYPE.BOUNDARY, [], [], true),
-    new GLinkOBJ ('GLinkOBJ15', 'QFX2-SITE3', 'red', 3, GNOs[1], '47', GNOs[6], '1-1-1', '10GbE', '0.8ms', LINK_TYPE.BOUNDARY, [], [], true),
-    new GLinkOBJ ('GLinkOBJ16', 'QFX2-POC3', 'red', 3, GNOs[1], '50', GNOs[17], '1-14-2', '100GbE', '1.5ms', LINK_TYPE.BOUNDARY, [], [], true),
-    new GLinkOBJ ('GLinkOBJ17', 'SITE1-POC1', 'red', 3, GNOs[4], '1-6-1', GNOs[15], '1-12-1', 'OTU4', '1.3ms', LINK_TYPE.BOUNDARY, [], [], true),
-    new GLinkOBJ ('GLinkOBJ18', 'SITE3-POC3', 'red', 3, GNOs[6], '1-6-1', GNOs[17], '1-12-1', 'OTU4', '3.1ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ13', 'QFX1-SITE1', '#009432', 3, GNOs[0], '47', GNOs[4], '1-1-1', '10GbE', '1.3ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ14', 'QFX1-POC1', '#009432', 3, GNOs[0], '50', GNOs[15], '1-14-2', '100GbE', '0.1ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ15', 'QFX2-SITE3', '#009432', 3, GNOs[1], '47', GNOs[6], '1-1-1', '10GbE', '0.8ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ16', 'QFX2-POC3', '#009432', 3, GNOs[1], '50', GNOs[17], '1-14-2', '100GbE', '1.5ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ17', 'SITE1-POC1', '#009432', 3, GNOs[4], '1-6-1', GNOs[15], '1-12-1', 'OTU4', '1.3ms', LINK_TYPE.BOUNDARY, [], [], true),
+    new GLinkOBJ ('GLinkOBJ18', 'SITE3-POC3', '#009432', 3, GNOs[6], '1-6-1', GNOs[17], '1-12-1', 'OTU4', '3.1ms', LINK_TYPE.BOUNDARY, [], [], true),
 
     new GLinkOBJ ('GLinkOBJ19', 'SITE1-3', '#009432', 3, GNOs[4], '1-1-2', GNOs[6], '1-1-2', '10GbE', '1.1ms', LINK_TYPE.DOMAIN, [], [], true),
-    new GLinkOBJ ('GLinkOBJ20', 'QFX1-2', '#009432', 3, GNOs[0], '48', GNOs[1], '49', '100Gbe', '0.1ms', LINK_TYPE.DOMAIN, [60, 40], ["IP", "Unused"], false)
+    new GLinkOBJ ('GLinkOBJ20', 'QFX1-2', '#009432', 3, GNOs[0], '48', GNOs[1], '48', '100Gbe', '0.1ms', LINK_TYPE.DOMAIN, [60, 40], ["IP", "Unused"], false)
 ];
 
 export const Paths: PathStruct[] = [
