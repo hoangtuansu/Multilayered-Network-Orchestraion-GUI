@@ -1,7 +1,12 @@
 <div class="topo2d" #renderer2DContainer>
-    
 </div>
-<div>
+
+<div style="padding-top: 20px; padding-left: 20px;">
+<div class="search-lab-logo" (click)="fadeInSearchBox()">
+    <img src="../../../../assets/images/logo.png" alt="AdminLTE Logo" style="opacity: .8">
+</div>
+
+<div id="search-form-div" class="search-form">
     <form class="example-form">
         <mat-form-field class="example-full-width"  appearance="outline">
             <mat-label>Search network elements</mat-label>
@@ -18,5 +23,8 @@
         </mat-form-field>
     </form>
 </div>
+
+</div>
+
 <div id="node_toolTip"></div>
 <div id="link_toolTip"></div>

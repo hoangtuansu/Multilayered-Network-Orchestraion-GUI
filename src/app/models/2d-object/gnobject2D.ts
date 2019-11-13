@@ -1,6 +1,7 @@
 import { NObject2D, NPrObject} from '../object-interfaces';
 import { CONSTANTS, NODE_LEVEL } from '../constants';
 import * as THREE from 'three';
+import { Vector3 } from 'three';
 
 export class GNObject2D implements NObject2D{
   id: any = 0;
@@ -37,11 +38,14 @@ export class GNObject2D implements NObject2D{
     this.interfaces = ifs;
 
     new THREE.FontLoader().load( 'assets/fonts/optimer_bold.typeface.json', font => {
-      let textGeom = new THREE.TextGeometry( this.name, { size: 0.75, height: 0, curveSegments: 3, font: font}),
-          textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff} );
+      let str = this.full_name.substr(0, Math.round(this.full_name.length/2)) + '\n' + this.full_name.substr(Math.round(this.full_name.length/2));
+      let textGeom = new THREE.TextGeometry( str, { size: 0.65, height: 0, curveSegments: 3, font: font}),
+          textMaterial = new THREE.MeshBasicMaterial( { color: 0xecf0f1} );
+      
       this.mesh_text = new THREE.Mesh(textGeom, textMaterial );
       this.mesh_text.rotation.set(this.level == NODE_LEVEL.CITY ? -Math.PI/4 : -Math.PI/2, 0, 0);
-      this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2] + 0.25);
+      this.mesh_text.position.set(this.position_3dtopo[0] - 1.8, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2]);
+      
     } );
 
   }
@@ -62,9 +66,9 @@ export class GNObject2D implements NObject2D{
       
     if(this.mesh_text != null)
       if(this.level == NODE_LEVEL.CITY) {
-        this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 1.75, this.position_3dtopo[2] + 1.25);
+        this.mesh_text.position.set(this.position_3dtopo[0] - 1.8, this.position_3dtopo[1] + 1.75, this.position_3dtopo[2] + 1);
       } else {
-        this.mesh_text.position.set(this.position_3dtopo[0] - 1, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2] + 0.25);
+        this.mesh_text.position.set(this.position_3dtopo[0] - 1.8, this.position_3dtopo[1] + 0.75, this.position_3dtopo[2]);
       }
       
   }

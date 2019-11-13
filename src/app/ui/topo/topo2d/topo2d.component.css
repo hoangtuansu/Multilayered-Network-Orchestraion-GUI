@@ -51,7 +51,7 @@ pre.prettyprint {
 .example-form {
   min-width: 100px;
   max-width: 500px;
-  width: 25%;
+  width: 450px;
   margin-left: 20px;
 }
 
@@ -68,3 +68,21 @@ pre.prettyprint {
   margin-right: 0;
   margin-left: 8px;
 }
+
+.search-form {
+  opacity: 0.0;
+  margin-left: 45px;
+  margin-top: -68px;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+  -ms-transition: all 500ms ease-in-out;
+  -o-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
+}
+
+.search-form.faded-in{
+  opacity: 1.0;
+  margin-left: 45px;
+  margin-top: -68px;
+}
+

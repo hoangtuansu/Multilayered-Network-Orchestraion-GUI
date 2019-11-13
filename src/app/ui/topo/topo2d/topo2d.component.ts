@@ -68,4 +68,10 @@ export class Topo2dComponent implements OnInit, OnChanges {
     
   }
 
+  fadeInSearchBox() {
+    console.log("abc");
+    const element: HTMLElement = document.getElementById("search-form-div");
+    element.classList.toggle("faded-in");
+  }
+
 }

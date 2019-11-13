@@ -53,10 +53,10 @@ export class EngineCoordinatorService {
                     NEorLinkSelected: true};
     if(!this.isDetailedDialogShown) {
       this.dialogRef = this.detailInfoDialog.open(DialogDetailsComponent, {
-        width: '25%',
+        width: '450px',
         panelClass: 'custom-detail-dialog-container',
         data: dataDlg,
-        position: {left: '20px', top: '85px'},
+        position: {left: '85px', top: '100px'},
         hasBackdrop: false,
         autoFocus: false
       });
